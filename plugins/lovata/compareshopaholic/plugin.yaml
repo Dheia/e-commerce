@@ -1,0 +1,6 @@
+plugin:
+    name: 'lovata.compareshopaholic::lang.plugin.name'
+    description: 'lovata.compareshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-table
+    homepage: ''

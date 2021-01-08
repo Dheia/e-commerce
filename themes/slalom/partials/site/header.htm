@@ -1,0 +1,362 @@
+[viewBag]
+
+[blogCategories]
+slug = "federation"
+displayEmpty = 1
+categoryPage = "federation-detail"
+
+[blogPosts antidopingPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "antidoping"
+postsPerPage = 3
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "antidoping"
+postPage = "antidoping"
+
+[staticMenu]
+code = "mobile-header"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "pravila"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "pravila"
+==
+<?php
+function onStart() {
+    $this['thisPage'] = $this->pageUrl('');
+}
+?>
+==
+{% set categories = blogCategories.categories %}
+{% set antidoping = antidopingPosts.posts %}
+{% set rules = blogPosts.posts %}
+{% set archive = [] %}
+{% set candidatList = [] %}
+<div class="modal-b" id="callback">
+    <div class="modal-b__inner">
+
+        <div class="modal-b__block">
+            <div class="modal-b__close js--close-modal">×</div>
+
+            <div class="modal-b__title">Заказать звонок</div>
+            <div class="modal-b__text">Представьтесь, мы вам перезвоним.</div>
+
+            <form action="" class="modal-b__form">
+                <div class="order-b__field">
+                    <input type="text" class="input-text" id="name" value="" placehoder="">
+                    <label for="name">Ваше имя: <span>*</span>
+                    </label>
+                </div>
+                <div class="order-b__field">
+                    <input type="tel" class="input-text input-text_phone" id="tel">
+                    <label for="tel">Телефон: <span>*</span>
+                    </label>
+                </div>
+                <div class="order-b__agree">Нажимая на кнопку я даю согласие на обработку <a href="#">моих персональных данных.</a>
+                </div>
+                <div class="order-b__button">
+                    <input type="submit" class="button" value="Отправить">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% partial('site/search/search') %}
+
+{% partial 'site/header-mobile' antidoping=antidoping %}
+
+
+<header class="header-b">
+<div class="max-width">
+    <div class="header-b__top">
+        <div class="header-b__logo">
+            <a href="/">
+                <img src="{{ 'assets/img/content/logo.svg'|theme}}" alt="">
+            </a>
+        </div>
+        <div class="header-b__note">Федерация гребного слалома России</div>
+        <div class="header-b__address">
+            <svg class="icon__map" width="13px" height="16px">
+                <use xlink:href="#map"></use>
+            </svg>
+            {% if address %}
+                {{ address }}
+            {% else %}
+                119270, г. Москва, наб. Лужнецкая, д. 8, стр. 1, ком. 255
+            {% endif %}
+        </div>
+        <div class="header-b__city">
+            <div class="footer-b__social">
+                {% if vk_active %}
+                    <a href="https://vk.com/{% if vk %}{{ vk }}{% else %}wwslalom{% endif %}" class="footer-b__social-links footer-b__social-links_vk"></a>
+                {% endif %}
+                {% if facebook_active %}
+                <a href="https://www.facebook.com/{% if facebook %}{{ facebook }}{% else %}wwslalom{% endif %}" class="footer-b__social-links footer-b__social-links_fb"></a>
+                {% endif %}
+                {% if instagram_active %}
+                    <a href="https://www.instagram.com/{% if instagram %}{{ instagram }}{% else %}slalom_russia{% endif %}" class="footer-b__social-links footer-b__social-links_insta"></a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="header-b__phone">
+
+            <svg class="icon__phone" width="14px" height="14px">
+                <use xlink:href="#phone"></use>
+            </svg>
+            {% if phone %}
+                <a href="tel:{{ phone }}">{{ phone }}</a>
+            {% else %}
+                <a href="tel:84957254687">+7 (495) 725-46-87</a>
+            {% endif %}
+            <br>
+            {% if second_phone %}
+                <a href="tel:{{ second_phone }}">{{ second_phone }}</a>
+            {% else %}
+                <a href="tel:84956370600">+7 (495) 637-06-00</a>
+            {% endif %}
+        </div>
+        <div class="header-b__callback"><a href="/results" class="button button_small button_border">Результаты</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="header-b__fixed">
+    <div class="max-width">
+
+        <div class="header-b__fixed-grid">
+            <div class="header-b__logo">
+                <a href="/">
+                    <img src="{{ 'assets/img/content/logo.svg'|theme }}" alt="">
+                </a>
+            </div>
+
+            <div class="header-b__menu">
+                <div class="header-b__item header-b__item_hasdrop">
+                    {% for category in categories if category.slug == 'federation' %}
+                    <a href="/{{ category.slug }}" class="header-b__links">{{ category.name }}
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <div class="header-b__drop">
+                        <div class="header-b__drop-item"><a href="/federation/kak-eto-bylo" class="header-b__drop-links">Как это было</a>
+                        </div>
+                            {% for subCategory in category.children %}
+                                <div class="header-b__drop-item"><a href="/{{ category.slug }}/{{ subCategory.slug }}" class="header-b__drop-links">{{ subCategory.name }}</a>
+                                </div>
+                            {% endfor %}
+                        <div class="header-b__drop-item"><a href="/federation/broshyury" class="header-b__drop-links">Брошюры</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="header-b__item header-b__item_hasdrop">
+                    <a href="/documents" class="header-b__links">Документы
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <div class="header-b__drop">
+                        {% for category in categories if category.slug == 'documents' %}
+                            {% for subCategory in category.children %}
+                                <div class="header-b__drop-item"><a href="/{{ category.slug }}/{{ subCategory.slug }}" class="header-b__drop-links">{{ subCategory.name }}</a>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="header-b__item header-b__item_hasdrop">
+                    <a href="/sorevnovaniya" class="header-b__links">Соревнования
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <div class="header-b__drop">
+                        <div class="header-b__drop-item"><a href="/calendar" class="header-b__drop-links">Календарь соревнований</a>
+                        </div>
+                        <div class="header-b__drop-item"><a href="/rezultaty-sorevnovaniy-do-2011-goda" class="header-b__drop-links">Результаты соревнований до 2011 года</a>
+                        </div>
+                        <div class="header-b__drop-item header-b__drop-item_hasdrop">
+                            <a href="/rules" class="header-b__drop-links">Правила
+                                <svg class="icon__down-arrow" width="256px" height="256px">
+                                    <use xlink:href="#down-arrow"></use>
+                                </svg>
+                            </a>
+                            <div class="header-b__second">
+                                {% for rule in rules %}
+                                    <div class="header-b__drop-item"><a href="{{ rule.url }}" class="header-b__drop-links">{{ rule.title }}</a></div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="header-b__drop-item header-b__drop-item_hasdrop">
+                            <a href="/sudeyskaya-kollegiya" class="header-b__drop-links">Судейская коллегия
+                                <svg class="icon__down-arrow" width="256px" height="256px">
+                                    <use xlink:href="#down-arrow"></use>
+                                </svg>
+                            </a>
+
+                            <div class="header-b__second">
+                                {% for category in categories if category.slug  == 'sorevnovaniya' %}
+                                    {% for subCategory in category.children if subCategory.slug == 'sudeyskaya-kollegiya' %}
+                                        {% for collegium in subCategory.children %}
+                                            <div class="header-b__drop-item"><a href="/sudeyskaya-kollegiya/{{ collegium.slug }}" class="header-b__drop-links">{{ collegium.name }}</a></div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-b__item header-b__item_hasdrop">
+                    <a href="/team" class="header-b__links">Сборная России
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <div class="header-b__drop">
+                        {% for team in categories if team.slug == 'sbornaya' %}
+                            {% for subTeam in team.children %}
+                                <div class="header-b__drop-item {% if subTeam.children.count %}header-b__drop-item_hasdrop{% endif %}">
+                                    {% if subTeam.slug == 'tekushchiy-sostav-sbornoy' %}
+                                        {% set url = "/sostav" %}
+                                    {% elseif subTeam.slug == 'trenerskiy-menedzherskiy-i-rukovodyashchiy-sostav-komandy' %}
+                                        {% set url = "/sostav/" ~ subTeam.slug %}
+                                    {% else %}
+                                        {% set url = "/team/" ~ subTeam.slug %}
+                                    {% endif %}
+                                    <a href="{{ url }}" class="header-b__drop-links">{{ subTeam.name }}
+                                        {% if subTeam.children.count and subTeam.slug != 'trenerskiy-menedzherskiy-i-rukovodyashchiy-sostav-komandy' %}
+                                            <svg class="icon__down-arrow" width="256px" height="256px">
+                                                <use xlink:href="#down-arrow"></use>
+                                            </svg>
+                                        {% endif %}
+                                    </a>
+                                    {% if subTeam.children.count and subTeam.slug != 'trenerskiy-menedzherskiy-i-rukovodyashchiy-sostav-komandy' %}
+                                        <div class="header-b__second">
+                                            {% for secondDepth in subTeam.children %}
+                                            <div class="header-b__drop-item {% if secondDepth.children.count %}header-b__drop-item_hasdrop-two{% endif %}">
+                                                {% set secondUrl = '/team/' ~ subTeam.slug ~ '/' ~ secondDepth.slug %}
+                                                {% if secondDepth.slug == 'arkhiv' %}
+                                                    {% set secondUrl = '/archive' %}
+                                                {% elseif subTeam.slug == 'tekushchiy-sostav-sbornoy' %}
+                                                    {% set secondUrl = '/sostav/' ~ secondDepth.slug %}
+                                                {% endif %}
+                                                <a href="{{ secondUrl }}" class="header-b__drop-links">{{secondDepth.name}}
+                                                    {% if secondDepth.children.count %}
+                                                        <svg class="icon__down-arrow" width="256px" height="256px">
+                                                            <use xlink:href="#down-arrow"></use>
+                                                        </svg>
+                                                    {% endif %}
+                                                </a>
+                                                {% if secondDepth.children.count %}
+                                                    <div class="header-b__third">
+                                                        {% for thirdDepth in secondDepth.children %}
+                                                        <div class="header-b__drop-item {% if thirdDepth.children.count %}header-b__drop-item_hasdrop-three{% endif %}">
+                                                            <div class="header-b__drop-item">
+                                                                <a href="/archive/{{ thirdDepth.slug }}" class="header-b__drop-links">{{ thirdDepth.name }}
+                                                                    {% if thirdDepth.children.count %}
+                                                                        <svg class="icon__down-arrow" width="256px" height="256px">
+                                                                            <use xlink:href="#down-arrow"></use>
+                                                                        </svg>
+                                                                    {% endif %}
+                                                                </a>
+                                                                {% if thirdDepth.children.count %}
+                                                                    <div class="header-b__fourth">
+                                                                        {% for fourthDepth in thirdDepth.children %}
+                                                                        <div class="header-b__drop-item"><a href="/utverzhdennyy-spisok-atletov-na-stavki-minsporta-ot-100111" class="header-b__drop-links">{{ fourthDepth.name }}</a>
+                                                                        </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="header-b__item header-b__item_hasdrop">
+                    <a href="/regions" class="header-b__links">Регионы
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <div class="header-b__drop">
+                        <div class="header-b__drop-item header-b__drop-item_hasdrop">
+                            <a href="/regions" class="header-b__drop-links">Региональные федерации
+                                <svg class="icon__down-arrow" width="256px" height="256px">
+                                    <use xlink:href="#down-arrow"></use>
+                                </svg>
+                            </a>
+                            <div class="header-b__second">
+                                {% for region in categories if region.slug == 'regiony' %}
+                                    {% for subRegion in region.children %}
+                                    <div class="header-b__drop-item header-b__drop-item_hasdrop-two">
+                                        <a href="/regions/{{ subRegion.slug }}" class="header-b__drop-links">{{ subRegion.name }}
+                                            <svg class="icon__down-arrow" width="256px" height="256px">
+                                                <use xlink:href="#down-arrow"></use>
+                                            </svg>
+                                        </a>
+                                        <div class="header-b__third">
+                                            {% for ocrug in subRegion.children %}
+                                                <div class="header-b__drop-item"><a href="/regions/{{ subRegion.slug }}/{{ ocrug.slug }}" class="header-b__drop-links">{{ ocrug.name }}</a></div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="header-b__drop-item"><a href="/clubs-and-sections" class="header-b__drop-links">Клубы и секции</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-b__item header-b__item_hasdrop">
+                    <a href="/antidoping" class="header-b__links">Антидопинг
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                    </a>
+
+                    <div class="header-b__drop">
+                        {% for post in antidoping %}
+                            <div class="header-b__drop-item"><a href="{{ post.url }}" class="header-b__drop-links">{{ post.title }}</a></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="header-b__item"><a href="/slalom-channels" class="header-b__links">Каналы</a>
+                </div>
+                <div class="header-b__item"><a href="/news" class="header-b__links">Новости</a>
+                </div>
+            </div>
+
+            <div class="header-b__actions">
+                <a href="#" class="header-b__actions-links js--toggle-search">
+                    <svg class="icon__search" width="16px" height="16px">
+                        <use xlink:href="#search"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</header>

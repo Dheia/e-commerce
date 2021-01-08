@@ -1,0 +1,13 @@
+title = "Информация"
+url = "/info/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "sudejskaya-kollegiya"
+==
+
+{% set post = blogPost.post %}
+{% set infoPage = true %}
+{% partial 'sorevnovania/detail' info=infoPage %}

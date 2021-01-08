@@ -1,0 +1,16 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+        conditions:
+            - active <> true
+            - active = true
+    product:
+        label: 'lovata.reviewsshopaholic::lang.field.product'
+        modelClass: Lovata\Shopaholic\Models\Product
+        nameFrom: name
+        conditions: product_id in (:filtered)

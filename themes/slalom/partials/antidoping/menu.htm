@@ -1,0 +1,11 @@
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <div class="sidebar-b__menu">
+            {% for post in posts %}
+                <div class="sidebar-b__item">
+                    <a href="/antidoping/{{ post.slug }}" class="sidebar-b__links">{{ post.title }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

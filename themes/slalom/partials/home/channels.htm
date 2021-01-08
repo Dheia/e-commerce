@@ -1,0 +1,45 @@
+[viewBag]
+
+[blogPosts slalomChannels]
+pageNumber = "{{ :page }}"
+categoryFilter = "slalom-channels"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "news"
+postPage = "slalom-channels"
+==
+<div class="main-page-articles">
+    <div class="max-width">
+        <div class="top-b">
+            <h2>Слаломные каналы</h2>
+        </div>
+
+        <div class="main-page-articles__grid">
+            <div class="main-page-articles__column">
+                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1lFVTB2NC0YafB-62w-J1X8AFrZH8NPO9&z=3" width="100%" height="100%"></iframe>
+            </div>
+            <div class="main-page-articles__column">
+                <div class="news-b__list news-b__list_articles-main">
+                    {% set channels = slalomChannels.posts.take(4) %}
+                    {% for channel in channels %}
+                        <div class="news-b__item">
+                            <a href=" {{ channel.url }} " class="news-b__block">
+                                {% if channel.featured_images.count %}
+                                    {% for image in channel.featured_images|slice(0, 1) %}
+                                        <img loading="lazy" src="{{ image.path }}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                {% endif %}
+                                <span class="news-b__about">
+                                    <span class="news-b__title">{{ channel.title }}</span>
+                                </span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

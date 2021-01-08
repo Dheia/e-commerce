@@ -1,0 +1,180 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+
+    title:
+        label: rainlab.blog::lang.post.title
+        span: left
+        placeholder: rainlab.blog::lang.post.title_placeholder
+
+    slug:
+        label: rainlab.blog::lang.post.slug
+        span: right
+        placeholder: rainlab.blog::lang.post.slug_placeholder
+        preset:
+            field: title
+            type: slug
+
+    toolbar:
+        type: partial
+        path: post_toolbar
+        cssClass: collapse-visible
+
+secondaryTabs:
+    stretch: true
+    fields:
+        content:
+            tab: rainlab.blog::lang.post.tab_edit
+            type: RainLab\Blog\FormWidgets\BlogMarkdown
+            cssClass: field-slim blog-post-preview
+            stretch: true
+            mode: split
+
+        categories:
+            tab: rainlab.blog::lang.post.tab_categories
+            type: relation
+            commentAbove: rainlab.blog::lang.post.categories_comment
+            placeholder: rainlab.blog::lang.post.categories_placeholder
+
+        published:
+            tab: rainlab.blog::lang.post.tab_manage
+            label: rainlab.blog::lang.post.published
+            span: left
+            type: checkbox
+
+        user:
+            tab: rainlab.blog::lang.post.tab_manage
+            label: rainlab.blog::lang.post.published_by
+            span: right
+            type: relation
+            nameFrom: login
+            emptyOption: rainlab.blog::lang.post.current_user
+
+        published_at:
+            tab: rainlab.blog::lang.post.tab_manage
+            label: rainlab.blog::lang.post.published_on
+            span: left
+            cssClass: checkbox-align
+            type: datepicker
+            mode: datetime
+            trigger:
+                action: enable
+                field: published
+                condition: checked
+
+        excerpt:
+            tab: rainlab.blog::lang.post.tab_manage
+            label: rainlab.blog::lang.post.excerpt
+            type: textarea
+            size: small
+
+        featured_images:
+            tab: rainlab.blog::lang.post.tab_manage
+            label: rainlab.blog::lang.post.featured_images
+            type: fileupload
+            mode: image
+            imageWidth: 200
+            imageHeight: 200
+
+        gallery :
+            label : pollozen.simplegallery::lang.form.label
+            tab : pollozen.simplegallery::lang.form.tab
+            type : relation
+
+
+
+        featured_files:
+            tab: rainlab.blog::lang.post.tab_manage
+            label : hambern.featuredfiles::lang.plugin.name
+            type : fileupload
+            mode : file
+
+
+#        peoples:
+#            label: Люди
+#            prompt: 'Добавить человека'
+#            span: auto
+#            type: repeater
+#            tab: Люди
+#            form:
+#                #            form: {}
+#                fields:
+#                    news_id: dropdown
+
+        date_start:
+            label: 'Дата начала события'
+            mode: datetime
+            span: auto
+            type: datepicker
+            tab: События
+        date_end:
+            label: 'Дата окончания события'
+            mode: datetime
+            span: auto
+            type: datepicker
+            tab: События
+        type:
+            label: 'Тип события'
+            options:
+                region: Регион
+                russia: Россия
+                world: Мир
+                olympicgames: 'Олимпийские игры'
+                no_type: 'Не выбран'
+            showSearch: true
+            span: auto
+            type: dropdown
+            tab: События
+        participants:
+            label: Участники
+            size: small
+            span: auto
+            type: textarea
+            tab: События
+        place:
+            label: 'Место проведения'
+            size: small
+            span: auto
+            type: textarea
+            tab: События
+        year:
+            label: 'Год соревнований'
+            span: left
+            type: number
+            step: 1  # defaults to 'any'
+            min: 1960   # defaults to not present
+            tab: События
+        priority:
+            label: 'Приоритет для вывода статьи'
+            span: auto
+            type: number
+            step: 1
+            min: 1
+            tab: rainlab.blog::lang.post.tab_manage
+        featured_results:
+            label: Результаты
+            mode: file
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: full
+            type: fileupload
+            tab: События
+        is_main_banner:
+            label: 'Выводить на главной'
+            span: right
+            type: switch
+            tab: 'Баннер на главной'
+        banner_white:
+            label: 'Белые буквы (для темного фона)'
+            span: left
+            type: switch
+            tab: 'Баннер на главной'
+        is_region_main:
+            label: 'Это регион?'
+            span: full
+            type: switch
+            tab: rainlab.blog::lang.post.tab_manage

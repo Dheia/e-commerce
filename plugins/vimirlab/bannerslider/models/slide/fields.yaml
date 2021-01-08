@@ -1,0 +1,151 @@
+fields:
+
+    display:
+        label: 'vimirlab.bannerslider::lang.form.display'
+        span: storm
+        default: true
+        type: switch
+        cssClass: col-sm-6
+    
+    text_align:
+        label: 'vimirlab.bannerslider::lang.form.text_align'
+        cssClass: col-sm-6
+        span: storm
+        options:
+            left: 'vimirlab.bannerslider::lang.form.left'
+            center: 'vimirlab.bannerslider::lang.form.center'
+            right: 'vimirlab.bannerslider::lang.form.right'
+        type: balloon-selector
+        
+    image:
+        label: 'vimirlab.bannerslider::lang.form.image'
+        type: fileupload
+        mode: image
+        useCaption: 0
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: storm
+        cssClass: col-sm-6
+        imageWidth: '250'
+        
+    title:
+        label: 'vimirlab.bannerslider::lang.form.title'
+        cssClass: col-sm-6
+        span: storm
+        type: text 
+        attributes:
+            maxlength: '80'
+    
+    title_size:
+        label: 'vimirlab.bannerslider::lang.form.title_size'
+        cssClass: col-sm-3
+        span: storm
+        type: number
+        min: 10
+        max: 100
+        default: 20
+    
+    title_color:
+        label: 'vimirlab.bannerslider::lang.form.title_color'
+        cssClass: col-sm-3
+        span: storm
+        type: colorpicker
+        availableColors: ['#FFFFFF', '#000000']
+        default: '#FFFFFF'
+    
+    subtitle:
+        label: 'vimirlab.bannerslider::lang.form.subtitle'
+        cssClass: col-sm-6
+        span: storm
+        type: text
+        attributes:
+            maxlength: '150'
+    
+    subtitle_size:
+        label: 'vimirlab.bannerslider::lang.form.subtitle_size'
+        cssClass: col-sm-3
+        span: storm
+        type: number
+        min: 5
+        max: 100
+        default: 10
+    
+    subtitle_color:
+        label: 'vimirlab.bannerslider::lang.form.subtitle_color'
+        cssClass: col-sm-3
+        span: storm
+        type: colorpicker
+        availableColors: ['#FFFFFF', '#000000']
+        default: '#FFFFFF'
+    
+    extra_text:
+        label: 'vimirlab.bannerslider::lang.form.extra_text'
+        cssClass: col-sm-9
+        span: storm
+        size: small
+        type: textarea
+        attributes:
+            maxlength: '300'
+    
+    extra_text_color:
+        label: 'vimirlab.bannerslider::lang.form.extra_text_color'
+        cssClass: col-sm-3
+        span: storm
+        type: colorpicker
+        availableColors: ['#FFFFFF', '#000000']
+        default: '#FFFFFF'
+    
+    button_1_active:
+        label: 'vimirlab.bannerslider::lang.form.button_1_active'
+        span: storm
+        cssClass: col-sm-12
+        type: switch        
+    
+    button_1_text:
+        label: 'vimirlab.bannerslider::lang.form.button_text'
+        span: storm
+        cssClass: col-sm-6
+        type: text
+        trigger:
+            action: show
+            field: button_1_active
+            condition: checked
+    
+    button_1_link:
+        label: 'vimirlab.bannerslider::lang.form.button_link'
+        span: storm
+        cssClass: col-sm-6
+        type: text
+        trigger:
+            action: show
+            field: button_1_active
+            condition: checked
+
+    button_2_active:
+        label: 'vimirlab.bannerslider::lang.form.button_2_active'
+        span: storm
+        cssClass: col-sm-12
+        type: switch
+    
+    button_2_text:
+        label: 'vimirlab.bannerslider::lang.form.button_text'
+        span: storm
+        cssClass: col-sm-6
+        type: text
+        trigger:
+            action: show
+            field: button_2_active
+            condition: checked
+    
+    button_2_link:
+        label: 'vimirlab.bannerslider::lang.form.button_link'
+        span: storm
+        cssClass: col-sm-6
+        type: text
+        trigger:
+            action: show
+            field: button_2_active
+            condition: checked
+    
+    

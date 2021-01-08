@@ -1,0 +1,130 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>Статьи</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="main.html" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item"><a href="main.html" class="sub-b__links">Информация</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">Статьи</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b grid-b_reverse">
+            <div class="grid-b__sidebar">
+                <div class="sidebar-b">
+                    <div class="sidebar-b__category">
+                        <div class="block-b__title block-b__title_small block-b__title_border">Категории</div>
+                        <div class="sidebar-b__category-list">
+                            <div class="sidebar-b__category-item">
+                                <a href="#" class="sidebar-b__category-links">Бизнес-советы<span>2</span></a>
+                            </div>
+                            <div class="sidebar-b__category-item">
+                                <a href="#" class="sidebar-b__category-links">Дизайн<span>2</span></a>
+                            </div>
+                            <div class="sidebar-b__category-item">
+                                <a href="#" class="sidebar-b__category-links">Инженерные системы<span>1</span></a>
+                            </div>
+                            <div class="sidebar-b__category-item">
+                                <a href="#" class="sidebar-b__category-links">Металлообработка<span>1</span></a>
+                            </div>
+                            <div class="sidebar-b__category-item">
+                                <a href="#" class="sidebar-b__category-links">Повышение продаж<span>1</span></a>
+                            </div>
+                            <div class="sidebar-b__category-item">
+                                <a href="#" class="sidebar-b__category-links">Управление проектами<span>2</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block-b">
+                    <div class="block-b__title block-b__title_small">Облако тегов</div>
+                    <div class="block-b__tags">
+                        <a href="#" class="block-b__tag">1С-Битрикс</a>
+                        <a href="#" class="block-b__tag">jivo</a>
+                        <a href="#" class="block-b__tag">арматура</a>
+                        <a href="#" class="block-b__tag">видео</a>
+                        <a href="#" class="block-b__tag">дизайн</a>
+                        <a href="#" class="block-b__tag">интерьер магазин</a>
+                        <a href="#" class="block-b__tag">Мотивация</a>
+                        <a href="#" class="block-b__tag">онлайн консультант</a>
+                        <a href="#" class="block-b__tag">покупка</a>
+                        <a href="#" class="block-b__tag">Рассылки</a>
+                        <a href="#" class="block-b__tag">строительство</a>
+                        <a href="#" class="block-b__tag">Управление</a>
+                    </div>
+                </div>
+
+                <div class="block-b">
+                    <a href="#">
+                        <img src="static/img/content/banner.jpg" alt="">
+                    </a>
+                </div>
+                <div class="block-b">
+                    <div class="fiches-b">
+                        <a href="#" class="fiches-b__item">
+                            <img src="static/img/content/optim_price.png" alt="">
+                            <strong>Оптимальный выбор</strong>
+                            Низкие цены
+                            <br>и широкий ассортимент
+                        </a>
+                        <a href="#" class="fiches-b__item">
+                            <img src="static/img/content/optim_price.png" alt="">
+                            <strong>Всегда рядом</strong>
+                            Широкая сеть
+                            <br>представительств
+                        </a>
+                        <div class="fiches-b__note"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-b__content">
+                {% for post in posts %}
+                    <div class="news-b__list news-b__list_grid">
+                        <div class="news-b__item news-b__item_double">
+                            <a href="{{ post.url }}" class="news-b__block">
+                                {% for image in post.featured_images %}
+                                    <img loading="lazy" src="{{ image.path }}" alt="">
+                                {% endfor %}
+                                <span class="news-b__about">
+                                    <span class="news-b__title">{{ post.title }}</span>
+                                    <span class="news-b__text">{{ post.excerpt }}</span>
+                                    <span class="news-b__date">{{ post.published_at | date('d.m.Y') }}</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="paging-b">
+                    <a href="#" class="paging-b__more">
+                        <svg class="icon__more" width="15px" height="15px">
+                            <use xlink:href="#more"></use>
+                        </svg>
+                        Загрузить еще</a>
+
+                    <div class="paging-b__list">
+                        <div class="paging-b__item"><a href="#" class="paging-b__links paging-b__links_arrow paging-b__links_hide">‹</a>
+                        </div>
+                        <div class="paging-b__item"><span class="paging-b__links paging-b__links_active">1</span>
+                        </div>
+                        <div class="paging-b__item"><a href="#" class="paging-b__links">2</a>
+                        </div>
+                        <div class="paging-b__item"><a href="#" class="paging-b__links paging-b__links_arrow">›</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

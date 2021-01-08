@@ -1,0 +1,6 @@
+<div class="form-group section-field span-full">
+    <div class="field-section">
+        <h4><?= e(trans('xeor.yandexservicesauth::lang.settings.section_title')) ?></h4>
+    </div>
+</div>
+<p>To authorize your site you should register Yandex application at <a href="https://oauth.yandex.ru/client/new" target="_blank">https://oauth.yandex.ru/client/new</a>. Then enter your application Client ID and Client Secret in the appropriate fields on this page. The list of your Yandex applications is located <a href="https://oauth.yandex.ru/client/my" target="_blank">here</a>.</p><p>Your Yandex application Callback URI should be set to: <?php echo 'http' . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 's' : '') . '://' . $_SERVER["SERVER_NAME"] . '/yandex_services_auth/oauth'; ?></p>

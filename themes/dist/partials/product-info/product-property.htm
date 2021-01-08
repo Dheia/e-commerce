@@ -1,0 +1,36 @@
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem #}
+{# @var obOffer \Lovata\Shopaholic\Classes\Item\OfferItem #}
+{# @var obBrand \Lovata\Shopaholic\Classes\Item\BrandItem #}
+{# @var obProperty \Lovata\PropertiesShopaholic\Classes\Item\PropertyItem #}
+
+{% set obOffer = obProduct.offer.active().first() %}
+{% set obBrand = obProduct.brand %}
+{% set obPropertyList = obProduct.property.sort() %}
+{% set obOfferList = obProduct.offer.first() %}
+
+{% if obPropertyList.isNotEmpty() or obBrand.isNotEmpty() %}
+<div class="uk-width-1-1 uk-width-3-4@m">
+    <h4 class="uk-h4 tovar-card__info">Характеристики</h4>
+    <ul>
+        {% for obProperty in obPropertyList if obProperty.property_value.notEmpty %}
+            <li>
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand" uk-leader>
+                        {{ obProperty.name }} {% if obProperty.measure.notEmpty %} {{ obProperty.measure.name }} {% endif %}
+                    </div>
+                    <div>{{ obProperty.property_value.getValueString() }}</div>
+                </div>
+            </li>
+        {% endfor %}
+        {% if obBrand.isNotEmpty %}
+            <li>
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand" uk-leader>Производитель:</div>
+                    <div>{{ obBrand.name }}</div>
+                </div>
+            </li>
+        {% endif %}
+        <li>
+    </ul>
+</div>
+{% endif %}

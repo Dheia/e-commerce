@@ -1,0 +1,85 @@
+title = "Блог категория"
+url = "/blog/:slug?"
+layout = "default"
+is_hidden = 0
+child_of = "blog-category"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :slug }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog-category"
+postPage = "blog-post"
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "blog-category"
+==
+use Wapp\Ascopy\Components\Breadcrumbs;
+
+function onStart(){
+    #get breadcrumbs from url
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+    #get breadcrumbs from url
+    $arrPosts = [];
+    $categoryId = Db::table('rainlab_blog_categories')->where('slug', $this->param('slug'))->value('id');
+    $idList = Db::table('rainlab_blog_posts_categories')->where('category_id', $categoryId)->lists('post_id');
+    #get list of years for current category
+    $years = [];
+    foreach($idList as $key => $idPost){
+        $arrYears = Db::table('rainlab_blog_posts')->where('id',$idPost)->get(['year']);
+        foreach($arrYears as $key => $year){
+            if(!in_array($year->year,$years)){
+                array_push($years,$year->year);
+            }
+        }
+    }
+    rsort($years);
+    $this['years'] = $years;
+    #get list of years for current category
+    $this['filtered'] = 0;
+    $this['noMatch'] = 0;
+    #filter by existing years
+    if($_GET){
+        foreach($idList as $key => $idPost){
+            $posts = \Rainlab\Blog\Models\Post::where('id',$idPost)->where('year',$_GET['year'])->first();
+            if($posts){
+                $arrPosts[] = $posts;
+            }
+        }
+        if(count($arrPosts)){
+            $this['filerPosts'] = $arrPosts;
+            $this['filtered'] = 1;
+        }else{
+            $this['noMatch'] = 1;
+        }
+    }
+    $this['pageUrl'] = '/blog/'.$this->param('slug');
+    #filter by existing years
+}
+==
+{% if filtered %}
+    {% set posts = filerPosts %}
+{% else %}
+    {% set posts = blogPosts.posts %}
+{% endif %}
+{% set pageTitle = blogPosts.category.name %}
+{% for category in blogCategories.categories %}
+    {% if category.slug == 'blog' %}
+        {% set categories = category.children %}
+    {% endif %}
+{% endfor %}
+
+{% partial 'blog/posts' posts = posts pageTitle = pageTitle categories = categories %}

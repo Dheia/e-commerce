@@ -1,0 +1,16 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: wapp.userconnect::lang.subscriber.fields.id.label
+    email:
+        label: wapp.userconnect::lang.subscriber.fields.email.label
+        searchable: true
+    created_at:
+        label: wapp.userconnect::lang.subscriber.fields.created_at.label
+        type: datetime
+    updated_at:
+        label: wapp.userconnect::lang.subscriber.fields.updated_at.label
+        type: datetime

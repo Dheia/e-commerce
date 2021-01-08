@@ -1,0 +1,63 @@
+items:
+    -
+        title: 'О нас'
+        nesting: 0
+        type: static-page
+        url: null
+        code: ''
+        reference: about-about-us
+        cmsPage: null
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Статьи
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: news
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Прайс лист'
+        nesting: 0
+        type: static-page
+        url: null
+        code: ''
+        reference: about-price-list
+        cmsPage: null
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Отзывы
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: feedbacks
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Контакты
+        type: cms-page
+        code: ''
+        reference: contacts
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: Header-second

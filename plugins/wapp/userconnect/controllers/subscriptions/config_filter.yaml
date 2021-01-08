@@ -1,0 +1,25 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    is_verified:
+        label: wapp.userconnect::lang.subscribers.filter.verified
+        type: checkbox
+        conditions: is_verified = true
+
+    category:
+        label: wapp.userconnect::lang.category.label
+        modelClass: Wapp\UserConnect\Models\Category
+        conditions: category_id in (:filtered)
+        nameFrom: name
+
+    created_at:
+        label: wapp.userconnect::lang.subscribers.filter.subscribed_between
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'
+
+    verified_at:
+        label: wapp.userconnect::lang.subscribers.filter.verified_between
+        type: daterange
+        conditions: verified_at >= ':after' AND verified_at <= ':before'

@@ -1,0 +1,24 @@
+title = "Новости"
+url = "/news"
+layout = "default"
+is_hidden = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "news"
+postsPerPage = 6
+noPostsMessage = "Записей не найдено"
+sortOrder = "published_at desc"
+categoryPage = "news-detail"
+postPage = "news-detail"
+
+[blogCategories]
+slug = "news"
+displayEmpty = 0
+categoryPage = 404
+==
+{% set posts = blogPosts.posts %}
+{% set categories = blogCategory.categories %}
+
+
+{% partial 'news/news' %}

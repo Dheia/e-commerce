@@ -1,0 +1,94 @@
+[viewBag]
+
+[blogCategories]
+slug = "regiony"
+displayEmpty = 1
+categoryPage = "news-category"
+==
+function onStart(){
+    $regions = Db::table('rainlab_blog_categories')->where('slug', 'regiony')->first();
+    $subcategories = \Rainlab\Blog\Models\Category::where('parent_id',$regions->id)->get();
+    foreach($subcategories as $key => $category){
+        $secondLevelSubCategories = \Rainlab\Blog\Models\Category::where('parent_id',$category->id)->get();
+        foreach($secondLevelSubCategories as $key => $subCategory){
+            $allPosts = \Rainlab\Blog\Models\Category::with('posts')->where('id',$subCategory->id)->first();
+            foreach($allPosts->posts as $singlePost){
+                if($singlePost->is_region_main){
+                    $posts[$category->slug][$subCategory->slug][] = $singlePost;
+                }
+            }
+        }
+    }
+    if(isset($posts)){
+        $this['postsWithMain'] = $posts;
+    }
+}
+==
+
+{% set categories = blogCategories.categories %}
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <!--<div class="sidebar-b__menu">
+            {% for mainNewsCategory in categories if mainNewsCategory.slug == 'regiony' %}
+                {% for subCategory in mainNewsCategory.children %}
+                    <div class="sidebar-b__item">
+                        <a href="/regions/{{ subCategory.slug }}" class="sidebar-b__links {% if currentOkrug == subCategory.slug %}sidebar-b__links_active{% endif %}">{{ subCategory.name }}
+                            {% if subCategory.children.count %}
+                                <svg class="icon__down-arrow" width="256px" height="256px">
+                                    <use xlink:href="#down-arrow"></use>
+                                </svg>
+                            {% endif %}
+                        </a>
+                        {% if currentOkrug == subCategory.slug and subCategory.children.count %}
+                            <div class="sidebar-b__drop">
+                                {% if postsWithMain %}
+                                    {% for subChildren in subCategory.children %}
+                                        {% for key,postMain in postsWithMain if key == currentOkrug %}
+                                            {% for secondKey,posts in postMain %}
+                                                {% if subChildren.slug == secondKey %}
+                                                    {% for contact in posts %}
+                                                        <a href="/regions/{{ subCategory.slug }}/{{subChildren.slug}}/{{ contact.slug }}" class="sidebar-b__drop-links">{{ contact.title }}</a>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% for subChildren in subCategory.children %}
+                                    <a href="/regions/{{ subCategory.slug }}/{{subChildren.slug}}" class="sidebar-b__drop-links">old-link|{{ subChildren.name }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>-->
+        <div class="sidebar-b__menu">
+            {% for mainNewsCategory in categories if mainNewsCategory.slug == 'regiony' %}
+                {% for subCategory in mainNewsCategory.children %}
+                <div class="sidebar-b__item">
+                    <a href="/regions/{{ subCategory.slug }}" class="sidebar-b__links {% if currentOkrug == subCategory.slug %}sidebar-b__links_active{% endif %}">{{ subCategory.name }}
+                        {% if subCategory.children.count %}
+                        <svg class="icon__down-arrow" width="256px" height="256px">
+                            <use xlink:href="#down-arrow"></use>
+                        </svg>
+                        {% endif %}
+                    </a>
+                    {% if currentOkrug == subCategory.slug and subCategory.children.count %}
+                    <div class="sidebar-b__drop">
+                        {% for subChildren in subCategory.children %}
+                            {% if subChildren.posts.count != 1 %}
+                                <a href="/regions/{{ subCategory.slug }}/{{subChildren.slug}}" class="sidebar-b__drop-links">{{ subChildren.name }}</a>
+                            {% else %}
+
+                                <a href="/regions/{{ subCategory.slug }}/{{subChildren.slug}}/{{ subChildren.posts.first.slug }}" class="sidebar-b__drop-links">{{ subChildren.name }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

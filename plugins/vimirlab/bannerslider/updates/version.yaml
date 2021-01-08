@@ -1,0 +1,8 @@
+1.0.0:
+    - 'Initialize Banner Slider Plugin'
+    - 'Create slider table'
+    - create_bannerslider_sliders.php
+    
+1.0.1:
+    - 'Create slide table'
+    - create_bannerslider_slides.php

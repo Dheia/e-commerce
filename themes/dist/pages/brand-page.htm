@@ -1,0 +1,210 @@
+<!--title = "Бренд"-->
+<!--url = "/brands/:slug"-->
+<!--layout = "default"-->
+<!--is_hidden = 0-->
+<!--child_of = "home"-->
+<!--hide_crumb = 0-->
+<!--remove_crumb_trail = 0-->
+<!--crumb_disabled = 0-->
+
+<!--[BrandData]-->
+<!--[BrandList]-->
+
+<!--[BrandPage]-->
+<!--slug = "{{ :slug }}"-->
+<!--slug_required = 1-->
+<!--smart_url_check = 0-->
+<!--skip_error = 0-->
+
+<!--[CategoryList]-->
+<!--==-->
+<!--{% set obBrandList = BrandList.make().sort().active() %}-->
+<!--{% set obBrand = BrandPage.get() %}-->
+
+<!--{% if obBrandList.isNotEmpty() and obBrand.name is not empty %}-->
+    <!--<section class="uk-section">-->
+        <!--<div class="uk-container">-->
+            <!--<h1 class="uk-h1">Продукция бренда: {{ obBrand.name }}</h1>-->
+
+            <!--{% partial 'site/breadcrumbs' %}-->
+
+            <!--<div class="uk-grid-collapse catalog" uk-grid>-->
+                <!--<div class="uk-width-1-1 catalog__item uk-card-body uk-card uk-width-1-2@s uk-width-1-3@m">-->
+                    <!--<div class="uk-grid-small" uk-grid>-->
+                        <!--<div class="uk-width-1-3"><img data-src="img/card-img.jpg" uk-img>-->
+                        <!--</div>-->
+                        <!--<div class="uk-width-2-3"><a class="catalog__item-title" href="#">Рандомная категория</a>-->
+                            <!--{% if obCategory.children.isNotEmpty() %}-->
+                            <!--<ul class="catalog__list">-->
+                                <!--<li>Подкатегория №0-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №1-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №2-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №3-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №4-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №5-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №6-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №7-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №8-->
+                                <!--</li>-->
+                                <!--<li class="catalog__toggler list-toggler"><span><span-->
+                                            <!--class="catalog__toggler-sing"></span>5 категорий</span></li>-->
+                            <!--</ul>-->
+                            <!--{% endif %}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-width-1-1 catalog__item uk-card-body uk-card uk-width-1-2@s uk-width-1-3@m">-->
+                    <!--<div class="uk-grid-small" uk-grid>-->
+                        <!--<div class="uk-width-1-3"><img data-src="img/card-img.jpg" uk-img>-->
+                        <!--</div>-->
+                        <!--<div class="uk-width-2-3"><a class="catalog__item-title" href="#">Рандомная категория</a>-->
+                            <!--<ul class="catalog__list">-->
+                                <!--<li>Подкатегория №0-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №1-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №2-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №3-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №4-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №5-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №6-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №7-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №8-->
+                                <!--</li>-->
+                                <!--<li class="catalog__toggler list-toggler"><span><span-->
+                                            <!--class="catalog__toggler-sing"></span>5 категорий</span></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-width-1-1 catalog__item uk-card-body uk-card uk-width-1-2@s uk-width-1-3@m">-->
+                    <!--<div class="uk-grid-small" uk-grid>-->
+                        <!--<div class="uk-width-1-3"><img data-src="img/card-img.jpg" uk-img>-->
+                        <!--</div>-->
+                        <!--<div class="uk-width-2-3"><a class="catalog__item-title" href="#">Рандомная категория</a>-->
+                            <!--<ul class="catalog__list">-->
+                                <!--<li>Подкатегория №0-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №1-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №2-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №3-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №4-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №5-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №6-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №7-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №8-->
+                                <!--</li>-->
+                                <!--<li class="catalog__toggler list-toggler"><span><span-->
+                                            <!--class="catalog__toggler-sing"></span>5 категорий</span></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-width-1-1 catalog__item uk-card-body uk-card uk-width-1-2@s uk-width-1-3@m">-->
+                    <!--<div class="uk-grid-small" uk-grid>-->
+                        <!--<div class="uk-width-1-3"><img data-src="img/card-img.jpg" uk-img>-->
+                        <!--</div>-->
+                        <!--<div class="uk-width-2-3"><a class="catalog__item-title" href="#">Рандомная категория</a>-->
+                            <!--<ul class="catalog__list">-->
+                                <!--<li>Подкатегория №0-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №1-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №2-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №3-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №4-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №5-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №6-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №7-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №8-->
+                                <!--</li>-->
+                                <!--<li class="catalog__toggler list-toggler"><span><span-->
+                                            <!--class="catalog__toggler-sing"></span>5 категорий</span></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="uk-width-1-1 catalog__item uk-card-body uk-card uk-width-1-2@s uk-width-1-3@m">-->
+                    <!--<div class="uk-grid-small" uk-grid>-->
+                        <!--<div class="uk-width-1-3"><img data-src="img/card-img.jpg" uk-img>-->
+                        <!--</div>-->
+                        <!--<div class="uk-width-2-3"><a class="catalog__item-title" href="#">Рандомная категория</a>-->
+                            <!--<ul class="catalog__list">-->
+                                <!--<li>Подкатегория №0-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №1-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №2-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №3-->
+                                <!--</li>-->
+                                <!--<li>Подкатегория №4-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №5-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №6-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №7-->
+                                <!--</li>-->
+                                <!--<li class="hidden">Подкатегория №8-->
+                                <!--</li>-->
+                                <!--<li class="catalog__toggler list-toggler"><span><span-->
+                                            <!--class="catalog__toggler-sing"></span>5 категорий</span></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="uk-margin-medium-top">-->
+                <!--<img class="uk-align-left@s uk-margin-remove"-->
+                     <!--data-src="-->
+                <!--{% if obBrand.preview_image.path.isNotEmpty %}-->
+                    <!--{{ obBrand.preview_image.path }}-->
+                 <!--{% else %} {{ 'assets/img/navigator.png'|theme }} {% endif %}" uk-img>-->
+                <!--{% if obBrand.description is not empty %}-->
+                    <!--{{ obBrand.description|raw }}-->
+                <!--{% else %}-->
+                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut facere, fugiat iusto nesciunt nisi-->
+                        <!--perferendis sit sunt ut? Aliquam quia, similique. Adipisci alias aut autem harum veritatis?-->
+                        <!--Beatae-->
+                        <!--in inventore maiores natus provident, quod reprehenderit sequi suscipit velit? Atque-->
+                        <!--exercitationem-->
+                        <!--explicabo inventore nam praesentium reiciendis repellat, vel. Adipisci cumque distinctio, enim-->
+                        <!--illum, in minima nesciunt numquam quod soluta vitae voluptatem.</p>-->
+                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem debitis ea iste-->
+                        <!--perspiciatis quaerat velit! Autem dolorum eum mollitia praesentium ut? Natus, nemo omnis.</p>-->
+                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem debitis ea iste-->
+                        <!--perspiciatis quaerat velit! Autem dolorum eum mollitia praesentium ut? Natus, nemo omnis.</p>-->
+                    <!--<p>Сайт:&#8194;<a class="uk-link" href="#">www.sait.ru</a></p>-->
+                <!--{% endif %}-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
+<!--{% endif %}-->

@@ -1,0 +1,30 @@
+title = "Состав детальная"
+url = "/sostav/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "sostav-detalnaya"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+postsPerPage = 5
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "sostav-detalnaya"
+postPage = "sostav-detalnaya"
+==
+{% set posts = blogPosts.posts %}
+{% set post = blogPost.post %}
+
+{% if this.param['slug'] %}
+    {% partial 'sostav/detail' post=post category = blogPosts.category currentCategory = 'tekushchiy-sostav-sbornoy' %}
+{% else %}
+    {% if this.param['category'] == 'trenerskiy-menedzherskiy-i-rukovodyashchiy-sostav-komandy' %}
+        {% partial 'sostav/trainers' posts=posts category = blogPosts.category.name currentCategory = 'tekushchiy-sostav-sbornoy' %}
+    {% else %}
+        {% partial 'sostav/peoples' posts=posts category = blogPosts.category.name currentCategory = 'tekushchiy-sostav-sbornoy' %}
+    {% endif %}
+{% endif %}

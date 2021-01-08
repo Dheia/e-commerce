@@ -1,0 +1,52 @@
+<?php return [
+    'plugin' => [
+        'name' => 'Basecode',
+        'description' => ''
+    ],
+    'menu' => [
+        'settings' => 'Site settings',
+    ],
+    'component' => [
+        'site_settings_title' => 'Site settings',
+        'site_settings_description' => '',
+        'catalog_title' => 'Catalog',
+        'catalog_description' => '',
+    ],
+    'tab' => [
+        'news_list' => 'News',
+        'popular_categories' => 'Popular categories',
+        'popular_products' => 'Popular products',
+        'catalogs_home_page' => 'Catalogs in home page',
+        'contact_page' => 'Contacts page',
+        'home_page' => 'Home page',
+    ],
+    'field' => [
+        'popular_category_list' => 'Popular categories',
+        'popular_product_list' => 'Popular products',
+        'news_list' => 'Block news',
+        'banners' => 'Banners',
+        'catalogs_list' => 'Catalog',
+        'contact_phone' => 'Phone',
+        'contact_second_phone' => 'Second phone',
+        'contact_address' => 'Address',
+        'contact_mail' => 'Mail',
+        'contact_work_time' => 'Work time',
+        'contact_telegram' => 'Telegram',
+        'contact_facebook' => 'Facebook',
+        'contact_facebook_active' => 'Show Facebook',
+        'contact_instagram' => 'Instagram',
+        'contact_instagram_active' => 'Show Instagram',
+        'youtube' => 'Youtube',
+        'twitter' => 'Twitter',
+        'map_iframe' => 'Map iframe',
+        'store_image' => 'Store image',
+        'contact_vk' => 'Vk',
+        'contact_vk_active' => 'Show Vk',
+        'icon' => 'icon (svg)',
+        'logo_header' => 'Logo in header',
+        'logo_footer' => 'Logo in footer',
+    ],
+    'permissions' => [
+        'settings' => 'Site settings',
+    ],
+];

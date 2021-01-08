@@ -1,0 +1,109 @@
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+==
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ blogPosts.category.name }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+    {% if currentNoCategory %}
+        {% set posts = postsNoCategory %}
+    {% endif %}
+    <div class="max-width">
+        <div class="grid-b grid-b_reverse">
+            {% partial 'news/menu' %}
+            <div class="grid-b__content">
+                <div class="news-b__list news-b__list_grid">
+                {% set count = 0 %}
+                {% for post in posts %}
+                    {% if currentNoCategory %}
+                        {% set url = '/news/no-category/'~post.slug %}
+                    {% else %}
+                        {% set url = '/news/'~post.categories[0].slug~'/'~post.slug %}
+                    {% endif %}
+                    {% if count == 0 or count == 4 %}
+                    <div class="news-b__item news-b__item_double">
+                        <a href="{{ url }}" class="news-b__block">
+                            {% if post.featured_images.count %}
+                                {% for image in post.featured_images|slice(0, 1) %}
+                                    <img loading="lazy" src="{{ image.path }}" alt="">
+                                {% endfor %}
+                            {% else %}
+                                    <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                            {% endif %}
+                            <span class="news-b__about">
+                                    <span class="news-b__title">{{ post.title }}</span>
+                                    <span class="news-b__text">{{ post.excerpt }}</span>
+                                    <span class="news-b__date">{{ post.published_at | date('d.m.Y') }}</span>
+                                </span>
+                        </a>
+                    </div>
+                    {% set count = count+1 %}
+                    {% else %}
+                        <div class="news-b__item">
+                            <a href="{{ url }}" class="news-b__block">
+                                {% if post.featured_images.count %}
+                                    {% for image in post.featured_images|slice(0, 1) %}
+                                        <img loading="lazy" src="{{ image.path }}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                {% endif %}
+                                <span class="news-b__about">
+                                    <span class="news-b__title">{{ post.title }}</span>
+                                    <span class="news-b__date">{{ post.published_at | date('d.m.Y') }}</span>
+                                </span>
+                            </a>
+                        </div>
+                        {% set count = count+1 %}
+                    {% endif %}
+                    {% if count == 6 %}
+                        {% set count = 0 %}
+                    {% endif %}
+                {% endfor %}
+                </div>
+
+                <!--pagination-->
+                {% if posts.lastPage > 1 %}
+                <div class="paging-b">
+                    <div class="paging-b__list">
+                        {% if posts.currentPage > 1 %}
+                            <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ posts.currentPage-1 }}" class="paging-b__links paging-b__links_arrow">‹</a></div>
+                        {% endif %}
+                        {% if posts.currentPage > 2 %}
+                            <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page=1" class="paging-b__links">1</a></div>
+                            {% if posts.currentPage > 3 %}
+                                <div class="paging-b__item"><a href="" class="paging-b__links">...</a></div>
+                            {% endif %}
+                        {% endif %}
+                        {% for page in 1..posts.lastPage %}
+                            {% if page == posts.currentPage-1 or page == posts.currentPage+1 %}
+                                <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ page }}" class="paging-b__links">{{ page }}</a></div>
+                            {% elseif posts.currentPage == page %}
+                                <div class="paging-b__item"><span class="paging-b__links paging-b__links_active">{{ page }}</span></div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if posts.currentPage < posts.lastPage-1 %}
+                            {% if posts.currentPage < posts.lastPage-2 %}
+                                <div class="paging-b__item"><a href="" class="paging-b__links">...</a></div>
+                            {% endif %}
+                            <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ posts.lastPage }}" class="paging-b__links">{{ posts.lastPage }}</a></div>
+                        {% endif %}
+                        {% if posts.lastPage > posts.currentPage %}
+                            <div class="paging-b__item"><a href="{{ this.page.currentUrl}}?page={{ posts.currentPage+1 }}" class="paging-b__links paging-b__links_arrow">›</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <!--pagination-->
+            </div>
+        </div>
+    </div>
+</section>

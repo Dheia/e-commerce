@@ -1,0 +1,92 @@
+{% set obCartPositionList = Cart.get() %}
+
+<div class="uk-margin-medium-top">
+    <h3 class="uk-h3">Популярные товары</h3>
+    <div class="uk-grid-collapse uk-child-width-1-2 uk-child-width-1-4@l uk-child-width-1-3@s" uk-grid>
+
+        {% for obProduct in arProductList %}
+            {% set obOffer = obProduct.offer.active().first() %}
+
+            {#  get labels #}
+            {# check for the availability of goods from the offer #}
+            {#            {% set obOffer = obProduct.offer.first() %}#}
+            {#            {% if obOffer.quantity > 0 %}#}
+            {#                <div>В наличии</div>#}
+            {#            {% else %}#}
+            {#                <div>Под заказ 1-2 дня</div>#}
+            {#            {% endif %}#}
+
+
+            {# get property for product#}
+            {#            {% set obPropertyList = obProduct.property %}#}
+            {#            {% set obGroupList = obPropertyList.getGroupList() %}#}
+            {#            {% set obMainGroup = obGroupList.getByCode('main') %}#}
+
+            {#            {% set obMainPropertyList = obPropertyList.group(obMainGroup.id) %}#}
+            {#            {% if obMainPropertyList.isNotEmpty() %}#}
+            {#            {% for obProperty in obMainPropertyList %}#}
+            {#                {% if obProperty.hasValue() %}#}
+            {#                {{ obProperty.property_value.getValueString() }}: {{ obProperty.measure.name }}#}
+            {#                {% endif %}#}
+            {#            {% endfor %}#}
+            {#            {% endif %}#}
+
+        {% set obOffer = obProduct.offer.active().first() %}
+        <div class="_shopaholic-product-wrapper" data-product-id="{{ obProduct.id }}">
+            <input type="hidden" name="offer_id" value="{{ obOffer.id }}">
+            <div class="uk-flex uk-flex-column uk-card-body uk-card-hover uk-border uk-card-small uk-card card">
+                <a class="card__img" href="{{obProduct.getPageUrl('catalog')}}">
+                    {% partial 'product-label/product-label' obProduct = obProduct %}
+                    {% if obProduct.preview_image.getPath() is not empty %}
+                        <img data-src="{{ obProduct.preview_image.getPath() }}" uk-img>
+                    {% else %}
+                        <img data-src="{{ 'assets/img/342341.jpg'|theme }}" uk-img>
+                    {% endif %}
+                </a>
+                <a class="uk-h4 uk-flex uk-margin-remove-top"
+                       href="{{obProduct.getPageUrl('catalog')}}">{{ obProduct.name }}
+                </a>
+                <div class="uk-article-meta uk-margin-auto-top uk-margin-bottom">{{ obProduct.code }}</div>
+                <div class="uk-flex uk-flex-middle">
+                    <div class="uk-width-expand uk-flex uk-flex-column uk-flex-center">
+                        {% if obOffer.isNotEmpty() %}
+                            {% if obOffer.old_price > 0 %}
+                            <div class="card__price old">{{ obOffer.old_price }}
+                                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                            {% endif %}
+
+                            {# get  discount value and type  #}
+
+                            {# {% if obOffer.discount_price_value > 0 %}#}
+                            {#     <div>{{ obOffer.discount_value }}#}
+                            {#         {% if obOffer.discount_type == 'percent' %}#}
+                            {#             %#}
+                            {#         {% endif %}#}
+                            {#     </div>#}
+                            {# {% endif %}#}
+                            <div class="card__price">{{ obOffer.price }}
+                                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                        {% else %}
+                            <div class="card__price old">setOffer
+                                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                            <div class="card__price">setOffer
+                                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="uk-width-auto">
+                        <button class="card__icon _shopaholic-cart-add
+                                         {% if obCartPositionList.hasProduct(obProduct.id) %} checked {% endif %}">
+                            В корзине
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>

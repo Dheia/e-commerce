@@ -1,0 +1,13 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    expire_at:
+        label: 'lovata.subscriptionsshopaholic::lang.field.expire_at'
+        type: daterange
+        conditions: expire_at >= ':after' AND expire_at <= ':before'
+    created_at:
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'

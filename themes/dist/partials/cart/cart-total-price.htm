@@ -1,0 +1,10 @@
+{# @var obCartPositionList \Lovata\OrdersShopaholic\Models\CartPosition#}
+{% set obCartPositionList = Cart.get() %}
+
+<div class="uk-text-muted">Итого:</div>
+<div>
+    {{ obCartPositionList.totalPriceValue }}
+    <span class="uk-margin-small-left uk-text-muted">
+ <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg style="max-width:10px">
+ </span>
+</div>

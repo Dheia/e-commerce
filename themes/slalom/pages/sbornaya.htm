@@ -1,0 +1,14 @@
+title = "Сборная"
+url = "/team"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "team"
+displayEmpty = 0
+categoryPage = "sbornaya-vnutrennyaya"
+==
+
+{% set categories = blogCategories.categories %}
+
+{% partial 'team/category-list' %}

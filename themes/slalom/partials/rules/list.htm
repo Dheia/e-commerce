@@ -1,0 +1,36 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ blogPosts.category.name }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            <div class="grid-b__sidebar">
+                <div class="sidebar-b">
+                    <div class="sidebar-b__menu">
+                        {% partial 'sorevnovania/left-menu' rules = 1 %}
+                    </div>
+                </div>
+            </div>
+            <div class="grid-b__content">
+                <div class="welcome-page">
+                    Смотрите в разделе <b>Правила</b>:
+                </div>
+                {% for post in posts %}
+                <div class="services-b">
+                    <div class="services-b__list">
+                        <div class="services-b__item">
+                            <div class="services-b__about">
+                                <div class="services-b__title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

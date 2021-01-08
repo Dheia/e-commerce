@@ -1,0 +1,56 @@
+title = "Посты без категории"
+url = "/news/no-category/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "news"
+postsPerPage = 6
+noPostsMessage = "Записей не найдено"
+sortOrder = "published_at desc"
+categoryPage = "news-detail"
+postPage = "news-detail"
+
+[blogCategories]
+slug = "news"
+displayEmpty = 0
+categoryPage = 404
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "posty-bez-kategorii"
+==
+use \Rainlab\Blog\Models\Category;
+use \Rainlab\Blog\Models\Post;
+function onStart(){
+    $newsCategoryId = Db::table('rainlab_blog_categories')->where('slug', 'news')->value('id');
+    $noCategoryList = Db::table('rainlab_blog_posts_categories')->where('category_id', $newsCategoryId)->lists('post_id');
+    $posts = Category::with('posts')->where('id',$newsCategoryId)->first();
+    $this['postsNoCategory'] = $posts->posts;
+    $this['currentNoCategory'] = true;
+}
+function onEnd(){
+    $currentCategory = Category::where('slug','news')->first();
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+    $isRightCategory = 0;
+    foreach($attachment as $key => $attach){
+        if($attach->category_id == $currentCategory->id){
+            $isRightCategory = 1;
+        }
+    }
+    if(!$isRightCategory && $this->param('slug')){
+        return $this->controller->run('404');
+    }
+}
+?>
+==
+{% set posts = blogPosts.posts %}
+{% set categories = blogCategory.categories %}
+{% set post = blogPost.post %}
+{% if this.param['slug'] %}
+    {% partial 'news/detail' %}
+{% else %}
+    {% partial 'news/news' %}
+{% endif %}

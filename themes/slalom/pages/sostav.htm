@@ -1,0 +1,17 @@
+title = "Состав"
+url = "/sostav"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = 404
+==
+
+{% set categories = blogCategories.categories %}
+{% for sbornaya in categories if sbornaya.slug == 'sbornaya' %}
+    {% for subCategory in sbornaya.children if subCategory.slug == 'tekushchiy-sostav-sbornoy' %}
+        {% partial 'sostav/list' categories = subCategory.children name=subCategory.name %}
+    {% endfor %}
+{% endfor %}

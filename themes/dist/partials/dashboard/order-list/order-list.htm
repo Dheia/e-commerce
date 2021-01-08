@@ -1,0 +1,13 @@
+{% set obUser = UserData.get() %}
+{% set obOrderList = obUser.order %}
+
+ {% for obOrder in obOrderList %}
+     {% if loop.index < 3 %}
+         <div class="uk-width-1-1">
+             <div><a class="uk-link" href="#">Заказ №{{ obOrder.order_number }}&#8194;</a>
+                 <span class="uk-article-meta">от {{ obOrder.created_at|date('d.m.y') }}</span>
+             </div>
+             <div>{{ obOrder.position_total_price_value }} руб. Статус:&nbsp;{{ obOrder.status.name_for_user }}</div>
+         </div>
+     {% endif %}
+ {% endfor %}

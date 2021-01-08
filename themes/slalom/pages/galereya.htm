@@ -1,0 +1,27 @@
+title = "Галерея"
+url = "/gallery/:slug?"
+layout = "default"
+is_hidden = 0
+
+[Galleries]
+galleryOrder = "nameAsc"
+results = 50
+markup = "user"
+galleryPage = "galereya"
+
+[blogCategories]
+slug = "news"
+displayEmpty = 0
+categoryPage = "blog/category"
+
+[Gallery]
+idGallery = 0
+markup = "user"
+slug = "{{ :slug }}"
+==
+{% set categories = blogCategories.categories %}
+{% if this.param['slug'] %}
+    {% partial 'gallery/detail' %}
+{% else %}
+    {% partial 'gallery/list' %}
+{% endif %}

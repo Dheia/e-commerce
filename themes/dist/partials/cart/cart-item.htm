@@ -1,0 +1,71 @@
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem #}
+{# @var obOffer \Lovata\Shopaholic\Classes\Item\OfferItem #}
+{# @var obCartPosition \Lovata\OrdersShopaholic\Classes\Item\CartPositionItem #}
+
+{% set obOffer = obCartPosition.item %}
+{% set obProduct = obOffer.product %}
+
+<div class="uk-card uk-card-small uk-background-default uk-card-body _shopaholic-product-wrapper"
+     id="obCartPosition-{{ obCartPosition.id }}" data-position-id="{{ obCartPosition.id }}"
+     data-product-id="{{ obProduct.id }}">
+    <div class="uk-grid-small" uk-grid>
+        {% if obProduct.preview_image.getPath() is not empty %}
+            <div class="uk-width-1-2 uk-width-1-6@s">
+                <img data-src="{{ obProduct.preview_image.getPath() }}" uk-img>
+            </div>
+        {% else %}
+            <div class="uk-width-1-2 uk-width-1-6@s">
+                <img data-src="{{ 'assets/img/342341.jpg'|theme }}" uk-img>
+            </div>
+        {% endif %}
+        <div class="uk-width-1-2 uk-flex-last@s uk-width-1-3@s">
+            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                <div class="uk-width-1-1 uk-width-auto@s uk-flex-last@s">
+                    <div class="uk-h3 uk-text-bold cart-price">
+                    <span class="_shopaholic-cart" data-group="position" data-field="price_value">
+                        {{ obCartPosition.price_value }}</span>
+                        <span class="uk-text-muted uk-margin-small-left">
+                            <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg
+                                 style="max-width:10px">
+                        </span>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-flex uk-width-auto@s">
+                    <div class="counter uk-flex bordered">
+                        <div class="counter__sing minus _shopaholic-cart-decrease-quantity">
+                            <span uk-icon="icon: minus"></span>
+                        </div>
+                        <input class="uk-form-width-xsmall uk-input uk-text-center_shopaholic-cart-quantity" type="text"
+                               name="quantity" value="{{ obCartPosition.quantity }}" min="1"
+                               max="{{ obCartPosition.offer.quantity }}">
+                        <div class="counter__sing plus _shopaholic-cart-increase-quantity">
+                            <span uk-icon="icon: plus"></span></div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-flex-last@s">
+                    {#        <div class="uk-text-muted">{{ obOffer.setActivePriceType(obPriceType.id).price }}#}
+                    <div class="uk-text-muted">{{ obOffer.price_value }}
+                        <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg style="max-width:10px">&ensp;/
+                        шт.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-auto uk-visible@s uk-flex-last@s">
+            <button class="cart__icon bordered uk-margin-small-bottom _shopaholic-cart-remove">
+                <span uk-icon="icon: trash"></span>
+            </button>
+            <button class="cart__icon bordered _shopaholic-add-wish-list-button" href="#">
+                <span uk-icon="icon: heart"></span>
+            </button>
+        </div>
+        <div class="uk-width-1-1 uk-width-expand@s">
+            <h3 class="uk-h3 uk-text-bold">{{ obProduct.name }}</h3>
+            <div class="uk-grid-medium" uk-grid>
+                <div>
+                    <div class="uk-article-meta">Артикул: {{ obProduct.code }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

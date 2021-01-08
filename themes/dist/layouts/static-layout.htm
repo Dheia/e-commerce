@@ -1,0 +1,122 @@
+description = "Default layout"
+
+[staticMenu]
+code = "footer"
+
+[Settings]
+
+[SeoToolbox]
+
+[Cart]
+
+[CategoryList]
+
+[ProductList]
+
+[ProductData]
+
+[UserData]
+
+[Login]
+mode = "ajax"
+redirect_on = 1
+redirect_page = "home"
+
+[staticPage]
+useContent = 1
+default = 0
+==
+<?php
+function onInit()
+    {
+     $this['phone'] = $this->Settings->get('phone');
+    $this['address'] = $this->Settings->get('address');
+    $this['work_time'] = $this->Settings->get('work_time');
+    $this['telegram'] = $this->Settings->get('telegram');
+    $this['vk'] = $this->Settings->get('vk');
+    $this['instagram'] = $this->Settings->get('instagram');
+    $this['twitter'] = $this->Settings->get('twitter');
+    $this['youtube'] = $this->Settings->get('youtube');
+    $this['imgLogoHeader'] = $this->Settings->get('logoHeader');
+    $this['imgLogoFooter'] = $this->Settings->get('logoFooter');
+}
+?>
+==
+<!DOCTYPE html>
+<html>
+<head>
+    {{ SeoToolbox.getHeadBegin()|raw }}
+    <meta charset="utf-8">
+    {% placeholder seo_tags default %}
+    {% component 'SeoToolbox' %}
+    {% endplaceholder %}
+    <title>{{ this.page.title }}</title>
+    <meta name="description" content="{{ this.page.meta_description }}">
+    <meta name="title" content="{{ this.page.meta_title }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ 'assets/img/logo.svg'|theme }}">
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/css/common.css'|theme }}">
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/basic_css/libs.min.css'|theme }}">
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/basic_css/main.css'|theme }}">
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/fonts/fonts.css'|theme }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap |theme"
+          rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.1.1/css/all.css "
+          integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    {% styles %}
+
+    {{ SeoToolbox.getHeadEnd()|raw }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('body').classList.remove('loader')
+        });
+
+        setTimeout(() => {
+            document.querySelector('body').classList.remove('loader')
+        }, 3000)
+
+    </script>
+</head>
+<body class="loader">
+    <div id="preloader" class="preloader">
+        <div id="cube-loader">
+            <div class="caption">
+                <div class="cube-loader">
+                    <div class="cube loader-1"></div>
+                    <div class="cube loader-2"></div>
+                    <div class="cube loader-4"></div>
+                    <div class="cube loader-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{ SeoToolbox.getBodyBegin()|raw }}
+<div class="content-wrapper" id="contentWrapper">
+    <div class="page-wrapper" id="pageWrapper">
+        <!-- Header -->
+        <header id="layout-header">
+            {% partial 'site/header' %}
+        </header>
+
+        <!-- Content -->
+        <section id="layout-content">
+            {% page %}
+        </section>
+    </div>
+    <!-- Footer -->
+    <footer id="layout-footer">
+        {% partial 'site/footer' %}
+    </footer>
+</div>
+<!-- Scripts -->
+<script src="{{ 'assets/js/common.js'|theme}}"></script>
+<script src="{{ 'assets/basic_js/libs.min.js'|theme }}"></script>
+<script src="{{ 'assets/basic_js/common.js'|theme}}"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+{% framework extras %}
+{% scripts %}
+{{ SeoToolbox.getBodyEnd()|raw }}
+</body>
+</html>

@@ -1,0 +1,89 @@
+title = "Контакты"
+url = "/contacts"
+layout = "default"
+is_hidden = 0
+child_of = "home"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[breadcrumbs]
+main-ol-class = "breadcrumb"
+active-class = "active"
+disabled-class = "disabled"
+==
+{% set imageStore =  Settings.get('storeImage') %}
+<section class="uk-section contacts">
+    <div class="uk-container">
+        <div class="uk-margin-medium-bottom" uk-grid>
+            <div class="uk-width-expand">
+                <h1 class="uk-h1 section-title">{{ this.page.title }}</h1>
+
+                {% partial 'site/breadcrumbs' %}
+
+                <div class="uk-margin-medium-bottom contacts-wrap" uk-grid>
+                    <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-3@m">
+                        <div class="uk-flex uk-flex-column uk-flex-top contacts-info">
+                            <div class="uk-text-small uk-margin-small-bottom">
+                                <a href="tel:{% if phone %} {{ phone }} {% else %} +7( 3452 ) 54-43-88 {% endif %}">
+                                    <span class="uk-text-bold">Телефон: &nbsp;
+                                    </span>{% if phone %} {{ phone }} {% else %} +7( 3452 ) 54-43-88 {% endif %}
+                                </a>
+                            </div>
+                            <div class="uk-text-small uk-margin-small-bottom"><span class="uk-text-bold">
+                                    Наш адрес: &nbsp;</span>{% if address %} {{ address }} {% else %} address {% endif %}
+                            </div>
+                            <div class="uk-text-small uk-margin-small-bottom"><span class="uk-text-bold">
+                                    Режим работы: &nbsp;</span>{% if work_time %} {{ work_time }} {% else %} work time {% endif %}
+                            </div>
+                            <div class="uk-text-small uk-margin-small-bottom">Мы в соц сетях:
+                                <div
+                                    class="uk-margin-small-bottom footer__mail uk-grid-small uk-flex-middle uk-flex-nowrap"
+                                    uk-grid>
+                                    <div class="uk-width-auto">
+                                        <a href="{{ vk }}">
+                                            <img src="{{ 'assets/img/vk-inner.svg'|theme }}">
+                                        </a>
+                                    </div>
+                                    <div class="uk-width-auto">
+                                        <a href="{{ instagram }}">
+                                            <img src="{{ 'assets/img/insta-inner.svg'|theme }}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-expand contacts-info">
+                            <div>Наш магазин</div>
+                            {% if imageStore.getPath() is not empty() %}
+                                <img src="{{ imageStore.getPath() }}">
+                            {% else %}
+                                <img src="{{ 'assets/img/avtozapchasti3.jpg'|theme }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="uk-width-1-1 uk-width-2-2@s uk-width-2-3@m">
+                        <div class="uk-width-expand contacts-map">
+                            {% partial 'map-iframe/map-iframe' %}
+                        </div>
+                    </div>
+                    <!--#contactMap.yandex-maps.contacts__map(data-address="")-->
+                    <!--.uk-card.uk-card-body.uk-background-default-->
+                    <!--    .uk-grid-medium.uk-child-width-1-1(uk-grid)-->
+                    <!--        each item in maps-->
+                    <!--            .uk-width-1-1-->
+                    <!--                .uk-grid-medium.uk-child-width-1-1(class="uk-child-width-1-2@s" uk-grid)-->
+                    <!--                    div-->
+                    <!--                        +ukImg('slide-1.jpg')-->
+                    <!--                    .uk-flex.uk-flex-column.uk-flex-top-->
+                    <!--                        a(href="#").uk-h3.uk-link Тюмень, улица Соболева, 5-->
+                    <!--                        .uk-text-small.uk-margin-small-bottom Понедельник - Пятницп: 09.00 - 19.00-->
+                    <!--                        .uk-text-small.uk-margin-small-bottom Суббота - Воскресенье: 10.00 - 18.00-->
+                    <!--                        a(href="tel: + 7 (345) 435 8765").uk-link.uk-margin-small-bottom + 7 (345) 435 8765-->
+                    <!--                        a(href="mailto: soboleba@rubilnik.ru").uk-link.uk-margin-small-bottom soboleba@rubilnik.ru-->
+                    <!--                        button.uk-button.uk-button-default.uk-margin-small-bottom Посмотреть на карте-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

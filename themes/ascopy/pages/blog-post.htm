@@ -1,0 +1,38 @@
+title = "Блог пост"
+url = "/blog/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+child_of = "blog-category"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 0
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 1
+categoryPage = "blog-category"
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "blog-category"
+==
+use Wapp\Ascopy\Components\Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+==
+
+{% set post = blogPost.post %}
+{% for category in blogCategories.categories %}
+    {% if category.slug == 'blog' %}
+        {% set categories = category.children %}
+    {% endif %}
+{% endfor %}
+
+{% partial 'blog/detail' categories = categories %}

@@ -1,0 +1,21 @@
+review:
+    label: 'lovata.reviewsshopaholic::lang.review.name'
+    manage:
+        form: $/lovata/reviewsshopaholic/models/review/relation_fields.yaml
+        list: $/lovata/reviewsshopaholic/models/review/columns.yaml
+        showSearch: true
+        showSorting: true
+        showCheckboxes: true
+        recordsPerPage: 20
+        defaultSort:
+            column: id
+            direction: desc
+    view:
+        list: $/lovata/reviewsshopaholic/models/review/columns.yaml
+        toolbarButtons: 'create|delete'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+        defaultSort:
+            column: id
+            direction: desc

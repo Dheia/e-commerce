@@ -1,0 +1,41 @@
+<section class="content">
+    <div class="max-width">
+        <h1 class="title title_h1">{{ pageTitle }} {% if input('year') %}за {{ input('year') }} год{% endif %}</h1>
+        {% partial 'site/breadcrumbs' %}
+        <div class="grid-b">
+            <div class="grid-b__content">
+                <div class="tabs-b">
+                    <div class="tabs-b__item"><a href="/blog" class="tabs-b__links tabs-b__links_active">За все время</a></div>
+                    {% for year in years|slice(0,11) %}
+                    <div class="tabs-b__item"><a href="{{ pageUrl }}/?year={{ year }}" class="tabs-b__links">{{ year }}</a></div>
+                    {% endfor %}
+                </div>
+                <div class="news-b">
+                    <div class="news-b__list news-b__list_w3">
+                        {% if noMatch %}
+                        {{ 'Нет постов по вашему запросу' }}
+                        {% else %}
+                        {% for post in posts %}
+                        <div class="news-b__item">
+                            <a href="{{ post.url }}" class="news-b__block">
+                                <span class="news-b__preview">
+                                    <img src="{{ 'assets/img/content/news.jpg'|theme }}" alt="">
+                                </span>
+                                <span class="news-b__about">
+                                    {% for category in post.categories %}
+                                        <span class="news-b__category">{{ category.name }}</span>
+                                    {% endfor %}
+                                    <span class="news-b__title">{{ post.title }}</span>
+                                    <span class="news-b__date">{{ post.published_at|date('d F Y') }}</span>
+                                </span>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% partial 'blog/sidebar' %}
+        </div>
+    </div>
+</section>

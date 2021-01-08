@@ -1,0 +1,28 @@
+fields:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        span: full
+        default: 0
+        type: switch
+    name:
+        label: 'lovata.reviewsshopaholic::lang.field.user_name'
+        span: full
+        type: text
+    email:
+        label: 'lovata.toolbox::lang.field.email'
+        span: full
+        type: text
+    phone:
+        label: 'lovata.toolbox::lang.field.phone'
+        span: full
+        type: text
+    rating:
+        label: 'lovata.reviewsshopaholic::lang.field.rating'
+        span: full
+        type: dropdown
+        emptyOption: 'lovata.toolbox::lang.field.empty'
+    comment:
+        label: 'lovata.reviewsshopaholic::lang.field.comment'
+        size: large
+        span: full
+        type: textarea

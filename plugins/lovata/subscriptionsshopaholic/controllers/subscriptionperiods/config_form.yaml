@@ -1,0 +1,16 @@
+name: 'lovata.subscriptionsshopaholic::lang.period.name'
+modelClass: Lovata\SubscriptionsShopaholic\Models\SubscriptionPeriod
+form: $/lovata/subscriptionsshopaholic/models/subscriptionperiod/fields.yaml
+defaultRedirect: lovata/subscriptionsshopaholic/subscriptionperiods
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/subscriptionsshopaholic/subscriptionperiods/update/:id'
+    redirectClose: lovata/subscriptionsshopaholic/subscriptionperiods
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/subscriptionsshopaholic/subscriptionperiods
+    redirectClose: lovata/subscriptionsshopaholic/subscriptionperiods
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

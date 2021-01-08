@@ -1,0 +1,22 @@
+{# @var obOffer \Lovata\Shopaholic\Models\Offer #}
+
+    {% if obOffer.isNotEmpty() %}
+        {% if obOffer.old_price %}
+            <div class="card__price old">{{ obOffer.old_price }}
+                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+            </div>
+        {% endif %}
+        {% if obOffer.price %}
+            <div class="card__price">{{ obOffer.price }}
+                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="card__price old">161 000
+            <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+        </div>
+        <div class="card__price">161 000
+            <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+        </div>
+    {% endif %}
+

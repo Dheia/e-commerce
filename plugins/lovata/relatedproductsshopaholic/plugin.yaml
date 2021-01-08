@@ -1,0 +1,6 @@
+plugin:
+    name: 'lovata.relatedproductsshopaholic::lang.plugin.name'
+    description: 'lovata.relatedproductsshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-link
+    homepage: ''

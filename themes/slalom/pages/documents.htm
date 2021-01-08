@@ -1,0 +1,19 @@
+title = "Документы"
+url = "/documents"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "documents"
+displayEmpty = 1
+categoryPage = "documents-detail"
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+==
+{% set categories = blogCategories.categories %}
+{% partial 'documents/category-list' %}

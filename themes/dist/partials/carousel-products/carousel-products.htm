@@ -1,0 +1,36 @@
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem #}
+{# @var Cart \Lovata\OrdersShopaholic\Models\Cart #}
+
+{% set obCartPositionList = Cart.get() %}
+{% for obProduct in arProduct %}
+
+    {% set obOffer = obProduct.offer.active().first() %}
+    <div class="_shopaholic-product-wrapper" data-product-id="{{ obProduct.id }}">
+        <input type="hidden" name="offer_id" value="{{ obOffer.id }}">
+    <li class="uk-flex uk-flex-column uk-card-body uk-card-hover uk-border uk-card-small uk-card card " >
+        <a class="card__img" href="{{obProduct.getPageUrl('catalog')}}">
+            {% partial 'product-label/product-label' obProduct = obProduct %}
+            {% if obProduct.preview_image.getPath() is not empty %}
+                <img data-src="{{ obProduct.preview_image.getPath() }}" uk-img>
+            {% else %}
+                <img data-src="{{ 'assets/img/342341.jpg'|theme }}" uk-img>
+            {% endif %}
+        </a>
+        <a class="uk-h4 uk-flex uk-margin-remove-top"
+           href="{{obProduct.getPageUrl('catalog')}}">{{ obProduct.name }}</a>
+        <div class="uk-article-meta uk-margin-auto-top uk-margin-bottom">{{ obProduct.code }}</div>
+        <div class="uk-flex uk-flex-middle">
+
+            {% set obOffer = obProduct.offer.active().first() %}
+            <div class="uk-width-expand uk-flex uk-flex-column uk-flex-center">
+            {% partial 'product-price/product-price' obOffer = obOffer %}
+            </div>
+            <div class="uk-width-auto">
+                <button class="card__icon _shopaholic-cart-add
+                               {% if obCartPositionList.hasProduct(obProduct.id) %} checked {% endif %}">
+                </button>
+            </div>
+        </div>
+    </li>
+    </div>
+{% endfor %}

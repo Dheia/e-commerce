@@ -1,0 +1,18 @@
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <div class="sidebar-b__menu">
+
+            {% for category in categories %}
+            {% set slug = category.slug %}
+            {% if slug == 'regiony' %}
+                {% set slug = 'regions' %}
+            {% elseif slug == 'pravila' %}
+                {% set slug = 'rules' %}
+            {% elseif slug == 'sbornaya' %}
+                {% set slug = 'team' %}
+            {% endif %}
+                <div class="sidebar-b__item"><a href="/{{ slug }}" class="sidebar-b__links">{{ category.name }}</a></div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+name: vimirlab.bannerslider::lang.title.slider
+
+form: ~/plugins/vimirlab/bannerslider/models/slider/fields.yaml
+modelClass: VimirLab\BannerSlider\Models\Slider
+defaultRedirect: vimirlab/bannerslider/sliders
+
+create:
+    title: vimirlab.bannerslider::lang.title.slider_create
+    redirect: vimirlab/bannerslider/sliders/update/:id
+    redirectClose: vimirlab/bannerslider/sliders
+    flashSave: vimirlab.bannerslider::lang.flash.slider_save
+
+update:
+    title: vimirlab.bannerslider::lang.title.slider_update
+    redirect: vimirlab/bannerslider/sliders
+    redirectClose: vimirlab/bannerslider/sliders
+    flashSave: vimirlab.bannerslider::lang.flash.slider_update
+    flashDelete: vimirlab.bannerslider::lang.flash.slider_delete

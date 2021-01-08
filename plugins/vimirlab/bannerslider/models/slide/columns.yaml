@@ -1,0 +1,18 @@
+columns:
+    id:
+        label: vimirlab.bannerslider::lang.form.id
+        searchable: true
+        invisible: true
+        
+    images:
+        sortable: false
+        type: partial
+        path: ~/plugins/vimirlab/bannerslider/models/slide/_image.htm
+        
+    title:
+        label: vimirlab.bannerslider::lang.form.title
+        searchable: true
+        
+    display:
+        label: vimirlab.bannerslider::lang.form.display
+        type: switch

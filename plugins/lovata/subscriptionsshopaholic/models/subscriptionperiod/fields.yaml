@@ -1,0 +1,13 @@
+fields:
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        span: left
+        required: 1
+        type: text
+    period:
+        label: 'lovata.subscriptionsshopaholic::lang.field.period'
+        comment: 'lovata.subscriptionsshopaholic::lang.field.period_description'
+        commentHtml: true
+        span: left
+        required: 1
+        type: text

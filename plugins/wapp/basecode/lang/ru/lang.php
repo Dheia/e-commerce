@@ -1,0 +1,52 @@
+<?php return [
+    'plugin' => [
+        'name' => 'Basecode',
+        'description' => ''
+    ],
+    'menu' => [
+        'settings' => 'Настройки сайта',
+    ],
+    'component' => [
+        'site_settings_title' => 'Настройки сайта',
+        'site_settings_description' => '',
+        'catalog_title' => 'Каталог',
+        'catalog_description' => '',
+    ],
+    'tab' => [
+        'news_list' => 'Новости',
+        'popular_categories' => 'Популярные категории',
+        'popular_products' => 'Популярные продукты',
+        'catalogs_home_page' => 'Каталоги на главной',
+        'contact_page' => 'Контакты',
+        'home_page' => 'Главная страница',
+    ],
+    'field' => [
+        'popular_category_list' => 'Популярные категории',
+        'popular_product_list' => 'Популярные продукты',
+        'news_list' => 'Блок новостей',
+        'banners' => 'Банеры',
+        'catalogs_list' => 'Каталоги',
+        'contact_phone' => 'Номер телефона',
+        'contact_second_phone' => 'Номер второго телефона',
+        'contact_address' => 'Адрес',
+        'contact_mail' => 'Почта',
+        'contact_work_time' => 'Work time',
+        'contact_telegram' => 'Telegram',
+        'contact_facebook' => 'Facebook',
+        'contact_facebook_active' => 'Выводить Facebook',
+        'contact_instagram' => 'Instagram',
+        'contact_instagram_active' => 'Выводить Instagram',
+        'youtube' => 'Youtube',
+        'twitter' => 'Twitter',
+        'map_iframe' => 'Карта (фрейм)',
+        'store_image' => 'Изображение магазина',
+        'contact_vk' => 'Vk',
+        'contact_vk_active' => 'Выводить Vk',
+        'icon' => 'Иконка (svg)',
+        'logo_header' => 'Лого в хедере',
+        'logo_footer' => 'Лого в футере',
+    ],
+    'permissions' => [
+        'settings' => 'Настройки сайта',
+    ],
+];

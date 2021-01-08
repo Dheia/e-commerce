@@ -1,0 +1,33 @@
+{# @var gallery \Pollozen\Simplegallery\Models\Gallery #}
+
+<div class="article-b__section">
+
+    {% if in_article == true %}
+    <a href="/gallery/{{gallery.slug}}">
+        <h3>{{ gallery.name }}</h3>
+    </a>
+    <div class="gallery-b">
+        {% for image in gallery.images %}
+        {% if loop.index < 4 %}
+        <div class="gallery-b__item">
+            <a href="{{ image.path }}" data-fancybox="gallery" data-caption="{{ image.name }}">
+                <img loading="lazy" src="{{ image.path }}" alt="">
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <h3>{{ gallery.name }}</h3>
+    <div class="gallery-b">
+        {% for image in gallery.images %}
+        <div class="gallery-b__item">
+            <a href="{{ image.path }}" data-fancybox="gallery" data-caption="{{ image.name }}">
+                <img loading="lazy" src="{{ image.path }}" alt="">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+

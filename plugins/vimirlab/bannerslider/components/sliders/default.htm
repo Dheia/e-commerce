@@ -1,0 +1,25 @@
+{% set slides = __SELF__.slides %}
+
+<div id="banner-slider" class="owl-carousel owl-theme owl-loaded owl-drag">
+	{% for slide in slides %}
+		<div class="item" style="background-image:url('{{ slide.image.path }}')">		
+			<div class="banner-text text-{% if slide.text_align %}{{ slide.text_align }}{% endif %}">
+				{% if slide.title %}
+					<h1 style="font-size: {{ slide.title_size }}px !important;{% if slide.title_color %} color: {{ slide.title_color }} !important; {% endif %}">{{ slide.title }}</h1>
+				{% endif %}
+				{% if slide.subtitle %}
+					<h3 style="font-size: {{ slide.subtitle_size }}px !important;{% if slide.subtitle_color %} color: {{ slide.subtitle_color }} !important; {% endif %}">{{ slide.subtitle }}</h3>
+				{% endif %}
+				{% if slide.extra_text %}
+					<p style="{% if slide.extra_text_color %} color: {{ slide.extra_text_color }} !important; {% endif %}">{{ slide.extra_text }}</p>
+				{% endif %}
+				{% if slide.button_1_active and slide.button_1_text %}
+					<a href="{{ slide.button_1_link }}" class="btn">{{ slide.button_1_text }}</a>
+				{% endif %}
+				{% if slide.button_2_active and slide.button_2_text %}
+					<a href="{{ slide.button_2_link }}" class="btn">{{ slide.button_2_text }}</a>
+				{% endif %}
+			</div>
+		</div>
+	{% endfor %}	
+</div>

@@ -1,0 +1,21 @@
+title = 404
+url = "/404"
+layout = "default"
+description = "Page not found (404)"
+is_hidden = 0
+==
+<section class="section uk-section page-404">
+    <div class="uk-container uk-flex uk-flex-column uk-flex-middle uk-text-center">
+        <div class="page-404__img"><img data-src="img/404.svg" uk-img uk-svg>
+        </div>
+        <h1 class="uk-h1 uk-margin-remove-top">Страница не найдена</h1>
+        <div class="uk-margin uk-text-bold">Проверьте написание адреса — можеть быть, вы просто ошиблись при наборе. А
+            может быть, этой страницы уже нет.
+        </div>
+        <div class="uk-margin-bottom"><a class="uk-link uk-text-bold" href="{{ url('/') }}">Вернуться на главную&nbsp;</a>или
+            воспользоваться&nbsp;<a class="uk-text-bold" href="{{ url('catalog') }}">каталогом товаров</a></div>
+        <div class="uk-button uk-button-default">
+            <a href="{{ url('catalog') }}">Перейти в каталог</a>
+        </div>
+    </div>
+</section>

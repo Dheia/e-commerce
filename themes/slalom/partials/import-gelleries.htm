@@ -1,0 +1,18 @@
+{% if last_path %}
+    <p>Последний путь: {{ last_path }}</p>
+<span class="lead">
+    <span class="label label-success">{{ 'Импорт прошел успешно!' }}</span>
+</span>
+{% endif %}
+
+{% if f_not_added %}
+    <div>
+        Файлы не добавлены:
+        {% for file in f_not_added %}
+            <span class="text-muted">
+        {{ file }}
+    </span>
+        {% endfor %}
+    </div>
+
+{% endif %}

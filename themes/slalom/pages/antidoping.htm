@@ -1,0 +1,53 @@
+title = "Антидопинг"
+url = "/antidoping/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "antidoping"
+postsPerPage = 6
+noPostsMessage = "Записей не найдено"
+sortOrder = "published_at desc"
+categoryPage = "antidoping"
+postPage = "antidoping"
+
+[blogCategories]
+slug = "antidoping"
+displayEmpty = 0
+categoryPage = "antidoping"
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "antidoping"
+==
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onEnd(){
+    $currentCategory = Category::where('slug','antidoping')->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+    $isRightCategory = 0;
+    foreach($attachment as $key => $attach){
+        if($attach->category_id == $currentCategory->id){
+            $isRightCategory = 1;
+        }
+    }
+    if(!$isRightCategory && $this->param('slug')){
+        return $this->controller->run('404');
+    }
+}
+==
+
+{% set posts = blogPosts.posts %}
+{% set posts = 'blogPost' %}
+{% set categories = blogCategory.categories %}
+
+{% if this.param['slug'] %}
+    {% partial 'antidoping/detail' %}
+{% else %}
+    {% partial 'antidoping/posts' %}
+{% endif %}

@@ -1,0 +1,47 @@
+title = "Архив"
+url = "/archive/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "archive"
+==
+use RainLab\Blog\Models\Post;
+use RainLab\Blog\Models\Category;
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('slug'))->first();
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    if(!$currentPost){
+        return $this->controller->run('404');
+    }
+    if($currentCategory){
+        $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+        $isRightCategory = 0;
+        foreach($attachment as $key => $attach){
+            if($attach->category_id == $currentCategory->id){
+                $isRightCategory = 1;
+            }
+        }
+        if(!$isRightCategory && $this->param('slug')){
+            return $this->controller->run('404');
+        }
+    }else{
+        return $this->controller->run('404');
+    }
+}
+==
+
+{% set categories = blogCategories.categories %}
+{% if this.param['slug'] %}
+    {% partial 'archive/detail' %}
+{% else %}
+    {% for team in categories if team.slug == 'sbornaya' %}
+        {% for list in team.children if list.slug == 'spisok-kandidatov-v-sbornuyu-komandu' %}
+            {% for archive in list.children if archive.slug == 'arkhiv' %}
+                {% partial 'archive/list' categories = archive.children name = archive.name %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}

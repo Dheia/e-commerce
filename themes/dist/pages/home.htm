@@ -1,0 +1,84 @@
+title = "Главная"
+url = "/"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 0
+
+[Settings]
+
+[CategoryData]
+
+[CategoryList]
+
+[ProductData]
+
+[ProductList]
+sorting = "no"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "news"
+postsPerPage = 10
+noPostsMessage = "Записей не найдено"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "news-page"
+
+[sliders]
+slider = 1
+
+[subscriptionForm]
+subscribeButtonText = "Subscribe"
+successMessage = "Thank you for subscribing."
+category = 1
+==
+{% set arCategoryIdList = Settings.get('popular_category_list') %}
+{% set arNewsIdList = Settings.get('news_list') %}
+{% set arCatalogIdList = Settings.get('catalogs') %}
+{% set posts = blogPosts %}
+{% set arProductList = ProductList.make().active().sort('popularity|desc').filterByQuantity().take(8) %}
+
+<section class="uk-section uk-padding-remove">
+    <div class="uk-container">
+        <div class="uk-margin-medium-bottom" uk-grid>
+            <aside class="uk-width-1-1 uk-width-1-4@m">
+                {% if arCatalogIdList is not empty() %}
+                    <ul class="catalog-menu uk-margin-bottom uk-visible@m">
+                        {% partial 'home/block_catalog' arCatalogIdList=arCatalogIdList %}
+                    </ul>
+                {% endif %}
+                <div uk-sticky="offset: 80; bottom: true; media: @m;" id="bannersBlock">
+                    <div class="uk-grid-medium" uk-grid>
+                        {% if arNewsIdList is not empty() %}
+                            {% partial 'home/block_news' arNewsIdList=arNewsIdList %}
+                        {% endif %}
+                        {% partial'home/block_subscribe' %}
+                    </div>
+                </div>
+            </aside>
+            <div class="uk-width-expand">
+
+                {% partial 'home/popular_baners' %}
+
+                {% if arCategoryIdList is not empty %}
+                    {% partial 'home/popular_categories' arCategoryIdList=arCategoryIdList %}
+                {% endif %}
+
+                {% if arProductList is not empty %}
+                {% partial 'home/popular_products' arProductList=arProductList %}
+                {% endif %}
+
+            </div>
+
+            <div class="uk-width-1-1" id="bannersMobile"></div>
+        </div>
+        {% partial 'viewed-products/recently' %}
+    </div>
+</section>

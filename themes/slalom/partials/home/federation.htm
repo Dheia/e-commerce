@@ -1,0 +1,143 @@
+[viewBag]
+
+[blogPosts blogPostsPresidium]
+pageNumber = "{{ :page }}"
+categoryFilter = "prezidium"
+postsPerPage = 8
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "federation-detail"
+
+[blogPosts blogPostsSovet]
+pageNumber = "{{ :page }}"
+categoryFilter = "popechitelskiy-sovet"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "federation-detail"
+==
+use RainLab\Blog\Models\Post;
+use RainLab\Blog\Models\Category;
+
+function onStart(){
+    $posts = new Post;
+    $category = new Category;
+    $category = $category->where('slug', 'popechitelskiy-sovet')->first();
+    $this['sovet_priority_posts'] = $category->posts->sortByDesc('priority');
+}
+==
+<div class="main-page-services">
+    <div class="max-width">
+        {% set presidium = blogPostsPresidium.posts %}
+        {% set sovet = sovet_priority_posts %}
+        <div class="top-b">
+            <h2>Федерация</h2>
+
+            <div class="top-b__tabs">
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links top-b__tabs-links_active">Президиум</a>
+                </div>
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links">Попечительский совет</a>
+                </div>
+            </div>
+
+            <div class="top-b__arrows"></div>
+        </div>
+
+        <div class="main-page-services__grid">
+            <div class="main-page-services__left">
+                <div class="main-page-services__title">Федерация гребного слалома России была создана 2007 году. В том же году получила официальную аккредитацию Минспорт РФ и стала представлять российский гребной слалом на международной арене.
+                    Первым президентом Федерации стал министр иностранных дел России Сергей Лавров, который в 2010 году возглавил Попечительский совет. Сейчас Федерацией руководит Сергей Папуш.</div>
+                <div class="main-page-services__text">Основные направления работы ФГСР:
+                    <br>
+                    ⁃ Организация и проведение всероссийских соревнований.
+                    <br>
+                    ⁃ Организация сборов и выезд на международные соревнования сборной команды России.
+                    <br>
+                    ⁃ Строительство слаломных каналов.
+                    <br>
+                    ⁃ Развитие и популяризация вида спорта в регионах.</div>
+                <a href="/federation/kak-eto-bylo" class="button button_border button_small">Подробнее</a>
+            </div>
+
+            <div class="main-page-services__right">
+                <div class="goods-b__section goods-b__section_show">
+                    <div class="main-page-services__list">
+                        {% for post in presidium.take(7) %}
+                        {% if loop.index == 1 %}
+                            <div class="main-page-services__item main-page-services__item_double">
+                                <a href="#" class="main-page-services__block">
+                                    <span class="main-page-services__toggle">
+                                    <span class="main-page-services__label">{{ post.title }}</span>
+                                    </span>
+                                    {% if post.featured_images.count %}
+                                        {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                        {% endfor %}
+                                    {% else %}
+                                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                    {% endif %}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="main-page-services__item">
+                                <a href="{{ post.url }}" class="main-page-services__block">
+                                    <span class="main-page-services__toggle">
+                                    <span class="main-page-services__label">{{ post.title }}</span>
+                                    </span>
+                                    {% if post.featured_images.count %}
+                                        {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                        {% endfor %}
+                                    {% else %}
+                                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                    {% endif %}
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="goods-b__section">
+                    <div class="main-page-services__list">
+                        {% for post in sovet %}
+                            {% if loop.index == 1 %}
+                            <div class="main-page-services__item main-page-services__item_double">
+                                <a href="#" class="main-page-services__block">
+                                    <span class="main-page-services__toggle">
+                                    <span class="main-page-services__label">{{ post.title }}</span>
+                                    </span>
+                                    {% if post.featured_images.count %}
+                                        {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                        {% endfor %}
+                                    {% else %}
+                                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                    {% endif %}
+                                </a>
+                            </div>
+                        {% else %}
+                        <div class="main-page-services__item">
+                            <a href="{{ post.url }}" class="main-page-services__block">
+                                <span class="main-page-services__toggle">
+                                <span class="main-page-services__label">{{ post.title }}</span>
+                                </span>
+                                {% if post.featured_images.count %}
+                                    {% for image in post.featured_images|slice(0, 1) %}
+                                        <img loading="lazy" src="{{ image.path }}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                {% endif %}
+                            </a>
+                        </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

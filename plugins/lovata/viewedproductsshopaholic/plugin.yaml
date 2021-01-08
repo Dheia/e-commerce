@@ -1,0 +1,6 @@
+plugin:
+    name: 'lovata.viewedproductsshopaholic::lang.plugin.name'
+    description: 'lovata.viewedproductsshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-eye
+    homepage: ''

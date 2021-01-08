@@ -1,0 +1,147 @@
+title = "Личная информация"
+url = "/personal-info"
+layout = "default"
+is_hidden = 1
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 1
+
+[rolesAccess]
+redirectAuth = "home"
+
+[UserData]
+
+[UserPage]
+slug = "{{ :slug }}"
+slug_required = 0
+flash_on = 1
+==
+{% component 'UserPage' %}
+{% set minimumYear = 1949 %}
+
+{% set user = UserData.get() %}
+<section class="uk-section-small cabinet">
+    <div class="uk-container">
+        <div uk-grid>
+            {% partial 'dashboard/cabinetItem' tab='is_personal_info' %}
+            <div class="uk-width-expand">
+                <div class="uk-card uk-background-default uk-card-small cabinet__item">
+                {{ form_ajax('UserPage::onAjax') }}
+                <form>
+                    <div class="uk-card-body">
+                        <h3 class="uk-h3">Персональная информация</h3>
+                    </div>
+                    <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+                        <div class="uk-grid-small uk-child-width-1-1" uk-grid>
+                            <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                                <label class="uk-text-right@m cabinet__label" for="accountName">Имя</label>
+                                <div class="uk-width-auto">
+                                    <input class="uk-input" id="accountName" type="text" name="name"
+                                           placeholder="{% if user.name %} {{ user.name }} {% else %} 'Имя' {% endif %}"
+                                           value="{% if user.name %} {{ user.name }} {% endif %} ">
+                                </div>
+                            </div>
+                            <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                                <label class="uk-text-right@m cabinet__label" for="accountName">Фамилия</label>
+                                <div class="uk-width-auto">
+                                    <input class="uk-input" id="accountName" type="text" name="last_name"
+                                           placeholder="{% if user.last_name %} {{ user.last_name }} {% else %} 'Фамилия'{% endif %}"
+                                           value="{% if user.last_name %} {{ user.last_name }} {% endif %} ">
+                                </div>
+                            </div>
+                            <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                                <label class="uk-text-right@m cabinet__label" for="cabinetDateDay">Дата рождения</label>
+                                <div class="uk-grid-small" uk-grid>
+                                    <div class="uk-width-auto">
+                                        <select class="uk-select" id="cabinetDateDay" name="property[dateDay]">
+                                            {% for day in 1..31 %}
+                                                <option value="{{ day }}"
+                                                    {% if user.property.dateDay == day %} selected {% endif %}>{{ day }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="uk-width-auto">
+                                        <select class="uk-select" id="cabinetDateMonth" name="property[dateMonth]">
+                                            <option {% if user.property.dateMonth == "Jan"%} selected {% endif%} value="Jan">Январь</option>
+                                            <option {% if user.property.dateMonth == "Feb"%} selected {% endif%} value="Feb">Февраль</option>
+                                            <option {% if user.property.dateMonth == "Mar"%} selected {% endif%} value="Mar">Март</option>
+                                            <option {% if user.property.dateMonth == "Apr"%} selected {% endif%} value="Apr">Апрель</option>
+                                            <option {% if user.property.dateMonth == "May"%} selected {% endif%} value="May">Май</option>
+                                            <option {% if user.property.dateMonth == "Jun"%} selected {% endif%} value="Jun">Июнь</option>
+                                            <option {% if user.property.dateMonth == "Jul"%} selected {% endif%} value="Jul">Июль</option>
+                                            <option {% if user.property.dateMonth == "Aug"%} selected {% endif%} value="Aug">Август</option>
+                                            <option {% if user.property.dateMonth == "Sep"%} selected {% endif%} value="Sep">Сентябрь</option>
+                                            <option {% if user.property.dateMonth == "Oct"%} selected {% endif%} value="Oct">Октябрь</option>
+                                            <option {% if user.property.dateMonth == "Nov"%} selected {% endif%} value="Nov">Ноябрь</option>
+                                            <option {% if user.property.dateMonth == "Dec"%} selected {% endif%} value="Dec">Декабрь</option>
+                                        </select>
+                                    </div>
+                                    <div class="uk-width-auto">
+                                        <select class="uk-select" id="cabinetDateYear" name="property[dateYear]">
+                                            {% for year in (minimumYear+1).."now"|date("Y") %}
+                                                <option {% if user.property.dateYear == year %} selected {% endif %} value="{{ year }}">{{ year }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="uk-width-auto uk-flex uk-flex-middle">
+                                        <button type="button" uk-icon="icon: question"></button>
+                                        <div class="cabinet__date-drop" uk-dropdown="mode: click;pos: top;">Дополнительная скинда в день рождения! Обращаем внимание, что дату рождения можно ввести только один раз. Для изменения даты рождения необходимо написать в поддержку&#8194;<a class="uk-link" href="#">bg@madrobots.ru</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                                <label class="uk-text-right@m cabinet__label" for="iu_gender">Пол</label>
+                                <div class="uk-width-auto">
+                                    <select class="uk-select" id="iu_gender" name="property[gender] ">
+                                        <option {% if user.property.gender == 'male' %} selected {% endif %} value="male">Мужской</option>
+                                        <option {% if user.property.gender == 'female' %} selected {% endif %} value="female">Женский</option>
+                                        <option {% if user.property.gender == 'unknown' %} selected {% endif %} value="unknown">Не выбран</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+                        <div class="uk-grid-small uk-child-width-1-1" uk-grid>
+                            <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                                <label class="uk-text-right@m cabinet__label" for="field-email">Почта</label>
+                                <div class="uk-width-auto">
+                                    <input class="uk-input" id="field-email" type="email" name="email"
+                                           placeholder="{% if user.email %} {{ user.email }} {% else %} 'Почта' {% endif %}"
+                                           value="{% if user.email %} {{ user.email }} {% endif %} ">
+                                </div>
+                            </div>
+                            <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                                <label class="uk-text-right@m cabinet__label" for="cabinetPhone">Телефон</label>
+                                <div class="uk-width-auto">
+                                    <input class="uk-input mask" id="cabinetPhone" type="text" name="phone"
+                                           placeholder="{% if user.phone %} {{ user.phone }} {% else %} 'Телефон' {% endif %}"
+                                           data-inputmask="'mask': '+7(999)-999-9999'"
+                                           value="{% if user.phone %} {{ user.phone }} {% endif %} ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+                        <div class="uk-flex uk-flex-column cabinet__label-wrap">
+                            <div class="cabinet__label empty"></div>
+                            <button class="uk-button-default uk-button" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+                {{ form_close() }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--recently-->
+{% partial 'viewed-products/recently' %}
+<!---->

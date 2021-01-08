@@ -1,0 +1,48 @@
+[viewBag]
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "kalendar-sorevnovaniy"
+postsPerPage = 100
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "sorevnovaniya"
+postPage = "sorevnovaniya"
+==
+{% set posts = blogPosts.posts %}
+{% set currentDate = "now"|date("Y-m-d") %}
+
+<div class="main-block-b__event main-block-b__event_blue">
+    <div class="main-block-b__event-title"><a href="/calendar">Ближайшие события</a>
+    </div>
+    <div class="main-block-b__event-list">
+        {% set count = 0 %}
+        {% for post in posts %}
+            {% if post.date_start|date('Y-m-d') > currentDate %}
+                {% set count = count+1 %}
+                <div class="main-block-b__event-item">
+                    <div class="main-block-b__event-date">{{ post.date_start|date('d.m.Y') }}</div>
+                    <div class="main-block-b__event-label"><a href="{{ post.url }}">{{ post.title }}</a>
+                    </div>
+                    <div class="main-block-b__event-actions">
+                        <a href="#">
+                            <svg class="icon__file" width="384px" height="512px">
+                                {% if post.featured_files.count %}<use xlink:href="#file"></use>{% endif %}
+                            </svg>
+                        </a>
+                        <a href="#">
+                            <svg class="icon__flag" width="512px" height="512px">
+                                {% if post.featured_results.count %}<use xlink:href="#flag"></use>{% endif %}
+                            </svg>
+                        </a>
+                        <a href="#">
+                            <svg class="icon__img" width="512px" height="512px">
+                                {% if post.featured_images.count %}<use xlink:href="#img"></use>{% endif %}
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

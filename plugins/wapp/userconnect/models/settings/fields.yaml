@@ -1,0 +1,27 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    verify_emails:
+        label: wapp.userconnect::lang.settings.fields.verify_emails.label
+        comment: wapp.userconnect::lang.settings.fields.verify_emails.comment
+        type: switch
+    key_expires_in:
+        label: wapp.userconnect::lang.settings.fields.key_expires_in.label
+        type: number
+        default: 1
+        span: left
+        trigger:
+            action: show
+            field: verify_emails
+            condition: checked
+    verification_success_page:
+        label: wapp.userconnect::lang.settings.fields.verification_success_page.label
+        type: dropdown
+        span: left
+        comment: wapp.userconnect::lang.settings.fields.verification_success_page.comment
+        trigger:
+            action: show
+            field: verify_emails
+            condition: checked

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: wapp.userconnect::lang.category.label
+
+# Model Form Field configuration
+form: $/wapp/userconnect/models/category/fields.yaml
+
+# Model Class name
+modelClass: Wapp\UserConnect\Models\Category
+
+# Default redirect location
+defaultRedirect: wapp/userconnect/categories
+
+# Create page
+create:
+    title: wapp.userconnect::lang.category.create_title
+    redirect: wapp/userconnect/categories/update/:id
+    redirectClose: wapp/userconnect/categories
+
+# Update page
+update:
+    title: wapp.userconnect::lang.category.update_title
+    redirect: wapp/userconnect/categories
+    redirectClose: wapp/userconnect/categories
+
+# Preview page
+preview:
+    title: wapp.userconnect::lang.category.preview_title

@@ -1,0 +1,57 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ blogPosts.category.name }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            <div class="grid-b__sidebar">
+                <div class="sidebar-b">
+                    <div class="sidebar-b__menu">
+                        {% partial 'federation/left-menu' %}
+                    </div>
+                </div>
+            </div>
+            {% for categoryMain in categories if categoryMain.slug == 'federation' %}
+            <div class="grid-b__content">
+                <div class="welcome-page">
+                    Смотрите в разделе <b>{{ categoryMain.name }}</b>:
+                </div>
+                <div class="services-b">
+                    <div class="services-b__list">
+                        <div class="services-b__item">
+                            <div class="services-b__about">
+                                <div class="services-b__title"><a href="/federation/kak-eto-bylo">Как это было</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for subCategory in categoryMain.children %}
+                <div class="services-b">
+                    <div class="services-b__list">
+                        <div class="services-b__item">
+                            <div class="services-b__about">
+                                <div class="services-b__title"><a href="/federation/{{ subCategory.slug }}">{{ subCategory.name }}</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="services-b">
+                    <div class="services-b__list">
+                        <div class="services-b__item">
+                            <div class="services-b__about">
+                                <div class="services-b__title"><a href="/federation/broshyury">Брошюры</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

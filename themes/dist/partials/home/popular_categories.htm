@@ -1,0 +1,24 @@
+<div class="uk-margin-medium-top">
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+        <h3 class="uk-h3 uk-margin-remove">Популярные категории</h3><a href="{{ url('catalog') }} ">Все категории<span
+                uk-icon="arrow-right"></span></a>
+    </div>
+    <div class="uk-grid-collapse uk-child-width-1-2 uk-child-width-1-4@m" uk-grid>
+        {% for iCategoryID in arCategoryIdList %}
+            {% set obCategory = CategoryData.get(iCategoryID.category_id) %}
+            <div class="uk-card-body uk-card-hover uk-border uk-text-center uk-card-small uk-card card"><a
+                    class="card__img" href="{{ url('category' , obCategory.slug) }}">
+                    {% if obCategory.preview_image.getPath() is not empty %}
+                    <img data-src="{{ obCategory.preview_image.getPath() }}" uk-img
+                         title="{{ obCategory.preview_image.title }}"
+                         alt="{{ obCategory.preview_image.description }}">
+                </a><a class="uk-h4" href="{{ url('category' , obCategory.slug) }}">
+                    {% else %}
+                    <img data-src="{{ 'assets/img/tires.jpg'|theme }}" uk-img></a><a class="uk-h4" href="{{ url('') }}">
+                    {% endif %}
+                    {{ obCategory.name }}</a>
+                <div class="uk-text-meta">От 100 рублей</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

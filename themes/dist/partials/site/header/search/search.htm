@@ -1,0 +1,17 @@
+{% if fixed %}
+    <form class="header__search uk-position-relative">
+        <button class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></button>
+        <input class="uk-input search__input js-search__input-static _shopaholic-search-input" name="search-input" type="text"
+               placeholder="Поиск">
+        <div class="header__search-wrap search-result-wrapper">
+        </div>
+    </form>
+{% else %}
+    <form class="header__search uk-position-relative">
+        <button class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></button>
+        <input class="uk-input search__input js-search__input-move _shopaholic-search-input" type="text" placeholder="Поиск">
+        <div class="header__search-wrap search-result-wrapper search-result-wrapper--move">
+        </div>
+    </form>
+{% endif %}
+

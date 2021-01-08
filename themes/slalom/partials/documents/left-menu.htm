@@ -1,0 +1,24 @@
+[blogCategories]
+slug = "documents"
+displayEmpty = 1
+categoryPage = "documents"
+
+[viewBag]
+==
+{% set categories = blogCategories.categories %}
+
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <div class="sidebar-b__menu">
+                {% for category in categories %}
+                {% if category.slug == 'documents' %}
+                    {% for subCategory in category.children %}
+                        <div class="sidebar-b__item">
+                                <a href="/documents/{{ subCategory.slug }}" class="sidebar-b__links">{{ subCategory.name }}</a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endfor %}
+        </div>
+    </div>
+</div>

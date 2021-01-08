@@ -1,0 +1,75 @@
+title = "address"
+url = "/address"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 1
+
+[rolesAccess]
+redirectAuth = "home"
+
+[UserAddress]
+==
+{% set obUser = UserData.get %}
+{# @var obUserAddressList \Lovata\OrdersShopaholic\Classes\Collection\UserAddressCollection #}
+{# get address user list#}
+{% set obUserAddressList = obUser.address() %}
+
+<section class="uk-section-small cabinet">
+    <div class="uk-container">
+        <div uk-grid>
+            {% partial 'dashboard/cabinetItem' tab='is_address' %}
+            <div class="uk-width-expand">
+                <div class="uk-card uk-background-default uk-card-small cabinet__item">
+                    <div class="uk-card-body">
+                        <h3 class="uk-h3">Мои адреса</h3>
+                    </div>
+                    {% if obUserAddressList.isNotEmpty() %}
+                    {% for obAddress in obUserAddressList %}
+                    <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+                        <div class="uk-grid-medium" uk-grid>
+                            <a class="cabinet__star {% if obAddress.is_favorite %} checked {% endif %}" href="#">
+                                <form class="form-delivery-address" data-request="onFavoriteAddress" data-request-success="reloadPage()">
+                                    <input type="hidden" name="id" value="{{ obAddress.id }}">
+                                    <button type="submit">
+                                        <span uk-icon="star"></span>
+                                    </button>
+                                </form>
+                            </a>
+                            <div class="uk-width-expand">
+                                {% if obAddress.city is not empty %}{{ obAddress.city }},{% endif %}
+                                {% if obAddress.street is not empty %}{{ obAddress.street }},{% endif %}
+                                {% if obAddress.house is not empty %}{{ obAddress.house }} {% endif %}
+                                {% if obAddress.apartment is not empty %}кв {{ obAddress.apartment }} {% endif %}
+                            </div>
+                            <form data-request="onRemove" data-request-success="reloadPage()">
+                                <input type="hidden" name="id" value="{{ obAddress.id }}">
+                                <button type="submit">
+                                    <a class="cabinet__trash" href="#">
+                                        <span uk-icon="trash"></span>
+                                    </a>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                        <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+                            <div class="uk-article-meta">Вы еще не добавили ни одного адреса</div>
+                        </div>
+                    {% endif %}
+                    <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+                        <button class="uk-button-default uk-button" uk-toggle="target: #addAddressModal">Добавить адрес</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

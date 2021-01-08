@@ -1,0 +1,7 @@
+name: Fortune
+description: 'Fortune OctoberCMS theme.'
+author: WAPP
+homepage: 'http://octobercms.com'
+code: ''
+require:
+    - Lovata.Shopaholic

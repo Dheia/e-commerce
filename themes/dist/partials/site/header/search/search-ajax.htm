@@ -1,0 +1,65 @@
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem#}
+{% set obCategoryList = CategoryList.make().active().search(input('search')) %}
+{% set obProductList = ProductList.make().active().search(input('search')) %}
+
+<ul class="search__list uk-margin-remove">
+    {% if obCategoryList.isNotEmpty() or obProductList.isNotEmpty() %}
+        {% if obCategoryList.isNotEmpty() %}
+{#            <div>Категории</div>#}
+            <div>
+            {% for obCategory in obCategoryList %}
+                <li class="search__li uk-padding-small">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                        <div class="uk-width-1-5">
+                            {% if obCategory.preview_image.getPath() is not empty %}
+                                <img data-src="{{ obCategory.preview_image.getPath() }}" uk-img>
+                            {% else %}
+                                <img data-src="{{ 'assets/img/card-img.jpg'|theme }}" uk-img>
+                            {% endif %}
+                        </div>
+                        <div class="uk-width-expand">
+                            <a class="search__title" target="_blank" href="{{ obCategory.getPageUrl('catalog') }}">
+                                {{ obCategory.name }}</a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% if obProductList.isNotEmpty() %}
+{#            <div>Продукты</div>#}
+            <div>
+            {% for obProduct in obProductList.take(5) %}
+                <li class="search__li uk-padding-small">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                        <div class="uk-width-1-5">
+                            {% if obProduct.preview_image.getPath() is not empty %}
+                                <img data-src="{{ obProduct.preview_image.getPath() }}" uk-img>
+                            {% else %}
+                                <img data-src="{{ 'assets/img/card-img.jpg'|theme }}" uk-img>
+                            {% endif %}
+                        </div>
+                        <div class="uk-width-expand">
+                            <a class="search__title" target="_blank" href="{{obProduct.getPageUrl('catalog')}}">
+                                {{ obProduct.name }}</a>
+                            {% set obOffer = obProduct.offer.active().first() %}
+                            <div class="search__price uk-text-semibold uk-grid-small uk-flex-middle" uk-grid>
+                                {% if obOffer.isNotEmpty() %}
+                                    {% if obOffer.price > 0 %}
+                                        <span class="search__price search__price_new">{{ obOffer.price }}</span>
+                                    {% endif %}
+                                    {% if obOffer.old_price > 0 %}
+                                        <span class="search__price search__price_old">{{ obOffer.old_price }}</span>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% else %}
+        <div>ничего не найдено :(</div>
+    {% endif %}
+</ul>

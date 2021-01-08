@@ -1,0 +1,53 @@
+{% set obCartPositionList = Cart.get() %}
+
+<div class="uk-grid-collapse uk-child-width-1-1 tovars-list__items uk-child-width-1-3@s uk-child-width-1-3@m" uk-grid id="catalogItems">
+    {% for obProduct in obProductList %}
+    {% set obOffer = obProduct.offer.active().first() %}
+        <div class="uk-flex uk-flex-column uk-card-body uk-card-hover uk-border uk-card-small uk-card card tovars-list__item  _shopaholic-product-wrapper"
+             data-product-id="{{ obProduct.id }}">
+            <input type="hidden" name="offer_id" value="{{ obOffer.id }}">
+            <div class="uk-width-1-1 uk-width-expand">
+                <div class="uk-grid-small uk-height-1-1 tovars-list__item-wrap uk-flex-column" uk-grid>
+                    <a class="card__img uk-position-relative tovars-list__item-img uk-width-1-1"
+                       href="{{ obProduct.getPageUrl('catalog') }}">
+                        {% partial 'product-label/product-label' obProduct = obProduct %}
+                        {% if obProduct.preview_image.getPath() is not empty %}
+                            <img data-src="{{ obProduct.preview_image.path }}" uk-img>
+                        {% else %}
+                            <img data-src="{{ 'assets/img/342341.jpg' |theme }}" uk-img>
+                        {% endif %}
+                    </a>
+                    <div class="tovars-list__item-content uk-width-1-1 uk-width-expand">
+                        <div class="uk-width-1-1 uk-height-1-1">
+                            <div class="uk-grid-small uk-height-1-1 uk-flex-column tovars-list__item-content-inner" uk-grid>
+                                <div class="tovars-list__item-text uk-flex uk-flex-column uk-width-expand">
+                                    <a class="card__title uk-h4 uk-flex uk-margin-remove-top"
+                                       href="{{ obProduct.getPageUrl('catalog') }}">{{ obProduct.name }}</a>
+                                    <div class="uk-article-meta uk-margin-auto-top uk-margin-bottom uk-margin-auto-top">
+                                        {{ obProduct.code }}
+                                    </div>
+                                    {% set obPropertyList = obProduct.property.sort() %}
+                                    {% set obBrand = obProduct.brand %}
+                                    {% if obPropertyList.isNotEmpty() or obBrand.isNotEmpty() %}
+                                        {% partial 'product-info/product-params' obPropertyList = obPropertyList obBrand = obBrand %}
+                                    {% endif %}
+                                </div>
+                                <div class="uk-flex uk-flex-middle tovars-list__item-cart uk-width-1-1">
+                                    <div class="uk-width-expand uk-flex uk-flex-column uk-flex-center">
+                                        {% set obOffer = obProduct.offer.active().first() %}
+                                        {% partial 'product-price/product-price' obOffer=obOffer %}
+                                    </div>
+                                    <div class="uk-width-auto">
+                                        <button class="card__icon _shopaholic-cart-add
+                                         {% if obCartPositionList.hasProduct(obProduct.id) %} checked {% endif %}">
+                                            В корзине</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

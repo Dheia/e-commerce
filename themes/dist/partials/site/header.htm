@@ -1,0 +1,194 @@
+[viewBag]
+
+[CategoryList]
+
+[staticMenu]
+code = "header-first"
+
+[staticMenu staticMenu2]
+code = "header-second"
+==
+<?php
+function onStart() {
+    $this['thisPage'] = $this->pageUrl('');
+}
+?>
+==
+{% component 'CategoryList' %}
+{% set obUser = UserData.get %}
+
+<!--get categories for home-->
+{% set obCategoryList = CategoryList.make().tree() %}
+
+{% partial 'mobile/header' %}
+<header class="header uk-background-default">
+    <div class="header__topline uk-visible@m">
+        <div class="uk-container">
+            <div class="uk-grid-medium" uk-grid>
+                <div class="uk-width-auto header__topline-links">
+                    <ul class="uk-grid-medium" uk-grid>
+                        {% for menuItem in staticMenu.menuItems %}
+                        <li class="uk-width-auto"><a href="{{ menuItem.url }}">{{ menuItem.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if thisPage != url('register') and thisPage != url('sing-in') %}
+                <div class="uk-width-auto uk-margin-auto-left header__login">
+                    <a href={% if obUser %} {{ url('dashboard') }} {% else %}
+                       "#" uk-toggle="target: #singInModal"
+                        {% endif %}>
+                        <img data-src="{{'assets/img/user.svg'|theme}}" uk-img uk-svg>
+                        Личный кабинет
+                        </a>
+                </div>
+                {% endif %}
+                {% if user %}
+                    <li><a href="#" data-request="onLogout">Выйти</a></li>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="header__middleline">
+        <div class="uk-container">
+            <div class="uk-grid-small uk-grid-medium@s" uk-grid>
+                <div class="uk-width-auto uk-hidden@m"><a class="mmenu-trigger" href="#menu" id="mmenu-icon"><img
+                    data-src="{{'assets/img/bars.svg'|theme}}" uk-img uk-svg></a></div>
+                <div class="uk-width-auto uk-width-1-4@m">
+                    <a class="header__logo" href="{{url('/')}}">
+                        {% if imgLogoHeader.getPath() is not empty() %}
+                        <img src="{{ imgLogoHeader.getPath() }}" uk-img>
+                        {% else %}
+                        <img data-src="{{'assets/img/Logo-inner.svg'|theme}}" uk-img>
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="header__search-continer uk-width-1-2 uk-visible@m">
+                    {% partial 'site/header/search/search' fixed=true %}
+                </div>
+                <div class="uk-width-expand uk-flex uk-flex-right uk-width-1-4@m header__cart-info-wrapper">
+                    {% partial 'site/header-cart-info' fixed=true %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header__bottomline uk-visible@m">
+        <div class="uk-container">
+            <div class="uk-flex-middle" uk-grid>
+                <div class="uk-width-1-4">
+                    <div class="uk-position-relative header__catalog-wrap">
+                        <a class="header__catalog" href="{{ url('catalog') }}">
+                            <img data-src="{{'assets/img/bars.svg'|theme}}" uk-img uk-svg>
+                            Каталог Товаров
+                        </a>
+                        {% if obCategoryList.isNotEmpty() %}
+                        {% for obCategory in obCategoryList if obCategory.product_count > 0 %}
+                        <ul class="catalog-menu uk-margin-bottom catalog-menu__drop uk-margin-remove uk-visible@m">
+                            <li class="catalog-menu__li">
+                                <a class="catalog-menu__link" href="{{ obCategory.getPageUrl('catalog') }}">
+                                    {{ obCategory.name }}</a>
+                                {% if obCategory.children.isNotEmpty() %}
+                                <ul class="catalog-menu__submenu">
+                                    {% for key, obChildCategory in obCategory.children if obChildCategory.product_count > 0 %}
+                                    <li class="catalog-menu__li">
+                                        <a class="catalog-menu__link last" href="{{ obChildCategory.getPageUrl('catalog') }}">{{ obChildCategory.name }}</a>
+{#                                        {% if obChildCategory.children.isNotEmpty() %}#}
+{#                                            {% for subChildCategory in obChildCategory.children if subChildCategory.product_count > 0 %}#}
+{#                                        <ul class="catalog-menu__submenu">#}
+{#                                            <li class="catalog-menu__li last"><a class="catalog-menu__link last"#}
+{#                                                                                 href="#">Подпункт каталога0</a></li>#}
+{#                                        </ul>#}
+{#                                            {% endfor %}#}
+{#                                        {% endif %}#}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="uk-width-expand">
+                    <ul class="uk-grid-medium uk-flex-middle uk-text-bold" uk-grid>
+                        {% for menuItem in staticMenu2.menuItems %}
+                        <li class="uk-width-auto"><a href="{{ menuItem.url }}">{{ menuItem.title }}</a></li>
+                        {% endfor %}
+                        <li class="uk-width-auto"><a href="{{ vk }}"><img src="{{'assets/img/vk-inner.svg'|theme}}"></a></li>
+                        <li class="uk-width-auto"><a href="{{ instagram }}"><img src="{{'assets/img/insta-inner.svg'|theme}}"></a></li>
+                        <li class="uk-width-auto"><a href="{{ telegram }}"><img src="{{'assets/img/telegram-header.svg'|theme}}"></a></li>
+                        <li class="uk-width-auto uk-margin-auto-left header__phone uk-flex-middle uk-flex"><a
+                            href="tel: {{ phone }}">{{ phone }}</a>
+                            <span class="uk-flex-middle uk-flex" uk-tooltip="
+                                {% if work_time is not empty %}{{ work_time }}
+                                {% else %} work_time is empty! {% endif %} ">
+                                <img data-src="{{'assets/img/info-circle.svg'|theme}}" uk-img uk-svg>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header__sticky" uk-sticky="top: 100; animation: uk-animation-slide-top; media: @m;">
+        <div class="uk-container">
+            <div class="uk-flex-middle" uk-grid>
+                <div class="uk-width-1-4">
+                    <div class="header__catalog-wrap">
+                        <a class="header__catalog" href="{{ url('catalog') }}">
+                            <img data-src="{{'assets/img/bars.svg'|theme}}" uk-img uk-svg>
+                            Каталог Товаров
+                        </a>
+                        {% if obCategoryList.isNotEmpty() %}
+                        {% for obCategory in obCategoryList if obCategory.product_count > 0 %}
+                        <ul class="catalog-menu uk-margin-bottom catalog-menu__drop uk-margin-remove uk-visible@m">
+                            <li class="catalog-menu__li">
+                                <a class="catalog-menu__link" href="{{ obCategory.getPageUrl('catalog') }}">
+                                    {{ obCategory.name }}</a>
+                                {% if obCategory.children.isNotEmpty() %}
+                                <ul class="catalog-menu__submenu">
+                                    {% for key, obChildCategory in obCategory.children if obChildCategory.product_count > 0 %}
+                                    <li class="catalog-menu__li">
+                                        <a class="catalog-menu__link last" href="{{ obChildCategory.getPageUrl('catalog') }}">{{ obChildCategory.name }}</a>
+    {#                                        {% if obChildCategory.children.isNotEmpty() %}#}
+    {#                                            {% for subChildCategory in obChildCategory.children if subChildCategory.product_count > 0 %}#}
+    {#                                        <ul class="catalog-menu__submenu">#}
+    {#                                            <li class="catalog-menu__li last"><a class="catalog-menu__link last"#}
+    {#                                                                                 href="#">Подпункт каталога0</a></li>#}
+    {#                                        </ul>#}
+    {#                                            {% endfor %}#}
+    {#                                        {% endif %}#}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="uk-width-expand">
+                    <ul class="uk-grid-medium uk-flex-middle uk-text-bold" uk-grid>
+                        <!--<li class="uk-width-auto"><a href="#">Производители</a></li>-->
+                        <li class="uk-width-expand">
+                            {% partial 'site/header/search/search' %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-width-auto">
+                    <div class="header__cart-info-wrapper">
+                        {% partial 'site/header-cart-info' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{#modals#}
+{% partial 'popups/add_address' %}
+
+{% partial 'popups/sign_in' %}

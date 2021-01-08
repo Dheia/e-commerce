@@ -1,0 +1,7 @@
+1.0.1: First version of Basecode
+    - create settings model
+    - create_settings_table.php
+
+1.0.2:
+    - Update UserAddress
+    - update_user_addresses_table.php

@@ -1,0 +1,34 @@
+{# @var obWishList \Lovata\Shopaholic\Classes\Collection\ProductCollection #}
+
+{% set obWishList = ProductList.make().wishList().active() %}
+
+
+    <div class="uk-card uk-background-default uk-card-small cabinet__item">
+        <div class="uk-card-body">
+
+            <h3 class="uk-h3 uk-text-center">{{user.name}} {{user.surname}}</h3>
+            <div class="uk-grid-small uk-flex-center" uk-grid>
+                <div class="uk-flex">
+                    <a class="uk-button uk-button-small uk-button-default uk-flex uk-flex-middle" href="{{url('dashboard')}}">
+                        <span class="uk-margin-small-right" uk-icon="cog"></span>Настройки
+                    </a>
+                </div>
+                <div class="uk-flex">
+                    <a class="uk-button uk-button-small uk-button-default uk-flex uk-flex-middle" data-request="onLogout" href="#">
+                        <span uk-icon="sign-out"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-background-default">
+            <ul class="cabinet__nav">
+                <li><a {% if tab == 'is_orders' %} class="active" {% endif %} href="{{url('orders')}}">Мои заказы</a></li>
+                <li><a {% if tab == 'is_favorite' %} class="active" {% endif %} href="{{url('favorite')}}">Избранное&nbsp;
+                    {% if obWishList.count() >0  %}<span id="cabinet__nav-favorite" >({{ obWishList.count() }})</span> {% endif %}
+                    </a></li>
+                <li><a {% if tab == 'is_personal_info' %} class="active" {% endif %} href="{{url('personal-info')}}">Персональная информация</a></li>
+                <li><a {% if tab == 'is_address' %} class="active" {% endif %} href="{{url('address')}}">Профили доставки</a></li>
+            </ul>
+        </div>
+    </div>
+

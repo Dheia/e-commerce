@@ -1,0 +1,19 @@
+{% if arBreadcrumbs is empty %}
+{# var \Mey\Breadcrumbs\Components\breadcrumbs\default.htm #}
+{% component 'breadcrumbs' %}
+
+{% else %}
+
+<ul class="{{crumbOptions['main-ol-class']}} breadcrumbs__list" itemscope itemtype="http://schema.org/BreadcrumbList">
+    {% for arItem in arBreadcrumbs %}
+        <li class="{% if arItem.active == true %}active{% endif %}">
+            {% if arItem.active == false %}
+                <a href="{{ arItem.url }}">{{ arItem.name }}</a>
+            {% else %}
+                {{ arItem.name }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endif %}

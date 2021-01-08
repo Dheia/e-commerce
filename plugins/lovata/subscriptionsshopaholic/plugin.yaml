@@ -1,0 +1,13 @@
+plugin:
+    name: 'lovata.subscriptionsshopaholic::lang.plugin.name'
+    description: 'lovata.subscriptionsshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-clock-o
+    homepage: ''
+permissions:
+    shopaholic-menu-subscription-period:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.subscriptionsshopaholic::lang.permission.period'
+    shopaholic-menu-subscription-access:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.subscriptionsshopaholic::lang.permission.access'

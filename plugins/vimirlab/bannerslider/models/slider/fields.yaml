@@ -1,0 +1,9 @@
+fields:
+
+    title:
+        label: 'vimirlab.bannerslider::lang.form.title'
+        required: true
+        attributes:
+           autofocus: ''
+        span: storm
+        cssClass: col-sm-12

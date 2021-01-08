@@ -1,0 +1,233 @@
+title = "Каталог"
+url = "/catalog/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[SeoToolbox]
+
+[CategoryPage MainCategoryPage]
+slug = "{{ :category }}"
+slug_required = 1
+smart_url_check = 1
+has_wildcard = 1
+skip_error = 0
+
+[CategoryPage]
+slug = "{{ :slug }}"
+slug_required = 0
+smart_url_check = 1
+has_wildcard = 0
+skip_error = 1
+
+[ProductPage]
+slug = "{{ :slug }}"
+slug_required = 0
+smart_url_check = 1
+skip_error = 1
+
+[BrandList]
+
+[ProductList]
+
+[Pagination]
+available_count_per_page = 12
+count_per_page = 12
+pagination_limit = 4
+active_class = "_act"
+button_list = "main"
+first_button_name = "First"
+first_button_limit = 3
+first_button_number = 1
+first-more_button_name = "..."
+first-more_button_limit = 4
+prev_button_name = "Prev"
+prev_button_limit = 1
+prev-more_button_name = "..."
+prev-more_button_limit = 1
+next-more_button_name = "..."
+next-more_button_limit = 1
+next_button_name = "Next"
+next_button_limit = 1
+last-more_button_name = "..."
+last-more_button_limit = 3
+last_button_name = "Last"
+last_button_limit = 2
+last_button_number = 1
+
+[Catalog]
+
+[FilterPanel]
+==
+<?php
+function onInit()
+{
+    $obProductItem = $this->ProductPage->get();
+    $obCategoryItem = $this->CategoryPage->get();
+    $obMainCategoryItem = $this->MainCategoryPage->get();
+    if(!empty($this->slug) && empty($obProductItem) && empty($obCategoryItem)){
+        return $this->ProductPage->getErrorResponse();
+    }
+
+    if(empty($this->slug) && empty($obMainCategoryItem)){
+        return $this->ProductPage->getErrorResponse();
+    }
+
+    $this->Catalog->setRequestData($obProductItem, $obMainCategoryItem, $obCategoryItem);
+
+    if(empty($obProductItem)) {
+        $sActiveSort = $this->ProductList->getSorting();
+        $iPage = $this->Pagination->getPageFromRequest();
+        $this->Catalog->initCatalogData($sActiveSort,$iPage);
+
+        $obProductList = $this->Catalog->getProductList();
+        $obFilteredProductList = $this->Catalog->getFilterProductPropertyList()->setCategory(null)->setProductList($obProductList);
+        $obFilteredProductList = $this->Catalog->getFilteredProductList();
+        $obBrandList= $this->Catalog->getBrandList();
+
+        $iMaxPage = $this->Pagination->getMaxPage($obFilteredProductList->count());
+        $obFilterProductPropertyList = $this->Catalog->getFilterProductPropertyList();
+        $this['obActiveCategoryItem'] =  $this->Catalog->getActiveCategory();
+
+        $arProductList = $this->Catalog->getProductListWithPagination($this->Pagination->getCountPerPage());
+        $this['obActiveCategory'] =  $this->Catalog->getActiveCategory();
+        $this['sActiveSort'] = $sActiveSort;
+        $this['arProductList'] = $arProductList;
+        $this['obProductList'] = $obProductList;
+        $this['iMaxPage'] = $iMaxPage;
+        $this['iCount'] = $obFilteredProductList->count();
+        $this['iPage'] = $iPage;
+        $this['obFilteredProductList']  = $obFilteredProductList;
+        $this['obFilterProductPropertyList']  = $obFilterProductPropertyList;
+        $this['obBrandList']  = $obBrandList;
+        } elseif(!empty($obProductItem)){
+                    $this['obProduct'] = $obProductItem;
+          }
+}
+?>
+==
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem  #}
+
+{% set obCategory = CategoryPage.get() %}
+
+{% if obCategory.name is empty %}
+    {% set obCategory = MainCategoryPage.get() %}
+{% endif %}
+
+{% set obCategoryList = CategoryList.make().tree() %}
+
+{% if obProduct.isNotEmpty()%}
+    {# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem  #}
+
+    {#SEO#}
+    {% set arSEOParams = {'product':obProduct, 'category': obCategory} %}
+    {% put seo_tags %}
+    {% component 'SeoToolbox' model=obProduct params=arSEOParams %}
+    {% endput %}
+    {#End SEO#}
+
+    <section class="uk-section-xsmall">
+        <div class="uk-container">
+            <h1 class="uk-h1 section-title">{{ obCategory.name }}</h1>
+            {% partial 'site/breadcrumbs' arBreadcrumbs=Catalog.getBreadcrumbs() %}
+
+            {% partial 'product-info/product-info' %}
+
+        </div>
+    </section>
+
+    {% set arRelatedProduct = obProduct.related.active().all() %}
+    {% if arRelatedProduct is not empty %}
+        <section class="uk-section-xsmall uk-position-relative">
+            <div class="uk-container">
+                <h3 class="uk-h3 uk-margin-remove">Сопутствующие товары</h3>
+                <div class="uk-position-relative uk-margin" tabindex="-1" uk-slider>
+                    <div class="uk-position-relative">
+                        <div class="uk-slider-container">
+                            <ul class="uk-grid-collapse uk-child-width-1-2 uk-slider-items uk-child-width-1-5@m uk-child-width-1-3@s">
+                                {% partial 'carousel-products/carousel-products' arProduct = arRelatedProduct %}
+                            </ul>
+                        </div>
+                        <a class="uk-position-center-left uk-position-center-left--25 uk-position-small uk-hidden-hover" href="#"
+                           uk-slidenav-previous="" uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-center-right--25 uk-position-small uk-hidden-hover" href="#" uk-slidenav-next=""
+                           uk-slider-item="next"></a>
+                        <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-hidden@m"></ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    {% endif %}
+{% else %}
+
+    {#SEO#}
+    {% set arSEOParams = {'category': obCategory} %}
+    {% put seo_tags %}
+    {% component 'SeoToolbox' model=obCategory params=arSEOParams %}
+    {% endput %}
+    {#End SEO#}
+
+<section class="uk-section-small tovars-list section">
+    <div class="uk-container">
+        <h1 class="uk-h1 uk-flex-inline uk- uk-position-relative uk-padding uk-padding-remove-vertical uk-padding-remove-left section-title">
+            {{ obCategory.name }}
+        </h1>
+
+        {% partial 'site/breadcrumbs' arBreadcrumbs=Catalog.getBreadcrumbs() %}
+
+        <div uk-grid>
+            <aside class="uk-width-1-4 tovars-list__aside catalog_filters" uk-offcanvas="overlay: true;container: false;"
+                   id="catalogAside">
+            {% partial 'catalog/catalog-filter' obFilterProductPropertyList=obFilterProductPropertyList %}
+            </aside>
+            <div class="uk-width-expand">
+                <div class="uk-grid-small uk-flex-right uk-margin-small-bottom" uk-grid>
+                    <div class="uk-width-1-1 uk-margin-auto-right uk-hidden@m uk-width-auto@s">
+                        <div class="uk-button-default uk-button tovars-list__filter-toggle uk-flex uk-flex-middle uk-flex-center" uk-toggle="target: #catalogAside">
+                            <img data-src="{{ 'assets/img/filter.svg'|theme }}" uk-img uk-svg>Фильтры
+                        </div>
+                    </div>
+
+                    <div class="uk-width-expand uk-flex uk-flex-right uk-width-auto@s">
+                        <div class="tovars-list__sort select2-outer">
+                            <select name="sort" id="catalogSort" class="_shopaholic-sorting">
+                                <option {% if sActiveSort == "popularity|desc" %} selected {% endif %} value="popularity|desc" data-img="{{ 'assets/img/up'|theme }}">По популярности</option>
+                                <option {% if sActiveSort == 'new' %} selected {% endif %} value="new" data-img="{{ 'assets/img/down'|theme }}">Новые</option>
+                                <option {% if sActiveSort == 'price|asc' %} selected {% endif %} value="price|asc" data-img="{{ 'assets/img/up'|theme }}">Дешевые</option>
+                                <option {% if sActiveSort == 'price|desc' %} selected {% endif %} value="price|desc" data-img="{{ 'assets/img/up'|theme }}">Дорогие</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="uk-width-auto uk-flex">
+                        <a href="#"
+                            class="uk-button-default uk-flex uk-flex-middle uk-button toggle-list list uk-button-small">
+                            <span uk-icon="list"></span>
+                        </a>
+                    </div>
+                    <div class="uk-width-auto uk-flex">
+                        <a href="#"
+                            class="uk-button-default uk-flex uk-flex-middle uk-button toggle-list grid uk-button-small">
+                            <span uk-icon="grid"></span>
+                        </a>
+                    </div>
+                </div>
+
+                    {% if arProductList is not empty %}
+                <div class="catalog_wrapper">
+                    {% partial 'catalog/catalog-content-ajax' obProductList=arProductList %}
+                </div>
+                    {% else %}
+                        Products not found
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% partial 'viewed-products/recently' %}

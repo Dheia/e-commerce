@@ -1,0 +1,312 @@
+[viewBag]
+
+[blogPosts mainTeamPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "natsionalnaya-sbornaya"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+
+[blogPosts juniorTeamPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "yuniorskaya-sbornaya"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+
+[blogPosts yunoshiTeamPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "yunosheskaya-sbornaya"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+
+[blogPosts trenerTeamPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "trenerskiy-menedzherskiy-i-rukovodyashchiy-sostav-komandy"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+
+[blogPosts specTeamPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "spisok-sportsmenov-instruktorov"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+==
+{% set mainTeam = mainTeamPosts.posts %}
+{% set juniorTeam = juniorTeamPosts.posts %}
+{% set yunoshiTeam = yunoshiTeamPosts.posts %}
+{% set trenerTeam = trenerTeamPosts.posts %}
+{% set specTeam = specTeamPosts.posts %}
+
+<div class="main-page-products">
+    <div class="max-width">
+
+        <div class="top-b">
+            <h2>Состав сборной</h2>
+            <!--TODO Разделить логику-->
+            <div class="top-b__tabs">
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links top-b__tabs-links_active">Основной состав</a>
+                </div>
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links">Юниорский состав</a>
+                </div>
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links">Юношеский состав</a>
+                </div>
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links">Тренерский состав</a>
+                </div>
+                <div class="top-b__tabs-item"><a href="#" class="top-b__tabs-links">Специалисты</a>
+                </div>
+            </div>
+
+            <div class="top-b__arrows">
+                <div class="top-b__arrows-section top-b__arrows-section_show" data-arrows="0">
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_prev arrow-b_prev-goods">
+                        <svg class="icon__arrow-l" width="9px" height="15px">
+                            <use xlink:href="#arrow-l"></use>
+                        </svg>
+                    </div>
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_next arrow-b_next-goods">
+                        <svg class="icon__arrow-r" width="9px" height="15px">
+                            <use xlink:href="#arrow-r"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="top-b__arrows-section" data-arrows="1">
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_prev arrow-b_prev-goods">
+                        <svg class="icon__arrow-l" width="9px" height="15px">
+                            <use xlink:href="#arrow-l"></use>
+                        </svg>
+                    </div>
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_next arrow-b_next-goods">
+                        <svg class="icon__arrow-r" width="9px" height="15px">
+                            <use xlink:href="#arrow-r"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="top-b__arrows-section" data-arrows="2">
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_prev arrow-b_prev-goods">
+                        <svg class="icon__arrow-l" width="9px" height="15px">
+                            <use xlink:href="#arrow-l"></use>
+                        </svg>
+                    </div>
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_next arrow-b_next-goods">
+                        <svg class="icon__arrow-r" width="9px" height="15px">
+                            <use xlink:href="#arrow-r"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="top-b__arrows-section" data-arrows="3">
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_prev arrow-b_prev-goods">
+                        <svg class="icon__arrow-l" width="9px" height="15px">
+                            <use xlink:href="#arrow-l"></use>
+                        </svg>
+                    </div>
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_next arrow-b_next-goods">
+                        <svg class="icon__arrow-r" width="9px" height="15px">
+                            <use xlink:href="#arrow-r"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="top-b__arrows-section" data-arrows="4">
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_prev arrow-b_prev-goods">
+                        <svg class="icon__arrow-l" width="9px" height="15px">
+                            <use xlink:href="#arrow-l"></use>
+                        </svg>
+                    </div>
+                    <div class="arrow-b arrow-b_blue arrow-b_small arrow-b_next arrow-b_next-goods">
+                        <svg class="icon__arrow-r" width="9px" height="15px">
+                            <use xlink:href="#arrow-r"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goods-b">
+            <div class="goods-b__section goods-b__section_show">
+                <div class="swiper-container js--slider-goods">
+                    <div class="swiper-wrapper">
+                        {% for post in mainTeam %}
+                        <div class="swiper-slide">
+                            <div class="goods-b__item">
+                                <div class="goods-b__block">
+                                    <div class="goods-b__pic">
+                                        <a href="{{ post.url }}">
+                                            {% if post.featured_images.count %}
+                                                {% for image in post.featured_images|slice(0, 1) %}
+                                                    <img loading="lazy" src="{{ image.path }}" alt="">
+                                                {% endfor %}
+                                            {% else %}
+                                                <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="goods-b__title"><a href="#">{{ post.title }}</a>
+                                    </div>
+
+                                    <div class="goods-b__desc is-scrollbar">
+                                        {{ post.content|striptags|raw }}
+                                    </div>
+
+                                    <div class="goods-b__actions">
+                                        <a href="/sostav/{{ mainTeamPosts.category.slug }}/{{ post.slug }}" class="button button_small">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="goods-b__section">
+                <div class="swiper-container js--slider-goods">
+                    <div class="swiper-wrapper">
+                        {% for post in juniorTeam %}
+                        <div class="swiper-slide">
+                            <div class="goods-b__item">
+                                <div class="goods-b__block">
+                                    <div class="goods-b__pic">
+                                        <a href="{{ post.url }}">
+                                            {% if post.featured_images.count %}
+                                                {% for image in post.featured_images|slice(0, 1) %}
+                                                    <img loading="lazy" src="{{ image.path }}" alt="">
+                                                {% endfor %}
+                                            {% else %}
+                                                <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="goods-b__title"><a href="#">{{ post.title }}</a>
+                                    </div>
+
+                                    <div class="goods-b__desc is-scrollbar">
+                                        {{ post.content|striptags|raw }}
+                                    </div>
+
+                                    <div class="goods-b__actions">
+                                        <a href="/sostav/{{ juniorTeamPosts.category.slug }}/{{ post.slug }}" class="button button_small">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="goods-b__section">
+                <div class="swiper-container js--slider-goods">
+                    <div class="swiper-wrapper">
+                        {% for post in yunoshiTeam %}
+                        <div class="swiper-slide">
+                            <div class="goods-b__item">
+                                <div class="goods-b__block">
+                                    <div class="goods-b__pic">
+                                        <a href="{{ post.url }}">
+                                            {% if post.featured_images.count %}
+                                            {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                            {% endfor %}
+                                            {% else %}
+                                            <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="goods-b__title"><a href="#">{{ post.title }}</a>
+                                    </div>
+
+                                    <div class="goods-b__desc is-scrollbar">
+                                        {{ post.content|striptags|raw }}
+                                    </div>
+
+                                    <div class="goods-b__actions">
+                                        <a href="/sostav/{{ yunoshiTeamPosts.category.slug }}/{{ post.slug }}" class="button button_small">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="goods-b__section">
+                <div class="swiper-container js--slider-goods">
+                    <div class="swiper-wrapper">
+                        {% for post in trenerTeam %}
+                        <div class="swiper-slide">
+                            <div class="goods-b__item">
+                                <div class="goods-b__block">
+                                    <div class="goods-b__pic">
+                                        <a href="{{ post.url }}">
+                                            {% if post.featured_images.count %}
+                                            {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                            {% endfor %}
+                                            {% else %}
+                                            <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="goods-b__title"><a href="#">{{ post.title }}</a>
+                                    </div>
+
+                                    <div class="goods-b__desc is-scrollbar">
+                                        {{ post.content|striptags|raw }}
+                                    </div>
+
+                                    <div class="goods-b__actions">
+                                        <a href="/sostav/{{ trenerTeamPosts.category.slug }}/{{ post.slug }}" class="button button_small">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="goods-b__section">
+                <div class="swiper-container js--slider-goods">
+                    <div class="swiper-wrapper">
+                        {% for post in specTeam %}
+                        <div class="swiper-slide">
+                            <div class="goods-b__item">
+                                <div class="goods-b__block">
+                                    <div class="goods-b__pic">
+                                        <a href="{{ post.url }}">
+                                            {% if post.featured_images.count %}
+                                            {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                            {% endfor %}
+                                            {% else %}
+                                            <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="goods-b__title"><a href="#">{{ post.title }}</a></div>
+                                    <div class="goods-b__desc is-scrollbar">
+                                        {{ post.content|striptags|raw }}
+                                    </div>
+                                    <div class="goods-b__actions">
+                                        <a href="/sostav/{{ specTeamPosts.category.slug }}/{{ post.slug }}" class="button button_small">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

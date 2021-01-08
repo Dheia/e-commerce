@@ -1,0 +1,15 @@
+columns:
+
+    id:
+        label: 'vimirlab.bannerslider::lang.form.id'
+        invisible: true
+
+    title:
+        label: 'vimirlab.bannerslider::lang.form.title'
+        searchable: true
+        
+    slides_count:
+        label: 'vimirlab.bannerslider::lang.form.slides_count'
+        relation: slides_count
+        valueFrom: count
+        default: 0

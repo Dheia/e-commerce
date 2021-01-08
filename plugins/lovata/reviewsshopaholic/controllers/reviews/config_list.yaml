@@ -1,0 +1,17 @@
+title: 'lovata.reviewsshopaholic::lang.review.list_title'
+modelClass: Lovata\ReviewsShopaholic\Models\Review
+list: $/lovata/reviewsshopaholic/models/review/columns.yaml
+recordUrl: 'lovata/reviewsshopaholic/reviews/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '10'
+showSetup: true
+showCheckboxes: true
+showSorting: 1
+defaultSort:
+    column: id
+    direction: desc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+filter: _config_filter.yaml

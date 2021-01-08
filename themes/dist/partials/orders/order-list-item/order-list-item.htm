@@ -1,0 +1,121 @@
+{# @var obOrderList \Lovata\OrdersShopaholic\Classes\Collection\OrderCollection #}
+{# @var obOrder \Lovata\OrdersShopaholic\Classes\Item\OrderItem #}
+{# @var obProductList \Lovata\OrdersShopaholic\Classes\Collection\OrderPositionCollection #}
+{# @var obOrderPosition \Lovata\OrdersShopaholic\Classes\Item\OrderPositionItem #}
+{# @var obOffer Lovata\Shopaholic\Classes\Item\OfferItem #}
+{% set obUser = UserData.get() %}
+{% set obOrderList = obUser.order() %}
+
+{% for obOrder in obOrderList %}
+    {% set obOrderPositionList = obOrder.order_position %}
+    <li class="cabinet__accordion-item">
+        <div class="cabinet__accordion-title">
+            <div class="uk-padding-small uk-padding-remove-horizontal">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-width-1-1 uk-width-expand@s">
+                        <div class="uk-grid-small" uk-grid>
+                            <div class="cabinet__accordion-number uk-width-1-1 uk-flex uk-flex-middle uk-width-1-3@s">
+                                <span class="uk-hidden@s">Заказ №&nbsp;</span>{{ obOrder.order_number }}</div>
+                            <div class="cabinet__accordion-date uk-width-1-2 uk-width-1-3@s">
+                                <span class="uk-hidden@s">Дата:&nbsp;</span>{{ obOrder.created_at|date('d.m.y') }}</div>
+                            <div class="cabinet__accordion-price uk-width-1-2 uk-width-1-3@s">
+                                <span class="uk-hidden@s">Сумма:&nbsp;</span>{{ obOrder.position_total_price_value }} р.</div>
+                        </div>
+                    </div>
+                    <div class="uk-width-1-1 uk-width-1-3@s">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+{#                                <span class="uk-hidden@s">Статус:&nbsp;</span>Заказ не оплачен, в обработке</div>#}
+                                <span class="uk-hidden@s">Статус:&nbsp;</span>{{ obOrder.status.name_for_user }}
+                            </div>
+                            <div class="uk-width-auto cabinet__order-buttons-desktop">
+                                <div class="uk-grid-small cabinet__order-buttons uk-margin-auto-left" uk-grid>
+                                    <div class="uk-width-auto">
+                                        <button class="cabinet__order-icon bordered">
+                                            <span uk-icon="icon: copy; ratio: 0.8;"></span>
+                                        </button>
+                                    </div>
+                                    <div class="uk-width-auto">
+                                        <button class="cabinet__order-icon bordered info"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-accordion-content cabinet__accordion-content">
+            <div class="uk-visible@s">
+                <div class="uk-margin-remove-top uk-grid-small uk-child-width-1-2" uk-grid>
+                    <div>Товар</div>
+                    <div>
+                        <div class="uk-grid-small uk-child-width-1-3" uk-grid>
+                            <div class="uk-text-center">Цена</div>
+                            <div class="uk-text-center">Количество</div>
+                            <div class="uk-text-center">Сумма</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% for obOrderPosition in obOrderPositionList %}
+                {% set obOffer = obOrderPosition.item %}
+                {% set obShipping = obOrder.shipping_type %}
+                {% set obProduct = obOffer.product %}
+                {% set obDelivery = obOffer.delivery %}
+            <div>
+                <div class="uk-margin-remove-top uk-grid-small uk-child-width-1-2" uk-grid>
+                    <div><a class="uk-link" target="_blank" href="{{ obProduct.getPageUrl('catalog') }}">{{obProduct.name}}</a></div>
+                    <div>
+                        <div class="cabinet__mobile-order-info uk-text-right uk-hidden@s">1шт х 350 руб.</div>
+                        <div class="uk-grid-small uk-child-width-1-3 uk-visible@s" uk-grid>
+                            <div class="uk-text-center">{{ obOrderPosition.price }} руб.</div>
+                            <div class="uk-text-center">{{ obOrderPosition.quantity }}шт.</div>
+                            <div class="uk-text-center">{{ obOrderPosition.total_price }} руб.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+{#            <div>#}
+{#                <div class="uk-margin-remove-top uk-grid-small uk-child-width-1-2" uk-grid>#}
+{#                    <div><a class="uk-link" href="#">Колумбия хайме</a></div>#}
+{#                    <div>#}
+{#                        <div class="cabinet__mobile-order-info uk-text-right uk-hidden@s">1шт х 350 руб.</div>#}
+{#                        <div class="uk-grid-small uk-child-width-1-3 uk-visible@s" uk-grid>#}
+{#                            <div class="uk-text-center">350 руб.</div>#}
+{#                            <div class="uk-text-center">1шт.</div>#}
+{#                            <div class="uk-text-center">350 руб.</div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="cabinet__accordion-info uk-grid-small" uk-grid>
+                <div class="uk-width-1-1 uk-flex uk-flex-column uk-flex-bottom uk-width-1-4@s uk-flex-last@s">
+                    <div class="uk-text-muted">Доставка: {{ obOrder.shipping_price_value }} руб.</div>
+                    <div>Итого: {{ obOrder.total_price_value }} руб.</div>
+                </div>
+                <div class="uk-width-1-1 uk-width-expand@s">
+                    <ul class="cabinet__accordion-infolist uk-margin-small-bottom">
+                        <li>Способ доставки: {{obOrder.shipping_type.name}}</li>
+                        <li>Адрес доставки: {{obOrderPosition}}</li>
+{#                        <li>Адрес доставки: г.Тюмень, ул. Первомайская, д.14, кв 15</li>#}
+                        <li>Способ оплаты: {{ obOrder.payment_method.name }}</li>
+{#                        <li>Способ оплаты: Картой на сайте</li>#}
+                        <li> Плательщик:&#8194;<a class="uk-link" href="#">ООО "Евроствет"</a></li>
+                        <li>Дата исполнения: 06.06.2019</li>
+                        <li><a class="uk-link" href="#">Электронный чек</a></li>
+                    </ul>
+                    <div class="uk-grid-small" uk-grid>
+                        <div>
+                            <button class="uk-button-default uk-button uk-button-small">Оплатить</button>
+                        </div>
+                        <div>
+                            <button class="uk-button-default uk-button uk-button-small">Отменить заказ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+{% endfor %}

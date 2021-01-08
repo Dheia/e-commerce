@@ -1,0 +1,20 @@
+title = "Регионы"
+url = "/regions/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "regions-detail"
+==
+use RainLab\Blog\Models\Category;
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('slug'))->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+}
+==
+{% set categories = blogCategories.categories %}
+{% partial 'regions/list' currentOkrug = this.param['slug'] %}

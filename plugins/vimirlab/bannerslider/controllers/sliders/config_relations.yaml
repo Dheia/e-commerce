@@ -1,0 +1,12 @@
+slides:
+    label: vimirlab.bannerslider::lang.title.relation
+    
+    view:
+        list: $/vimirlab/bannerslider/models/slide/columns.yaml
+        toolbarButtons: create|delete
+        
+    manage:
+        form: $/vimirlab/bannerslider/models/slide/fields.yaml
+        recordsPerPage: 20
+        
+    emptyMessage: vimirlab.bannerslider::lang.flash.emptyMessage

@@ -1,0 +1,17 @@
+title: 'lovata.campaignsshopaholic::lang.campaign.list_title'
+modelClass: Lovata\CampaignsShopaholic\Models\Campaign
+list: $/lovata/campaignsshopaholic/models/campaign/columns.yaml
+recordUrl: 'lovata/campaignsshopaholic/campaigns/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '10'
+showSetup: true
+showCheckboxes: true
+showSorting: 1
+defaultSort:
+    column: id
+    direction: desc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+filter: _config_filter.yaml

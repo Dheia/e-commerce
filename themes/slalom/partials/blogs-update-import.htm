@@ -1,0 +1,13 @@
+[viewBag]
+==
+
+{% if postsImport %}
+    {% for post in postsImport %}
+        <p>{{ post.id }}  |  {{ post.name }}  |  {{ post.name }}  |  {{ post.image_type }}</p>
+    {% endfor %}
+    {{ mypost }}
+{% else %}
+    <p>
+        Нажмите кнопку "Импорт"
+    </p>
+{% endif %}

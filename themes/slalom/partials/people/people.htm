@@ -1,0 +1,30 @@
+    <a href="/regions/{{ blogPosts.category.parent.slug }}/{{ blogPosts.category.slug }}/{{ post.slug }}">
+        <div class="reviews-b__item reviews-b__item_border">
+            <div class="reviews-b__photo">
+                {% for image in post.featured_images|slice(0, 1) %}
+                <img loading="lazy" src="{{image.path}}" alt="">
+                {% endfor %}
+            </div>
+            <div class="reviews-b__about">
+                <div class="reviews-b__name">
+                    {{post.title}}
+                </div>
+                <!--                                    <div class="reviews-b__who">Руководитель</div>-->
+                <div class="reviews-b__text">
+                    {{post.content|striptags|length > 50 ? post.content|slice(0, 1000)
+                    |striptags|raw ~ '...' : post.content|striptags|raw}}
+                    <!--                                        <p>Контролирует деятельность организации и обеспечивает взаимодействие подразделений</p>-->
+                </div>
+                <!--                                    <div class="reviews-b__urls">-->
+                <!--                                        <a href="mailto:commerce@site.ru">commerce@site.ru</a>-->
+                <!--                                        <a href="tel:80001234567">+7 (000) 123-45-67</a>-->
+                <!--                                    </div>-->
+                <!--                                    <div class="reviews-b__social">-->
+                <!--                                        <a href="#"><i class="icon_contacts icon_contacts_vk"></i></a>-->
+                <!--                                        <a href="#"><i class="icon_contacts icon_contacts_tw"></i></a>-->
+                <!--                                        <a href="#"><i class="icon_contacts icon_contacts_ig"></i></a>-->
+                <!--                                    </div>-->
+            </div>
+        </div>
+    </a>
+

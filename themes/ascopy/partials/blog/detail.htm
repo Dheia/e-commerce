@@ -1,0 +1,59 @@
+<section class="content">
+    <div class="max-width">
+        <h1 class="title title_h1">{{ post.title }}</h1>
+        {% partial 'site/breadcrumbs' %}
+        <div class="grid-b">
+            <div class="grid-b__content">
+                <div class="article-b">
+                    <div class="article-b__date">{{ post.published_at|date('d F Y') }}</div>
+                    <div class="article-b__content">
+                        {% for image in post.featured_images | slice(0,1) %}
+                            <img src="{{ image.path }}" class="article-b__pic" alt="">
+                        {% endfor %}
+                        <div class="article-b__desc">{{ post.excerpt }}</div>
+                        <div class="content-zone">
+                            {{ post.content|raw }}
+                        </div>
+                    </div>
+                    <div class="comments-b">
+                        <div class="comments-b__tabs">
+                            <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links comments-b__tabs-links_active">Комментарии</a></div>
+                            <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links">Вконтакте</a></div>
+                        </div>
+                        <div class="comments-b__add"> <a href="#" class="button button_pink js--comment-add">Добавить комментарий</a>
+                            <form action="" class="comments-b__add-form">
+                                <div class="comments-b__add-list">
+                                    <div class="comments-b__add-field">
+                                        <div class="order-b__field">
+                                            <input class="input-text" id="name" value="" placehoder="">
+                                            <label for="name">Ваше имя: <span>*</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="comments-b__add-field">
+                                        <div class="order-b__field">
+                                            <input type="email" class="input-text" id="email">
+                                            <label for="email">E-mail:</label>
+                                        </div>
+                                    </div>
+                                    <div class="comments-b__add-field comments-b__add-field_full">
+                                        <div class="order-b__field">
+                                            <textarea id="cmt" class="input-text"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="comments-b__add-field comments-b__add-field_full">
+                                        <input type="submit" class="button button_pink" value="Отправить">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <a href="blog.html" class="article-b__back">
+                        <svg class="icon__back" width="512px" height="512px">
+                            <use xlink:href="#back"></use>
+                        </svg> Назад к списку</a>
+                </div>
+            </div>
+            {% partial 'blog/sidebar' %}
+        </div>
+    </div>
+</section>

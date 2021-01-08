@@ -1,0 +1,93 @@
+[viewBag]
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "news"
+postsPerPage = 8
+noPostsMessage = "Записей не найдено"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "news-page"
+==
+{% set posts = blogPosts.posts %}
+
+
+
+<section class="news-main uk-section">
+    <div class="uk-container">
+        <h1 class="uk-h1 section-title">Статьи</h1>
+        {% partial 'site/breadcrumbs' %}
+
+        <div class="uk-grid-medium uk-child-width-1-3@s uk-child-width-1-4@m" uk-grid>
+
+            {% if posts.isNotEmpty() %}
+                {% for post in posts if post.published %}
+                    <div class="uk-flex"><a
+                            class="uk-card-body news-main__item uk-card-hover uk-card uk-card-small uk-background-default"
+                            href="{{ post.url }}">
+                            <div class="uk-width-expand picture">
+                                {% if post.featured_images is not empty %}
+                                    {% for image in post.featured_images|slice(0,1) %}
+                                        <img src="{{ image.path }}">
+                                    {% endfor %}
+                                {% else %}
+                                    <img src="{{ 'assets/img/news-pic.jpg'|theme }}">
+                                {% endif %}
+
+                            </div>
+                            <div class="uk-h4 news-main__item-title uk-text-bold">{{ post.title }}</div>
+                            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                <div><span uk-icon="icon: calendar"></span></div>
+                                <div>
+                                    <div class="uk-article-meta">{{ post.published_at|date('d.m.y') }}
+                                        просмотрели: {{ post.views }}
+                                    </div>
+                                </div>
+                                <div class="uk-margin-auto-left">
+                                    <div class="uk-link news-main__item-link" href="#"
+                                         uk-icon="icon: arrow-right"></div>
+                                </div>
+                            </div>
+                        </a></div>
+                {% endfor %}
+
+            {% else %}
+
+                {{ noPostsMessage }}
+
+            {% endif %}
+
+        </div>
+{#        <div class="uk-flex uk-flex-center uk-margin-medium">#}
+{#            <button class="uk-button uk-button-default uk-flex uk-flex-middle"><span class="uk-margin-small-right"#}
+{#                                                                                     uk-icon="icon: plus;ratio: 0.8"></span>Показать#}
+{#                еще#}
+{#            </button>#}
+{#        </div>#}
+        {% if posts.lastPage > 1 %}
+            <div class="uk-flex uk-flex-center uk-margin-medium">
+                <ul class="uk-pagination" uk-margin="">
+                    {% if posts.currentPage > 1 %}
+                        <li><a href="{{ url('news' ,(posts.currentPage -1)) }}"><span uk-pagination-previous=""></span></a>
+                        </li>
+                    {% endif %}
+                    {% for page in 1..posts.lastPage %}
+                        <li class="{{ posts.currentPage == page ? 'uk-active' : null }}">
+                            {% if posts.currentPage != page %}
+                                <a href="{{ url('news' ,page) }}">
+                                    {{ page }}
+                                </a>
+                            {% else %}
+                                {{ page }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if posts.lastPage > posts.currentPage %}
+                        <li><a href="{{ url('news' ,(posts.currentPage +1)) }}"><span uk-pagination-next=""></span></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</section>

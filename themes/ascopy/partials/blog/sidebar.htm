@@ -1,0 +1,17 @@
+<div class="grid-b__sidebar">
+    <div class="sticky">
+        <div class="block-b block-b_hover">
+            <div class="block-b__content">
+                <div class="block-b__icon"><img src="{{ 'assets/img/content/fly.svg'|theme }}" alt=""></div>
+                <div class="block-b__text">Будьте в курсе наших акций и новостей</div>
+            </div>
+            <div class="block-b__button"><a href="#" class="button button_block">Подписаться</a></div>
+        </div>
+        <div class="block-b block-b_menu">
+            {% for category in categories %}
+            <div class="block-b__item"><a href="{{ category.url }}" class="block-b__links">{{ category.name }}<span>{{ category.posts.count }}</span></a></div>
+            {% endfor %}
+        </div>
+        <div class="block-b block-b_banner"><a href="#"><img src="{{ 'static/img/content/banner.jpg'|theme }}" alt=""></a></div>
+    </div>
+</div>

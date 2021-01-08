@@ -1,0 +1,8 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+export:
+    title: wapp.userconnect::lang.subscriptions.export
+
+    modelClass: Wapp\UserConnect\Models\SubscriptionExport
+    list: $/wapp/userconnect/models/subscription/columns.yaml

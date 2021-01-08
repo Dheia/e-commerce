@@ -1,0 +1,120 @@
+title = "Избранное"
+url = "/favorite"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 1
+
+[rolesAccess]
+redirectAuth = "home"
+
+[UserData]
+[BrandList]
+==
+{# @var obWishList \Lovata\Shopaholic\Classes\Collection\ProductCollection #}
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem#}
+{% set obWishList = ProductList.make().wishList().active() %}
+{% set obCartPositionList = Cart.get() %}
+
+<section class="uk-section-small cabinet">
+    <div class="uk-container">
+        <div uk-grid>
+            <aside class="uk-width-1-4 uk-visible@m">
+            <div id="__personal-cabinet">
+            {% partial 'dashboard/cabinetItem' tab='is_favorite' %}
+            </div>
+            </aside>
+            <div class="uk-width-expand">
+                <form class="uk-card uk-background-default uk-card-small cabinet__item">
+                    <div class="uk-card-body">
+                        <h3 class="uk-h3 uk-padding uk-padding-remove-vertical uk-padding-remove-left uk-position-relative uk-flex-inline">Избранное
+                            {% if obWishList.count > 0 %}
+                            <div class="uk-article-meta uk-position-top-right">{{ obWishList.count() }}</div>
+                            {% endif %}
+                        </h3>
+                    </div>
+                    {% if obWishList.isNotEmpty() %}
+                    <div class="uk-card-body">
+                        <div class="uk-grid-collapse uk-child-width-1-1 tovars-list__items list cabinet__favorites-items" uk-grid>
+                            {% for obProduct in obWishList %}
+                                {% set obOffer = obProduct.offer.active().first() %}
+                            <div class="_shopaholic-product-wrapper" data-product-id="{{ obProduct.id }}">
+                                 <input type="hidden" name="offer_id" value="{{ obOffer.id }}">
+                                <div class="uk-flex uk-flex-column uk-card-body uk-card-hover uk-card-small uk-card tovars-list__item">
+                                <div class="uk-width-1-1">
+                                    <div class="uk-grid-small" uk-grid>
+                                        <a class="card__img uk-position-relative tovars-list__item-img uk-width-1-1"
+                                           href="{{ obProduct.getPageUrl('catalog') }}">
+                                            {% if obProduct.preview_image.getPath() is not empty %}
+                                                <img data-src="{{ obProduct.preview_image.getPath() }}" uk-img>
+                                            {% else %}
+                                                <img data-src="{{ 'assets/img/342341.jpg'|theme }}" uk-img>
+                                            {% endif %}
+
+                                            {% set obOffer = obProduct.offer.active().first() %}
+                                            {% set obLabelList = obProduct.label.active().sort() %}
+                                            {% partial 'product-label/product-label' obProduct = obProduct %}
+                                        </a>
+                                        <div class="tovars-list__item-content uk-width-1-1">
+                                            <div>
+                                                <div class="uk-width-1-1">
+                                                    <div class="uk-grid-small" uk-grid>
+                                                        <div class="tovars-list__item-text">
+                                                            <a class="uk-h4 uk-flex uk-margin-remove-top" href="{{ obProduct.getPageUrl('catalog') }}">
+                                                                {{obProduct.name}}</a>
+                                                            <div class="uk-article-meta uk-margin-auto-top uk-margin-bottom">{{ obProduct.code }}</div>
+                                                            {% set obPropertyList = obProduct.property.sort() %}
+                                                            {% set obBrand = obProduct.brand %}
+                                                            {% if obPropertyList.isNotEmpty() or obBrand.isNotEmpty() %}
+                                                                {% partial 'product-info/product-params' obPropertyList = obPropertyList obBrand = obBrand %}
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="uk-flex uk-flex-middle tovars-list__item-cart uk-width-1-1">
+                                                            <div class="uk-width-expand uk-flex uk-flex-column uk-flex-center">
+                                                                {% set obOffer = obProduct.offer.active().first() %}
+                                                                {% partial 'product-price/product-price' obOffer=obOffer %}
+                                                            </div>
+                                                            <div class="uk-width-auto ">
+                                                                <button class="card__icon _shopaholic-cart-add
+                                                                {% if obCartPositionList.hasProduct(obProduct.id) %} checked {% endif %}">
+                                                                    В корзине
+                                                                </button>
+                                                            </div>
+                                                            <div class="uk-width-auto ">
+                                                                <button class="card__icon _shopaholic-remove-wish-list-button">Убрать</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+{#                        <div class="uk-padding-small uk-padding-remove-horizontal uk-flex">#}
+{#                            <button class="uk-button uk-button-default uk-flex uk-flex-center uk-flex-middle uk-width-expand">#}
+{#                                <span class="uk-margin-small-right" uk-icon="icon: plus; ratio: 0.8"></span>Показать еще</button>#}
+{#                        </div>#}
+                    </div>
+                    {% else %}
+                        <div class="uk-card-body">
+                            <div class="uk-margin-small-bottom">В этом списке будут храниться товары, которые Вас заинтересовали</div>
+                            <a href="{{ url('catalog') }}">
+                            <button class="uk-button-primary uk-button" >Перейти в каталог</button>
+                            </a>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

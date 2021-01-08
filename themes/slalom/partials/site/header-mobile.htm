@@ -1,0 +1,278 @@
+<div class="header-nav-b">
+    <div class="header-nav-b__level header-nav-b__level_first">
+        <div class="header-nav-b__menu">
+            <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-1">Федерация</a>
+            </div>
+            <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-2">Документы</a>
+            </div>
+            <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-3">Соревнования</a>
+            </div>
+            <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-4">Сборная России</a>
+            </div>
+            <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-5">Регионы</a>
+            </div>
+            <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-6">Антидопинг</a>
+            </div>
+            <div class="header-nav-b__item"><a href="/channels" class="header-nav-b__links">Каналы</a>
+            </div>
+            <div class="header-nav-b__item"><a href="/news" class="header-nav-b__links">Новости</a>
+            </div>
+            <div class="header-nav-b__item">
+                <a href="{% if phone %}{{ phone }}{% else %}+7 (495) 725-46-87{% endif %}" class="header-nav-b__links header-nav-b__links_gray">
+                    <svg class="icon__phone" width="14px" height="14px">
+                        <use xlink:href="#phone"></use>
+                    </svg>
+                    {% if phone %}{{ phone }}{% else %}+7 (495) 725-46-87{% endif %}
+                </a>
+            </div>
+        </div>
+
+        <div class="header-nav-b__contacts">
+            <div class="header-nav-b__contacts-field">
+
+                <svg class="icon__map" width="13px" height="16px">
+                    <use xlink:href="#map"></use>
+                </svg>
+                {% if address %}{{ address }}{% else %}119270, г. Москва, наб. Лужнецкая, д. 8, стр. 1, ком. 255{% endif %}
+            </div>
+            <div class="header-nav-b__contacts-field">
+
+                <svg class="icon__mail" width="16px" height="13px">
+                    <use xlink:href="#mail"></use>
+                </svg>
+                <a href="mailto:slalomrus@yandex.ru">{% if mail %}{{ mail }}{% else %}slalomrus@yandex.ru{% endif %}</a>
+            </div>
+            <div class="header-nav-b__social">
+                {% if vk_active %}
+                    <a href="https://vk.com/{% if vk %}{{ vk }}{% else %}wwslalom{% endif %}" class="header-nav-b__social-links header-nav-b__social-links_vk"></a>
+                {% endif %}
+                {% if facebook_active %}
+                    <a href="https://www.facebook.com/{% if vk %}{{ vk }}{% else %}wwslalom{% endif %}" class="header-nav-b__social-links header-nav-b__social-links_fb"></a>
+                {% endif %}
+                {% if instagram_active %}
+                    <a href="https://www.instagram.com/{% if vk %}{{ vk }}{% else %}slalom_russia{% endif %}" class="header-nav-b__social-links header-nav-b__social-links_insta"></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- SECOND -->
+    <div class="header-nav-b__level header-nav-b__level_second">
+        <div class="header-nav-b__back"><strong>←</strong> Назад</div>
+
+        <div class="header-nav-b__section header-nav-b__section_show" data-section="drop-1">
+            <div class="header-nav-b__label">Федерация</div>
+            <div class="header-nav-b__menu">
+                {% for category in categories if category.slug == 'federation' %}
+                    {% for subCategory in category.children %}
+                        <div class="header-nav-b__item"><a href="/{{ category.slug }}/{{ subCategory.slug }}" class="header-nav-b__links">{{ subCategory.name }}</a></div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="header-nav-b__section" data-section="drop-2">
+            <div class="header-nav-b__label">Документы</div>
+            <div class="header-nav-b__menu">
+                {% for category in categories if category.slug == 'documents' %}
+                    {% for subCategory in category.children %}
+                        <div class="header-nav-b__item"><a href="/{{ category.slug }}/{{ subCategory.slug }}" class="header-nav-b__links">{{ subCategory.name }}</a></div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="header-nav-b__section" data-section="drop-3">
+            <div class="header-nav-b__label">Соревнования</div>
+            <div class="header-nav-b__menu">
+                <div class="header-nav-b__item"><a href="/calendar" class="header-nav-b__links">Календарь соревнований</a>
+                </div>
+                <div class="header-nav-b__item"><a href="/rezultaty-sorevnovaniy-do-2011-goda" class="header-nav-b__links">Результаты соревнований до 2011 года</a>
+                </div>
+                <div class="header-nav-b__item"><a href="/rules" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-3_1">Правила</a>
+                </div>
+                <div class="header-nav-b__item"><a href="/sudeyskaya-kollegiya" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-3_2">Судейская коллегия</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-nav-b__section" data-section="drop-4">
+            <div class="header-nav-b__label">Сборная России</div>
+            <div class="header-nav-b__menu">
+                {% set menuNumber = 0 %}
+                {% for category in categories if category.slug == 'sbornaya' %}
+                    {% for subCategory in category.children %}
+                        {% if subCategory.children.count %}
+                            {% set menuNumber = menuNumber+1 %}
+                            <div class="header-nav-b__item"><a href="/team/{{ subCategory.slug }}" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-4_{{ menuNumber }}">{{ subCategory.name }}</a></div>
+                        {% else %}
+                            <div class="header-nav-b__item"><a href="/team/{{ subCategory.slug }}" class="header-nav-b__links">{{ subCategory.name }}</a></div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="header-nav-b__section" data-section="drop-5">
+            <div class="header-nav-b__label">Регионы</div>
+            <div class="header-nav-b__menu">
+                <div class="header-nav-b__item"><a href="/regions" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-5_1">Региональные федерации</a>
+                </div>
+                <div class="header-nav-b__item"><a href="/clubs-and-sections" class="header-nav-b__links">Клубы и секции</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-nav-b__section" data-section="drop-6">
+            <div class="header-nav-b__label">{{ category.name }}</div>
+            <div class="header-nav-b__menu">
+                {% for post in antidoping %}
+                <div class="header-nav-b__item"><a href="{{ post.url }}" class="header-nav-b__links">{{ post.title }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- THIRD -->
+    <div class="header-nav-b__level header-nav-b__level_third">
+        <div class="header-nav-b__back"><strong>←</strong> Назад</div>
+
+        <div class="header-nav-b__section header-nav-b__section_show" data-section="drop-3_1">
+            <div class="header-nav-b__label">Правила</div>
+            <div class="header-nav-b__menu">
+                {% for rule in categories if rule.slug == 'pravila' %}
+                    {% for subCategory in rule.children %}
+                        <div class="header-nav-b__item"><a href="/rules/{{ subCategory.slug }}" class="header-nav-b__links">{{ subCategory.name }}</a></div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="header-nav-b__section" data-section="drop-3_2">
+            <div class="header-nav-b__label">Судейская коллегия</div>
+            <div class="header-nav-b__menu">
+                {% for category in categories if category.slug  == 'sorevnovaniya' %}
+                    {% for subCategory in category.children if subCategory.slug == 'sudeyskaya-kollegiya' %}
+                        {% for collegium in subCategory.children %}
+                            <div class="header-nav-b__item"><a href="/sudeyskaya-kollegiya/{{ collegium.slug }}" class="header-nav-b__links">{{ collegium.name }}</a></div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        {% set teamCount = 0 %}
+        {% for team in categories if team.slug == 'sbornaya' %}
+            {% for teamChild in team.children %}
+                {% if teamChild.children.count %}
+                {% set teamCount = teamCount+1 %}
+                <div class="header-nav-b__section" data-section="drop-4_{{ teamCount }}">
+                    <div class="header-nav-b__label">{{ teamChild.name }}</div>
+                    <div class="header-nav-b__menu">
+                        {% for secondLevel in teamChild.children %}
+                            {% if teamChild.slug == 'tekushchiy-sostav-sbornoy' %}
+                                <div class="header-nav-b__item"><a href="/sostav/{{ secondLevel.slug }}" class="header-nav-b__links">{{ secondLevel.name }}</a></div>
+                            {% elseif secondLevel.slug == 'arkhiv' %}
+                            {% set archive = secondLevel.children %}
+                            {% set candidatList = archive.children %}
+                                <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-4_2_1">Архив</a>
+                                </div>
+                            {% else %}
+                                <div class="header-nav-b__item"><a href="/team/{{ teamChild.slug }}/{{ secondLevel.slug }}" class="header-nav-b__links">{{ secondLevel.name }}</a></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        <div class="header-nav-b__section" data-section="drop-5_1">
+            <div class="header-nav-b__label">Региональные федерации</div>
+            <div class="header-nav-b__menu">
+                {% for category in categories if category.slug == "regiony" %}
+                    {% set countModal = 0 %}
+                    {% for subCategory in category.children %}
+                        {% set countModal = countModal+1 %}
+                        <div class="header-nav-b__item"><a href="#" class="header-nav-b__links header-nav-b__links_arrow" data-show="drop-5_1_{{ countModal }}">{{ subCategory.name }}</a>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- FOURTH -->
+    <div class="header-nav-b__level header-nav-b__level_fourth">
+        <div class="header-nav-b__back"><strong>←</strong> Назад</div>
+
+        <div class="header-nav-b__section header-nav-b__section_show" data-section="drop-4_2_1">
+            <div class="header-nav-b__label">Архив</div>
+            <div class="header-nav-b__menu">
+                {% for single in archive %}
+                    <div class="header-nav-b__item"><a href="/archive/{{ single.slug }}" class="header-nav-b__links {% if single.slug == 'spisok-kandidatov-v-sbornuyu-komandu-2011' %}header-nav-b__links_arrow{% endif %}" {% if single.slug == "spisok-kandidatov-v-sbornuyu-komandu-2011" %}data-show="drop-4_2_1_1"{% endif %}>{{ single.name }}</a></div>
+                {% endfor %}
+            </div>
+        </div>
+        {% set countRegions = 0 %}
+        {% for category in categories if category.slug == 'regiony' %}
+            {% for subCategory in category.children %}
+            {% set countRegions = countRegions+1 %}
+            <div class="header-nav-b__section" data-section="drop-5_1_{{ countRegions }}">
+                <div class="header-nav-b__label">{{ subCategory.name }}</div>
+                <div class="header-nav-b__menu">
+                    {% for singleRegion in subCategory.children %}
+                    <div class="header-nav-b__item"><a href="/regions/{{ subCategory.slug }}/{{singleRegion.slug}}" class="header-nav-b__links">{{ singleRegion.name }}</a></div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <!-- FIFTH -->
+    <div class="header-nav-b__level header-nav-b__level_fifth">
+        <div class="header-nav-b__back"><strong>←</strong> Назад</div>
+
+        <div class="header-nav-b__section header-nav-b__section_show" data-section="drop-4_2_1_1">
+            <div class="header-nav-b__label">Список кандидатов в сборную команду 2011</div>
+            <div class="header-nav-b__menu">
+                {% for category in candidatList %}
+                    <div class="header-nav-b__item"><a href="/utverzhdennyy-spisok-atletov-na-stavki-minsporta-ot-100111" class="header-nav-b__links">{{ category.name }}</a></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shadow js--header-nav-hide"></div>
+
+<div class="header-mobile-b">
+    <div class="max-width">
+
+        <div class="header-mobile-b__grid">
+            <div class="header-mobile-b__burger js--header-nav-show">
+                <svg class="icon__burger" width="18px" height="16px">
+                    <use xlink:href="#burger"></use>
+                </svg>
+            </div>
+            <div class="header-mobile-b__logo">
+                <a href="/">
+                    <img src="{{ 'assets/img/content/logo.svg'|theme }}" alt="">
+                </a>
+            </div>
+            <div class="header-mobile-b__actions">
+                <a href="#" class="header-mobile-b__actions-links">
+                    <svg class="icon__phone-big" width="21px" height="21px">
+                        <use xlink:href="#phone-big"></use>
+                    </svg>
+                </a>
+                <a href="#" class="header-mobile-b__actions-links js--toggle-search">
+                    <svg class="icon__search" width="16px" height="16px">
+                        <use xlink:href="#search"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>

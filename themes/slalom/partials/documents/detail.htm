@@ -1,0 +1,65 @@
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+function onEnd(){
+    if(!$this->post){
+        return $this->controller->run('404');
+    };
+}
+==
+
+{% set post = blogPost.post %}
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ post.title }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'documents/left-menu' %}
+            <div class="grid-b__content">
+                <div class="person-b">
+                    <div class="person-b__about person-b__description person-b__nophoto">
+                        <div class="comments-b__tabs comments-b__tabs_gray">
+                            <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links comments-b__tabs-links_active">Содержание</a>
+                            </div>
+                            <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links">Документы</a>
+                            </div>
+                        </div>
+                        <div class="person-b__whois">{{ post.title }}</div>
+                        <div class="person-b__text">
+                            <div class="article-b__content article-b__content_show">
+                                <p>{{ post.content | raw}}</p>
+                            </div>
+                            <div class="article-b__content">
+                                {% if post.featured_files.count %}
+                                    <div class="docs-b">
+                                        {% for file in post.featured_files %}
+                                            {% set arrFile = file.file_name | split('.') %}
+                                            {% set fileType = arrFile|slice(length-1, length) %}
+                                            <a href="{{ file.path }}" class="docs-b__item">
+                                                <i class="icon_docs icon_docs_{{ fileType[0] }}"></i>
+                                                <span class="docs-b__name">{{ file.file_name }}</span>
+                                                <span class="docs-b__size">{{ file.size }}</span>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p>Нет документов</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

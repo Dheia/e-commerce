@@ -1,0 +1,39 @@
+{% set obUser = UserData.get %}
+{% set obUserAddressList = obUser.address() %}
+
+<div class="uk-card-body">
+    <div class="uk-grid-small uk-child-width-1-1" uk-grid>
+        {% if obUserAddressList is not empty %}
+            {% for obAddress in obUserAddressList %}
+                <div>
+                    <div class="uk-text-semibold">
+                        {% if obAddress.city is not empty %}г.{{ obAddress.city }}{% endif %}
+                        {% if obAddress.street is not empty %}ул.{{ obAddress.street }},{% endif %}
+                        {% if obAddress.house is not empty %}дом {{ obAddress.house }} {% endif %}
+                        {% if obAddress.apartment is not empty %}квартира {{ obAddress.apartment }} {% endif %}
+                    </div>
+                    <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                        <a class="uk-link" href="#">Изменить</a>
+                        {#                        <a class="uk-link" href="#">Удалить</a>#}
+                        <form data-request="onRemove" data-request-success="reloadPage()">
+                            <input type="hidden" name="id" value="{{ obAddress.id }}">
+                            <button class="uk-link" type="submit">
+                                Удалить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+            <div>
+                <a class="uk-button-default uk-button-small uk-button" href="{{ url('address') }}">
+                    Показать все адреса</a>
+            </div>
+        {% else %}
+            <div class="uk-card-body">Профили доставки отсутствуют</div>
+        {% endif %}
+        <div>
+            <a class="uk-button uk-button-default uk-button-small" uk-toggle="target: #addAddressModal" href="#">добавить
+                адрес</a>
+        </div>
+    </div>
+</div>

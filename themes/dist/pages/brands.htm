@@ -1,0 +1,38 @@
+<!--title = "brands"-->
+<!--url = "/brands"-->
+<!--layout = "default"-->
+<!--is_hidden = 0-->
+<!--child_of = "home"-->
+<!--hide_crumb = 0-->
+<!--remove_crumb_trail = 0-->
+<!--crumb_disabled = 0-->
+
+<!--[BrandList]-->
+
+<!--[BrandData]-->
+<!--==-->
+<!--{% set obBrandList = BrandList.make().sort().active() %}-->
+<!--{% if obBrandList.isNotEmpty() %}-->
+<!--<section class="uk-section">-->
+    <!--<div class="uk-container">-->
+        <!--<h1 class="uk-h1">Бренды</h1>-->
+        <!--<div class="uk-card uk-card-body uk-background-default">-->
+            <!--<div class="uk-grid-small uk-child-width-1-2 uk-child-width-1-5@s uk-child-width-1-6@m" uk-grid>-->
+                <!--{% for obBrand in obBrandList %}-->
+                <!--<div class="uk-flex uk-flex-column uk-flex-middle">-->
+                    <!--<a class="uk-flex uk-flex-center uk-flex-middle uk-width-expand uk-margin-small-bottom" href="{{url('brands',obBrand.slug) }}">-->
+                        <!--<img data-src="{{ obBrand.preview_image.path }}" title="{{ obBrand.preview_image.title }}"-->
+                             <!--alt="{{ obBrand.preview_image.description }}">-->
+                    <!--</a>-->
+                    <!--<div class="uk-article-meta uk-margin-auto-top">-->
+                        <!--<a href="{{url('brands',obBrand.slug) }}">-->
+                            <!--{{obBrand.name}}-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--{% endfor %}-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
+<!--{% endif %}-->

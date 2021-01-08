@@ -1,0 +1,88 @@
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+==
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ post.title }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b grid-b_reverse">
+            {% partial 'news/menu' %}
+            <div class="grid-b__content">
+                <div class="article-b">
+                    {% if post.featured_files.count %}
+                    <div class="comments-b__tabs comments-b__tabs_gray">
+                        <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links comments-b__tabs-links_active">Содержание</a>
+                        </div>
+                        <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links">Документы</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="article-b__content article-b__content_show">
+                        <div class="article-b__info">
+                            <div class="article-b__date">{{ post.published_at | date("d.m.Y") }}</div>
+                            <div class="article-b__cat">{{ post.category }}</div>
+                        </div>
+                        <div class="article-b__preview">
+                            {% for image in post.featured_images %}
+                                <img loading="lazy" src="{{ image.path }}" alt="">
+                            {% endfor %}
+                        </div>
+                        <div class="article-b__head">
+                            <div class="article-b__head-text">{{ post.title }}</div>
+                        </div>
+                        <div class="article-b__text">
+                            <div class="content-zone">
+                                {{post.content_html|raw}}
+                            </div>
+
+                            {% if post.gallery.count != 0 %}
+                                {% for gallery in post.gallery %}
+                                    {% partial 'gallery/album' gallery=gallery  in_article=true %}
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="block-b">
+                                <div class="block-b__title block-b__title_small">Теги</div>
+                                <div class="block-b__tags">
+                                    {% if post.categories[0].parent %}
+                                        <a href="/{{ post.categories[0].parent.slug }}" class="block-b__tag">{{ post.categories[0].parent.name }}</a>
+                                    {% endif %}
+                                    {% for category in post.categories %}
+                                        <a href="/news/{{ category.slug }}" class="block-b__tag">{{ category.name | replace({'Новости: ':''}) }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if post.featured_files.count %}
+                    <div class="article-b__content">
+                        <div class="docs-b">
+                        {% for file in post.featured_files %}
+                            {% set arrFile = file.file_name | split('.') %}
+                            {% set fileType = arrFile|slice(length-1, length) %}
+                            <a href="{{ file.path }}" class="docs-b__item" download>
+                                <i class="icon_docs icon_docs_{{ fileType[0] }}"></i>
+                                <span class="docs-b__name">{{ file.file_name }}</span>
+                                <span class="docs-b__size">{{ file.size }}</span>
+                            </a>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,40 @@
+columns:
+    buddies_user:
+        label: 'lovata.ordersshopaholic::lang.field.user'
+        relation: user
+        searchable: true
+        sortable: false
+        select: concat_ws(' ', name, last_name, ' (', email, ')')
+    rainlab_user:
+        label: 'lovata.ordersshopaholic::lang.field.user'
+        relation: user
+        searchable: true
+        sortable: false
+        select: concat_ws(' ', name, surname, ' (', email, ')')
+    product:
+        label: 'lovata.toolbox::lang.field.product'
+        relation: product
+        searchable: true
+        sortable: false
+        select: name
+    expire_at:
+        label: 'lovata.subscriptionsshopaholic::lang.field.expire_at'
+        type: datetime
+        searchable: false
+        sortable: false
+    id:
+        label: 'lovata.toolbox::lang.field.id'
+        type: text
+        searchable: true
+        sortable: true
+        width: 100px
+    created_at:
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: timetense
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'lovata.toolbox::lang.field.updated_at'
+        type: timetense
+        sortable: true
+        invisible: true

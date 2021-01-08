@@ -1,0 +1,17 @@
+title = "Судейская коллегия список"
+url = "/sudeyskaya-kollegiya"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[blogCategories]
+slug = "{{ :category }}"
+displayEmpty = 0
+categoryPage = "sudejskaya-kollegiya"
+==
+{% set categories = blogCategories.categories %}
+
+{% partial 'kollegiya/list' %}

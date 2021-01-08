@@ -1,0 +1,45 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ name }}</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="/" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item"><a href="/team" class="sub-b__links">Сборная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">{{ name }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            <div class="grid-b__sidebar">
+                <div class="sidebar-b">
+                    <div class="sidebar-b__menu">
+                        {% partial 'team/left-menu' %}
+                    </div>
+                </div>
+            </div>
+            <div class="grid-b__content">
+                {% for category in categories %}
+                    <div class="services-b">
+                        <div class="services-b__list">
+                            <div class="services-b__item">
+                                <div class="services-b__about">
+                                    <div class="services-b__title"><a href="/archive/{{ category.slug }}">{{ category.name }}</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

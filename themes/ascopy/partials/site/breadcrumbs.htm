@@ -1,0 +1,11 @@
+{% set url = '' %}
+<div class="sub-b">
+    {% for slug, name in arrBreadcrumbs %}
+        {% if loop.first %}
+        <div class="sub-b__item"><a href="/" class="sub-b__links">{{ name }}</a></div>
+        {% else %}
+        {% set url = url ~ '/' ~ slug %}
+        <div class="sub-b__item"><a href="{{ url }}" class="sub-b__links">{{ name }}</a></div>
+        {% endif %}
+    {% endfor %}
+</div>

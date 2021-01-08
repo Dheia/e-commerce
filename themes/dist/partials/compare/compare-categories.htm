@@ -1,0 +1,20 @@
+{% set obCategoryList = CategoryList.make().tree() %}
+
+{% if obCategoryList.isNotEmpty() %}
+    <ul class="catalog-menu uk-margin-bottom uk-margin-remove uk-visible@m">
+        {% for obCategory in obCategoryList if obCategory.product_count > 0 %}
+            {% if obCategory.children.isNotEmpty() %}
+                {% for key, obChildCategory in obCategory.children if obChildCategory.product_count > 0 %}
+                    {% set countWithCategory = ProductList.make().category([obChildCategory.id]).compare().active().count() %}
+                    <li class="catalog-menu__li {% if currentUrl == obChildCategory.getPageUrl('compare') %} selected open {% endif %}">
+                        <a class="catalog-menu__link catalog-menu__link--no-arrow"
+                            {% if countWithCategory > 0 %} href="{{ obChildCategory.getPageUrl('compare') }} {% endif %}">
+                            {{ obChildCategory.name }}
+                        </a>
+                        <div class="uk-article-meta uk-position-top-right">{{ countWithCategory }}</div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}

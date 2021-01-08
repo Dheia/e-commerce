@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Fira Sans Condensed';
+    src: url('FiraSansCondensed-Regular.woff2') format('woff2'),
+        url('FiraSansCondensed-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Sans Condensed';
+    src: url('FiraSansCondensed-ExtraBold.woff2') format('woff2'),
+        url('FiraSansCondensed-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Sans Condensed';
+    src: url('FiraSansCondensed-Medium.woff2') format('woff2'),
+        url('FiraSansCondensed-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Sans Condensed';
+    src: url('FiraSansCondensed-Thin.woff2') format('woff2'),
+        url('FiraSansCondensed-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Sans Condensed';
+    src: url('FiraSansCondensed-SemiBold.woff2') format('woff2'),
+        url('FiraSansCondensed-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Sans Condensed';
+    src: url('FiraSansCondensed-Bold.woff2') format('woff2'),
+        url('FiraSansCondensed-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+

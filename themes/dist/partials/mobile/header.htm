@@ -1,0 +1,113 @@
+[viewBag]
+
+[CategoryList]
+
+[staticMenu]
+code = "header-first"
+
+[staticMenu staticMenu2]
+code = "header-second"
+==
+{% component 'CategoryList' %}
+
+<!--get categories for home-->
+{% set obCategoryList = CategoryList.make().tree() %}
+
+<nav id="menu">
+    <ul class="mobile-menu">
+        {% if obCategoryList.isNotEmpty() %}
+        <li class="mobile-menu__item"><span>Каталог</span>
+            <ul class="mobile-menu__dropdown">
+                {% for obCategory in obCategoryList if obCategory.product_count > 0 %}
+                <li class="nav__dropown-item">
+                    <span>
+                        {% if obCategory.children.isEmpty() %}
+                            <a href="{{ obCategory.getPageUrl('product-list') }}">{{ obCategory.name }}</a>
+                        {% else %}
+                            {{ obCategory.name('product-list') }}
+                        {% endif %}
+                    </span>
+                    {% if obCategory.children.isNotEmpty() %}
+                    <ul class="mobile-menu__dropdown">
+                        {% for key, obChildCategory in obCategory.children if obChildCategory.product_count > 0 %}
+                            <li class="nav__dropown-item">
+                                <span>
+                                    <a href="{{ obChildCategory.getPageUrl('product-list') }}">{{ obChildCategory.name }}</a>
+                                </span></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+        <!--<li class="mobile-menu__item"><a class="mobile-menu__link" href="#">Производители</a></li>-->
+        <li class="mobile-menu__item"><a class="mobile-menu__link" href="#">Новинки</a></li>
+        <li class="mobile-menu__item"><a class="mobile-menu__link" href="#">Распродажа</a></li>
+        <li class="mobile-menu__item"><span>Компания</span>
+            <ul class="mobile-menu__dropdown">
+                <li class="nav__dropown-item"><a class="nav__dropown-link" href="#">Подкомпания</a></li>
+                <li class="nav__dropown-item"><a class="nav__dropown-link" href="#">Подкомпания</a></li>
+                <li class="nav__dropown-item"><a class="nav__dropown-link" href="#">Подкомпания</a></li>
+            </ul>
+        </li>
+        <li class="mobile-menu__item"><a class="mobile-menu__link" href="#">Контакты</a></li>
+        <li class="mobile-menu__item"><a class="mobile-menu__link styled uk-flex uk-flex-middle" href="#">
+                <div class="uk-margin-small-right"><img data-src="{{'assets/img/user.svg'|theme}}" uk-img uk-svg style="max-width:15px">
+                </div>
+                Личный кабинет
+                <div class="uk-margin-small-left uk-badge">4</div>
+            </a></li>
+        <li class="mobile-menu__item"><a class="mobile-menu__link styled uk-flex uk-flex-middle" href="#">
+                <div class="uk-margin-small-right"><img data-src="{{'assets/img/shopping-cart.svg'|theme}}" uk-img uk-svg
+                                                        style="max-width:15px">
+                </div>
+                Корзин
+                <div class="uk-margin-small-left uk-badge">4</div>
+            </a></li>
+        <li class="mobile-menu__item"><a class="mobile-menu__link styled uk-flex uk-flex-middle" href="#">
+                <div class="uk-margin-small-right"><img data-src="{{'assets/img/heart.svg'|theme}}" uk-img uk-svg style="max-width:15px">
+                </div>
+                Отложенные
+                <div class="uk-margin-small-left uk-badge">4</div>
+            </a></li>
+        <li class="mobile-menu__item"><a class="mobile-menu__link styled uk-flex uk-flex-middle empty" href="#">
+                <div class="uk-margin-small-right"><img data-src="{{'assets/img/chart-bar.svg'|theme}}" uk-img uk-svg style="max-width:15px">
+                </div>
+                Сравнение товаров
+                <div class="uk-margin-small-left uk-badge">0</div>
+            </a></li>
+        {% if user %}
+            <li class="mobile-menu__item">
+                <a class="mobile-menu__link styled uk-flex uk-flex-middle empty" href="#" data-request="onLogout">
+                    <div class="uk-margin-small-right">
+                        <img data-src="{{'assets/img/user.svg'|theme}}" uk-img uk-svg style="max-width:15px">
+                    </div>
+                    Выйти из аккаунта
+                </a></li>
+        {% endif %}
+        <div class="mobile-menu__contacts uk-flex uk-flex-column uk-padding-small">
+            <div class="uk-margin-small">Контактная информация</div>
+            <a class="uk-margin-small-bottom uk-flex uk-flex-middle uk-padding-remove"
+               href="tel: {% if phone %} {{ phone }} {% else %} +7( 3452 ) 54-43-88 {% endif %} ">
+                <span class="uk-margin-small-right" uk-icon="phone"></span>
+                {% if phone %} {{ phone }} {% else %} +7( 3452 ) 54-43-88 {% endif %}
+            </a>
+            <a class="uk-margin-small-bottom uk-flex uk-flex-middle uk-padding-remove"
+               href="mailto: {% if mail is not empty %} {{ mail }} {% else %} sale@evroset.market {% endif %}">
+                <div class="uk-margin-small-right"><img data-src="{{'assets/img/envelope.svg'|theme}}" uk-img uk-svg style="max-width:15px">
+                </div>
+                {% if mail is not empty %} {{ mail }} {% else %} sale@evroset.market {% endif %}
+            </a>
+            <div class="mobile-menu__socials uk-margin-small-top">
+                <a class="uk-margin-small-bottom uk-flex uk-flex-middle" href="#">
+                    <span class="uk-margin-small-right" uk-icon="facebook"></span>facebook</a>
+                <a class="uk-margin-small-bottom uk-flex uk-flex-middle" href="#">
+                    <span class="uk-margin-small-right" uk-icon="twitter"></span>twitter</a>
+                <a class="uk-margin-small-bottom uk-flex uk-flex-middle" href="#">
+                    <span class="uk-margin-small-right" uk-icon="youtube"></span>youtube</a>
+            </div>
+        </div>
+    </ul>
+</nav>

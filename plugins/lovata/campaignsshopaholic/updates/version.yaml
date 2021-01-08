@@ -1,0 +1,19 @@
+1.0.0:
+    - 'Initialize plugin.'
+    - create_table_campaigns.php
+    - create_table_campaign_shipping_type.php
+    - create_table_campaign_brand.php
+    - create_table_campaign_category.php
+    - create_table_campaign_offer.php
+    - create_table_campaign_product.php
+    - create_table_campaign_tag.php
+1.0.1:
+    - 'Fixed creation of an order promo mechanisms via add() method.'
+1.0.2:
+    - 'Fixed bug with applying discounts for linked offers and products.'
+1.0.3:
+    - 'Fixed bug with applying discounts for linked only offers or only products.'
+1.1.0:
+    - 'Adding support of mechanisms to increase the price of products and orders. Requires Orders for Shopaholic plugin version 1.25.0 and later.'
+1.1.1:
+    - 'Fixed condition in Campaign model for PostgreSQL.'

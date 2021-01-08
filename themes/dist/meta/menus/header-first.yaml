@@ -1,0 +1,44 @@
+items:
+    -
+        title: 'Условия доставки'
+        nesting: 0
+        type: static-page
+        code: ''
+        reference: about-delivery
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Способы оплаты'
+        nesting: 0
+        type: static-page
+        code: ''
+        reference: about-payments
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Контактная информация'
+        type: cms-page
+        code: ''
+        reference: contacts
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Политика конфиденциальности'
+        nesting: 0
+        type: static-page
+        code: ''
+        reference: about-privacy-policy
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: Header-first

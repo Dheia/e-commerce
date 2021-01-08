@@ -1,0 +1,10 @@
+[viewBag]
+==
+
+{% if success %}
+    <span class="lead">
+        <span class="label label-success">Импорт из папки {{ success }} завершен</span>
+    </span>
+{% else %}
+    <p>Ведите название папки и нажмите "импорт"</p>
+{% endif %}

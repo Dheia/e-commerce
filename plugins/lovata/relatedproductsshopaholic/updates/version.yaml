@@ -1,0 +1,11 @@
+1.0.0:
+    - 'Initialize plugin.'
+    - create_table_related_product_link.php
+1.0.1:
+    - 'Added check for isNested flag when expanding forms'
+1.1.0:
+    - 'Add RelatedProductListStore class. Refactoring ProductModelHandler class. Requires Toolbox plugin version 1.10.0 and later.'
+1.2.0:
+    - 'Update license file'
+1.2.1:
+    - 'Fixed dynamic method in ProductItem class. Requires Toolbox plugin version 1.28.1 and later.'

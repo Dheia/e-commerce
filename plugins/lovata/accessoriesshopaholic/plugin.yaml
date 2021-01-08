@@ -1,0 +1,6 @@
+plugin:
+    name: 'lovata.accessoriesshopaholic::lang.plugin.name'
+    description: 'lovata.accessoriesshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-umbrella
+    homepage: ''

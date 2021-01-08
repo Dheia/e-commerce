@@ -1,0 +1,175 @@
+[viewBag]
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "novosti-video"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "news-detail"
+postPage = "news-detail"
+==
+{% set videos = blogPosts.posts.take(2) %}
+
+<div class="main-page-last">
+    <div class="max-width">
+
+        <div class="top-b">
+            <h2>Фото и видео</h2>
+        </div>
+
+        <div class="main-page-last__grid">
+            {% if galleries.isNotEmpty() %}
+            <div class="main-page-last__column">
+                <div class="main-page-last__list">
+                    {% for gallery in galleries %}
+                        {% if gallery.images.count() > 0 %}
+                    <div class="main-page-last__item">
+                        <div href="#" class="main-page-last__toggle">
+                            <div class="is-scrollbar">
+                                <a href="{{ gallery.url }}" class="main-page-last__click">
+                                    <span class="main-page-last__date">{{ gallery.name }}</span>
+                                    <span class="main-page-last__text">{{ gallery.description }}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <img loading="lazy" src="{{ gallery.images[0].path }}" alt="">
+                    </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="main-page-last__button"><a href="/gallery" class="button">Смотреть все фото</a>
+                </div>
+            </div>
+            {% else %}
+                <h1>Альбомов нет</h1>
+            {% endif %}
+            <div class="main-page-last__column">
+                <div class="main-page-last__list">
+                    {% if videos.count %}
+                        {% for post in videos %}
+                            <div class="main-page-last__item">
+                                <div href="{{ post.url }}" class="main-page-last__toggle">
+                                    <div class="is-scrollbar">
+                                        <a href="{{ post.url }}" class="main-page-last__click">
+                                            <span class="main-page-last__date">{{ post.title }}</span>
+                                            <span class="main-page-last__text">{{ post.title }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% if post.featured_images.count %}
+                                    {% for image in post.featured_images|slice(0, 1) %}
+                                        <img loading="lazy" src="{{ image.path }}" alt="">
+                                    {% endfor %}
+                                {% else %}
+                                    <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="main-page-last__button"><a href="/news/novosti-video" class="button">Смотреть все видео</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Instagram-->
+<div class="main-page-last">
+    <div class="max-width">
+
+        <div class="top-b">
+            <h2>Инстаграм федерации</h2>
+        </div>
+
+        <div class="swiper-container js--slider-last">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="main-page-last__item">
+                        <div href="#" class="main-page-last__toggle">
+                            <div class="is-scrollbar">
+                                <a href="#" class="main-page-last__click">
+                                    <span class="main-page-last__date">05 августа</span>
+                                    <span class="main-page-last__text">Лето заканчивается, поэтому пора готовить свой онлайн-проект к осени. Мы хорошо потрудились в июле и делимся своими достижениями в дайджесте. ? Читайте его до конца — применяйте фишки на своем проекте и зарабатывайте на нем еще больше. <br>Читайте июльский дайджест и используйте новые инструменты на практике — https://clck.ru/Q6fte. Приятного чтения! <br>#aspro_ru #aspro_blog #готовыерешения #готовыесайты #bitrix #aspro_digest</span>
+                                </a>
+                            </div>
+                        </div>
+                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="main-page-last__item">
+                        <div href="#" class="main-page-last__toggle">
+                            <div class="is-scrollbar">
+                                <a href="#" class="main-page-last__click">
+                                    <span class="main-page-last__date">05 августа</span>
+                                    <span class="main-page-last__text">Лето заканчивается, поэтому пора готовить свой онлайн-проект к осени. Мы хорошо потрудились в июле и делимся своими достижениями в дайджесте. ? Читайте его до конца — применяйте фишки на своем проекте и зарабатывайте на нем еще больше. <br>Читайте июльский дайджест и используйте новые инструменты на практике — https://clck.ru/Q6fte. Приятного чтения! <br>#aspro_ru #aspro_blog #готовыерешения #готовыесайты #bitrix #aspro_digest</span>
+                                </a>
+                            </div>
+                        </div>
+                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="main-page-last__item">
+                        <div href="#" class="main-page-last__toggle">
+                            <div class="is-scrollbar">
+                                <a href="#" class="main-page-last__click">
+                                    <span class="main-page-last__date">05 августа</span>
+                                    <span class="main-page-last__text">Лето заканчивается, поэтому пора готовить свой онлайн-проект к осени. Мы хорошо потрудились в июле и делимся своими достижениями в дайджесте. ? Читайте его до конца — применяйте фишки на своем проекте и зарабатывайте на нем еще больше. <br>Читайте июльский дайджест и используйте новые инструменты на практике — https://clck.ru/Q6fte. Приятного чтения! <br>#aspro_ru #aspro_blog #готовыерешения #готовыесайты #bitrix #aspro_digest</span>
+                                </a>
+                            </div>
+                        </div>
+                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="main-page-last__item">
+                        <div href="#" class="main-page-last__toggle">
+                            <div class="is-scrollbar">
+                                <a href="#" class="main-page-last__click">
+                                    <span class="main-page-last__date">05 августа</span>
+                                    <span class="main-page-last__text">Лето заканчивается, поэтому пора готовить свой онлайн-проект к осени. Мы хорошо потрудились в июле и делимся своими достижениями в дайджесте. ? Читайте его до конца — применяйте фишки на своем проекте и зарабатывайте на нем еще больше. <br>Читайте июльский дайджест и используйте новые инструменты на практике — https://clck.ru/Q6fte. Приятного чтения! <br>#aspro_ru #aspro_blog #готовыерешения #готовыесайты #bitrix #aspro_digest</span>
+                                </a>
+                            </div>
+                        </div>
+                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="main-page-last__item">
+                        <div href="#" class="main-page-last__toggle">
+                            <div class="is-scrollbar">
+                                <a href="#" class="main-page-last__click">
+                                    <span class="main-page-last__date">05 августа</span>
+                                    <span class="main-page-last__text">Лето заканчивается, поэтому пора готовить свой онлайн-проект к осени. Мы хорошо потрудились в июле и делимся своими достижениями в дайджесте. ? Читайте его до конца — применяйте фишки на своем проекте и зарабатывайте на нем еще больше. <br>Читайте июльский дайджест и используйте новые инструменты на практике — https://clck.ru/Q6fte. Приятного чтения! <br>#aspro_ru #aspro_blog #готовыерешения #готовыесайты #bitrix #aspro_digest</span>
+                                </a>
+                            </div>
+                        </div>
+                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+            <div class="arrow-b arrow-b_next arrow-b_next-last">
+                <svg class="icon__arrow-r" width="9px" height="15px">
+                    <use xlink:href="#arrow-r"></use>
+                </svg>
+            </div>
+            <div class="arrow-b arrow-b_prev arrow-b_prev-last">
+                <svg class="icon__arrow-l" width="9px" height="15px">
+                    <use xlink:href="#arrow-l"></use>
+                </svg>
+            </div>
+        </div>
+
+        <div class="main-page-last__button"><a href="#" class="button">Смотреть инстаграм</a>
+        </div>
+    </div>
+</div>
+<!--Instagram-->

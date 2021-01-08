@@ -1,0 +1,160 @@
+{# @var obGroupList \Lovata\PropertiesShopaholic\Classes\Collection\GroupCollection #}
+{# @var obFilterProductPropertyList \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection #}
+{# @var obProperty \Lovata\PropertiesShopaholic\Classes\Item\PropertyItem #}
+{# @var obPropertyValue \Lovata\PropertiesShopaholic\Classes\Item\PropertyValueItem #}
+{# @var obBrand \Lovata\Shopaholic\Classes\Item\BrandItem #}
+{# @var obActiveCategory \Lovata\Shopaholic\Classes\Item\CategoryItem #}
+{# @var obCategory \Lovata\Shopaholic\Classes\Item\CategoryItem #}
+
+{% set obGroupList =  obFilterProductPropertyList.groupList() %}
+{% set obMainGroup =  obGroupList.getByCode('main') %}
+
+{% set obMainFilterPropertyList = obFilterProductPropertyList.group(obMainGroup.id) %}
+
+{% set arFilterPropertyList = Catalog.getFilterPropertyList() %}
+{% set arFilterValueWithoutProperty = Catalog.getFilterValueWithoutProperty() %}
+
+ {% if obMainFilterPropertyList.isNotEmpty() %}
+    <div class="tovars-list__aside-inner uk-background-default bordered uk-offcanvas-bar uk-padding-remove">
+        <button class="uk-offcanvas-close tovars-list__close uk-hidden@m" type="button">Закрыть</button>
+        <ul class="tovars-list__list uk-card uk-card-small" uk-accordion="multiple: true;">
+            {% if obActiveCategory.children.isNotEmpty() %}
+                <li class="uk-card-body uk-open _shopaholic-category-filter-wrapper"
+                    data-filter-type="checkbox">
+                    <a class="uk-accordion-title">Категории
+                        <button type="button" uk-icon="icon: question; ratio: .75;"></button>
+                        <div uk-dropdown="mode: click;boundary-align: true; boundary: !.uk-accordion-title; pos: bottom-justify;">
+                            Краткое описание
+                        </div>
+                    </a>
+                    <div class="uk-accordion-content">
+                        <div class="uk-flex uk-flex-column">
+                            {% for obCategory in obActiveCategory.children if obCategory.product_count > 0 %}
+                                {% set arFilterCategoryList = Catalog.getFilterCategoryList() %}
+                                <label class="uk-margin-small-bottom uk-flex uk-flex-middle"
+                                       for="category-{{ obCategory.id }}">
+                                    <input class="uk-margin-remove-top uk-checkbox uk-margin-small-right"
+                                           type="checkbox"
+                                           {% if obCategory.id in arFilterCategoryList %}checked{% endif %}
+                                           value="{{ obCategory.slug }}"
+                                           id="category-{{ obCategory.id }}">
+                                    <span class="uk-text-semibold">{{ obCategory.name }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endif %}
+
+            {% for obProperty in obMainFilterPropertyList if obProperty.hasValue() %}
+                <li class="uk-card-body uk-open _shopaholic-filter-wrapper" data-filter-type="{{ obProperty.filter_type }}" data-property-id={{ obProperty.id }}>
+                    <a class="uk-accordion-title" href="#">{{ obProperty.filter_name }}
+                        {% if obProperty.measure.isNotEmpty() %} {{ obProperty.measure.name }} {% endif %}
+                        <button type="button" uk-icon="icon: question; ratio: .75;"></button>
+                        <div uk-dropdown="mode: click;boundary-align: true; boundary: !.uk-accordion-title; pos: bottom-justify;">
+                            {% if obProperty.description is not empty() %}
+                                {{ obProperty.description }}
+                            {% else %}
+                                Краткое описание
+                            {% endif %}
+                        </div>
+                    </a>
+                    <div class="uk-accordion-content">
+                        <div class="uk-flex uk-flex-column">
+                            {% set obPropertyValueList = obProperty.property_value.sort() %}
+                            {% for obPropertyValue in obPropertyValueList %}
+                                {% set bChecked = arFilterPropertyList[obProperty.id] is not empty and obPropertyValue.slug in arFilterPropertyList[obProperty.id] %}
+                                {% if bChecked == false and arFilterValueWithoutProperty[obProperty.id] is not empty %}
+                                    {% set obProductListTemp =obProductList.copy().filterByProperty(arFilterValueWithoutProperty[obProperty.id], obFilterProductPropertyList) %}
+                                    {% set bDisabled = obPropertyValue.isDisabled(obProductListTemp) %}
+                                {% endif %}
+
+                                {% if bDisabled %} <strike> {% endif %}
+                                <label class="uk-margin-small-bottom uk-flex uk-flex-middle" for="property-{{ obProperty.id }}-{{ obPropertyValue.id }}">
+                                <input class="uk-margin-remove-top uk-checkbox uk-margin-small-right"
+                                       type="checkbox"
+                                       {% if bChecked %}checked{% endif %}
+                                       {% if bDisabled %}disabled{% endif %}
+                                       value="{{ obPropertyValue.slug }}"
+                                       id="property-{{ obProperty.id }}-{{ obPropertyValue.id }}">
+                                <span class="uk-text-semibold">{{ obPropertyValue.value }}</span>
+{#                                <div class="uk-article-meta uk-margin-small-left">#}
+{#                                    {% if bDisabled %}0{% else %}12{% endif %}#}
+{#                                </div>#}
+                            </label>
+                                {% if bDisabled %} </strike> {% endif %}
+                           {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            {% if obProductList.getOfferMinPrice() is not empty %}
+                {% set minPrice = obProductList.getOfferMinPrice().price %}
+                {% set maxPrice = obProductList.getOfferMaxPrice().price %}
+                {% set obFilterPrice = Catalog.getFilterPrice() %}
+            <li class="uk-card-body uk-open">
+                <a class="uk-accordion-title" href="#">Цена</a>
+                <div class="uk-accordion-content">
+                     <div class="uk-flex uk-flex-middle uk-margin-medium-bottom">
+                        <div class="uk-width-expand">
+                            <input type="number" name="filter-min-price" class="range-input uk-input uk-text-center _shopaholic-price-filter" id="leftRange" value="{{ obFilterPrice.min }}">
+                        </div>
+                        <div class="uk-width-auto">
+                            <div class="tovars-list__range-seporator"></div>
+                        </div>
+                        <div class="uk-width-expand">
+                            <input type="number" name="filter-max-price" class="range-input uk-input uk-text-center _shopaholic-price-filter" id="rightRange" value="{{ obFilterPrice.max }}">
+                        </div>
+                    </div>
+{#                    <div id="range" data-min="0" data-max="8000" data-start="500" data-end="4000"></div>#}
+                    <div id="range" data-min="{{ minPrice }}" data-max="{{ maxPrice + 1 }}" data-start="{{ obFilterPrice.min }}" data-end="{{ obFilterPrice.max }}"></div>
+                    <div class="uk-flex uk-margin-medium-top">
+                        <button
+                            id="setRangePrice"
+                            class="setRangePrice uk-width-expand uk-button-default uk-button uk-flex uk-flex-middle uk-flex-center">
+                            Применить
+                        </button>
+                    </div>
+                </div>
+            </li>
+            {% endif %}
+
+            {# get brands filter#}
+            {% if obBrandList.isNotEmpty() %}
+                {% set arFilterBrandList = Catalog.getFilterBrandList() %}
+            <li class="uk-card-body uk-open _shopaholic-brand-filter-wrapper" data-filter-type="checkbox" data-property-id={{ obProperty.id }}>
+                <a class="uk-accordion-title">Бренды
+                    <button type="button" uk-icon="icon: question; ratio: .75;"></button>
+                    <div uk-dropdown="mode: click;boundary-align: true; boundary: !.uk-accordion-title; pos: bottom-justify;">
+                        Краткое описание
+                    </div>
+                </a>
+                <div class="uk-accordion-content">
+                    <div class="uk-flex uk-flex-column">
+                        {% for obBrand in obBrandList %}
+                            <label class="uk-margin-small-bottom uk-flex uk-flex-middle">
+                                <input
+                                    class="uk-margin-remove-top uk-checkbox uk-margin-small-right"
+                                    id="brand-{{ obBrand.id  }}"
+                                    type="checkbox"
+                                    {% if obBrand.id in arFilterBrandList %}checked{% endif %}
+                                    value="{{ obBrand.slug }}">
+                                <span class="uk-text-semibold">{{ obBrand.name }}</span>
+{#                                <div class="uk-article-meta uk-margin-small-left">12</div>#}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+        <div class="uk-flex uk-padding-small">
+            <button
+                id="resetForm"
+                class="uk-width-expand uk-button-default uk-button uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.75"></span>
+                Сбросить фильтры
+            </button>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,44 @@
+title = "Регионы детальная"
+url = "/regions/:category*/:subcategory/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = 404
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :subcategory }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+==
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('subcategory'))->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+    $isRightCategory = 0;
+    foreach($attachment as $key => $attach){
+        if($attach->category_id == $currentCategory->id){
+            $isRightCategory = 1;
+        }
+    }
+    if(!$isRightCategory && $this->param('slug')){
+        return $this->controller->run('404');
+    }
+}
+==
+{% set posts = blogPosts.posts %}
+{% if this.param['slug'] %}
+    {% partial 'regions/detail' currentOkrug=this.param['category'] %}
+{% else %}
+    {% partial 'regions/posts' currentOkrug=this.param['category'] %}
+{% endif %}

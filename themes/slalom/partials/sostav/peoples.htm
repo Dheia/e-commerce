@@ -1,0 +1,94 @@
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "sostav-detalnaya"
+==
+{% set posts = blogPosts.posts %}
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ category }}</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="/" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item"><a href="/sostav" class="sub-b__links">Состав</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">{{ category }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'team/left-menu' %}
+            <div class="grid-b__content">
+                <div class="catalog-b">
+                    <div class="catalog-b__list catalog-b__list_services">
+                        {% for post in posts %}
+                            <div class="catalog-b__item">
+                                <div class="catalog-b__pic">
+                                    <a href="{{ post.url }}">
+                                        {% if post.featured_images.count %}
+                                            {% for image in post.featured_images|slice(0, 1) %}
+                                                <img loading="lazy" src="{{ image.path }}" alt="">
+                                            {% endfor %}
+                                        {% else %}
+                                            <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="catalog-b__title"><a href="/sostav/trenerskiy-menedzherskiy-i-rukovodyashchiy-sostav-komandy/{{ post.slug }}">{{post.title}}</a>
+                                </div>
+                                <div class="catalog-b__text">{{ post.excerpt }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!--pagination-->
+                    {% if posts.lastPage > 1 %}
+                        <div class="paging-b">
+                            <div class="paging-b__list">
+                                {% if posts.currentPage > 1 %}
+                                    <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ posts.currentPage-1 }}" class="paging-b__links paging-b__links_arrow">‹</a></div>
+                                {% endif %}
+                                {% if posts.currentPage > 2 %}
+                                    <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page=1" class="paging-b__links">1</a></div>
+                                    {% if posts.currentPage > 3 %}
+                                        <div class="paging-b__item"><a href="" class="paging-b__links">...</a></div>
+                                    {% endif %}
+                                {% endif %}
+                                {% for page in 1..posts.lastPage %}
+                                    {% if page == posts.currentPage-1 or page == posts.currentPage+1 %}
+                                        <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ page }}" class="paging-b__links">{{ page }}</a></div>
+                                    {% elseif posts.currentPage == page %}
+                                        <div class="paging-b__item"><span class="paging-b__links paging-b__links_active">{{ page }}</span></div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if posts.currentPage < posts.lastPage-1 %}
+                                    {% if posts.currentPage < posts.lastPage-2 %}
+                                        <div class="paging-b__item"><a href="" class="paging-b__links">...</a></div>
+                                    {% endif %}
+                                    <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ posts.lastPage }}" class="paging-b__links">{{ posts.lastPage }}</a></div>
+                                {% endif %}
+                                {% if posts.lastPage > posts.currentPage %}
+                                    <div class="paging-b__item"><a href="{{ this.page.currentUrl}}?page={{ posts.currentPage+1 }}" class="paging-b__links paging-b__links_arrow">›</a></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!--pagination-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

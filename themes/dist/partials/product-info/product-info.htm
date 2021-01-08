@@ -1,0 +1,194 @@
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem #}
+{# @var obOffer \Lovata\Shopaholic\Classes\Item\OfferItem #}
+{# @var obBrand \Lovata\Shopaholic\Classes\Item\BrandItem #}
+{# @var obProperty \Lovata\PropertiesShopaholic\Classes\Item\PropertyItem #}
+
+{% set obOffer = obProduct.offer.active().first() %}
+{% set obPropertyList = obProduct.property.sort() %}
+{% set obBrand = obProduct.brand %}
+{% set obOfferList = obProduct.offer.first() %}
+{% set obWishList = ProductList.make().wishList().active() %}
+
+<div uk-grid class="_shopaholic-product-wrapper" data-product-id="{{ obProduct.id }}">
+    <input type="hidden" name="offer_id" value="{{ obOffer.id }}">
+    <div class="uk-width-1-1 uk-width-expand@m">
+        <div class="uk-card uk-card-body tovar-card uk-background-default">
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-1 tovar-card_left uk-width-1-3@s">
+
+                    {% if obProduct.preview_image.getPath() is not empty %}
+
+                        <div class="uk-position-relativ main-img" tabindex="-1" uk-slider>
+                            <ul class="uk-slider-items uk-child-width-1-1">
+                                <li>
+                                    <a class="photoswipe" href="{{ obProduct.preview_image.path }}"
+                                       data-fancybox-group="tovar">
+                                        <img src="{{ obProduct.preview_image.path }}"
+                                             alt="{{ obProduct.preview_image.description }}">
+                                    </a>
+                                </li>
+                                {% if  obProduct.images is not empty %}
+                                    {% for obImage in obProduct.images %}
+                                        <li>
+                                            <a class="photoswipe" href="{{ obImage.path }}"
+                                               data-fancybox-group="tovar">
+                                                <img src="{{ obImage.path }}">
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                            {% if  obProduct.images is not empty %}
+                                <ul class="uk-child-width-1-3 uk-grid-small" uk-grid>
+                                    {% for obImage in obProduct.images %}
+                                        <li class="main-img" uk-slider-item="{{ loop.index }}">
+                                            <a href="#">
+                                                <img src="{{ obImage.path }}" alt="">
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="uk-position-relativ main-img" tabindex="-1" uk-slider>
+                            <ul class="uk-slider-items uk-child-width-1-1">
+                                <li>
+                                    <a class="photoswipe" href="assets/img/slide-1.jpg" data-fancybox-group="tovar">
+                                        <img src="{{ 'assets/img/34234-big.jpg'|theme }}" alt=""></a>
+                                </li>
+                                <li>
+                                    <a class="photoswipe" href="assets/img/slide-2.jpg" data-fancybox-group="tovar">
+                                        <img src="{{ 'assets/img/34234-big.jpg'|theme }}" alt=""></a>
+                                </li>
+                                <li>
+                                    <a class="photoswipe" href="assets/img/slide-3.jpg" data-fancybox-group="tovar">
+                                        <img src="{{ 'assets/img/34234-big.jpg'|theme }}" alt=""></a>
+                                </li>
+                            </ul>
+                            <ul class="uk-child-width-1-3 uk-grid-small" uk-grid>
+                                <li class="main-img" uk-slider-item="0">
+                                    <a href="#">
+                                        <img src="{{ 'assets/img/34234-big.jpg'|theme }}" alt="">
+                                    </a>
+                                </li>
+                                <li class="main-img" uk-slider-item="1">
+                                    <a href="#">
+                                        <img src="{{ 'assets/img/34234-big.jpg'|theme }}" alt="">
+                                    </a>
+                                </li>
+                                <li class="main-img" uk-slider-item="2">
+                                    <a href="#">
+                                        <img src="{{ 'assets/img/34234-big.jpg'|theme }}" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="uk-width-1-1 uk-width-expand">
+                    <div class="uk-width-1-1 uk-flex uk-flex-top">
+                        <div class="uk-grid-column">
+                            <div class="tovar-card__title">{{ obProduct.name }}</div>
+                            <div class="tovar-card__subtitle">Арт: {{ obProduct.code }}</div>
+                        </div>
+                        <div class="uk-flex uk-margin-auto-left">
+                            <div class="uk-width-1-2 uk-flex uk-margin-medium-right">
+                                <div class="uk-flex tovar-card__icons uk-flex-middle">
+                                    <img data-src="{{ 'assets/img/chart-bar.svg'|theme }}" uk-img uk-svg>
+{#                                    <a class="uk-text-bold" href="#">Сравнить</a>#}
+                                    {% if obProduct.inCompare() %}
+                                        <form data-request="ProductList::onRemoveFromCompare">
+                                            <input type="hidden" name="product_id" value="{{ obProduct.id }}">
+                                            <button type="submit" >Убрать из Сравнения</button>
+                                        </form>
+                                    {% else %}
+                                    <form data-request="ProductList::onAddToCompare">
+                                        <input type="hidden" name="product_id" value="{{ obProduct.id }}">
+                                        <button type="submit" >Сравнить</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="uk-width-1-2 uk-flex">
+                                <div>
+                                    <div class="uk-flex tovar-card__icons uk-flex-middle">
+                                        <img data-src="{{ 'assets/img/heart.svg'|theme }}" uk-img uk-svg>
+                                        {% if obWishList.has(obProduct.id) %}
+                                        <a class="uk-text-bold _shopaholic-remove-wish-list-button" href="#">Убрать</a>
+                                        {% else %}
+                                        <a class="uk-text-bold _shopaholic-add-wish-list-button" href="#">Избранное</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-margin-medium-top">
+                        {{ obProduct.preview_text|raw }}
+                    </div>
+                    {% if obOffer.isNotEmpty() %}
+                        <div class="prices">
+                            <div class="tovar-card__price old">{{ obOffer.old_price }}
+                                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                            <div class="tovar-card__price">{{ obOffer.price }}
+                                <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="prices">
+                            <div class="tovar-card__price old">setOffer<img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                            <div class="tovar-card__price">setOffer<img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}" uk-img uk-svg>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="uk-flex uk-flex-middle uk-flex-right">
+                        <div class="counter uk-flex bordered uk-background-default uk-margin-small-right">
+                            <div class="counter__sing minus  _shopaholic-cart-decrease-quantity">
+                                <span uk-icon="icon: minus">
+                                </span>
+                            </div>
+{#                            <input class="uk-form-width-xsmall uk-input uk-text-center" name="{{ quantity }}" value="1" min="1" max="{{ obOffer.quantity}}" type="number">#}
+                            <input class="uk-form-width-xsmall uk-input uk-text-center_shopaholic-cart-quantity" type="text"
+                                   name="quantity" value="1" min="1"
+                                   max="{{ obOffer.quantity }}">
+                            <div class="counter__sing plus _shopaholic-cart-increase-quantity">
+                                <span uk-icon="icon: plus">
+                                </span>
+                            </div>
+                        </div>
+                        <a type="button" class="uk-button-primary uk-button _shopaholic-cart-add" href="#">В корзину</a>
+                    </div>
+                </div>
+                    {% partial 'product-info/product-property' %}
+            </div>
+        </div>
+    </div>
+    <div class="uk-width-1-1 uk-width-1-4@m">
+        <div class="uk-card-body uk-card uk-card-small bordered uk-background-default uk-margin-medium-bottom uk-visible@m">
+            <h6 class="uk-h6 uk-text-bold uk-margin-small-bottom">Нужна консультация?</h6>
+            <div class="uk-margin-small-bottom">Тел: {{ phone }}</div>
+            <div class="uk-margin-small-bottom">{{ work_time }}</div>
+            <h6 class="uk-h6 uk-text-bold uk-margin-small-bottom uk-margin-medium-top">Доставка:</h6>
+            <ul class="tovar-card__infolist">
+                <li>Самовывоз</li>
+                <li>Доставка курьером</li>
+                <li>Доставка транспортной компанией</li>
+            </ul><a href="{{ url('delivery') }}">Подробнее о доставке</a>
+            <h6 class="uk-h6 uk-text-bold uk-margin-small-bottom uk-margin-medium-top">Оплата:</h6>
+            <ul class="tovar-card__infolist">
+                <li>Наличные</li>
+                <li>Безналичный расчет</li>
+                <li>Банковская карта</li>
+            </ul><a href="{{ url('payment-methods') }}">Подробнее про оплату</a>
+        </div>
+        <!--.uk-card-body.uk-card.uk-card-small.bordered.uk-background-default-->
+        <!--    .uk-grid-medium( uk-grid )-->
+        <!--        .uk-width-1-1.uk-text-center( class="uk-width-1-5@s uk-width-1-1@m")-->
+        <!--            +ukImg( 'card-img.jpg' )-->
+        <!--        .uk-width-1-1( class="uk-width-4-5@s uk-width-1-1@m") Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolorum eius esse, harum iusto nobis non odit quam totam vero. Blanditiis consequatur nihil velit voluptatem!-->
+        <!--            a( href="#" ).uk-flex.uk-flex-middle.tovar-card__banner-link.uk-margin-medium-top Все товары бренда IcePeak-->
+    </div>
+</div>

@@ -1,0 +1,55 @@
+title = "Корзина"
+url = "/cart"
+layout = "default"
+is_hidden = 0
+child_of = "home"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+==
+<?php
+function onInit(){
+    $this['obPriceType'] = \Lovata\Shopaholic\Classes\Helper\PriceTypeHelper::instance()->findByCode("priceType1");
+}
+?>
+==
+{# @var obCartPositionList \Lovata\OrdersShopaholic\Components\Cart #}
+{% set obCartPositionList = Cart.get() %}
+
+<section class="uk-section">
+    <div class="uk-container">
+        <h1 class="uk-h1 section-title">Моя корзина</h1>
+        {% partial 'site/breadcrumbs' %}
+
+        {% if obCartPositionList.isNotEmpty() %}
+        <div uk-grid>
+            <div class="uk-width-expand cart__items">
+                {% for obCartPosition in obCartPositionList %}
+                    {% partial 'cart/cart-item' obCartPosition=obCartPosition %}
+                {% endfor %}
+            </div>
+            <div class="uk-width-1-1 uk-width-1-4@m">
+                <div class="uk-card uk-card-small uk-card-body uk-background-default" uk-sticky="offset: 80; bottom: true; media: @m;">
+                    <div class="uk-grid-medium" uk-grid>
+                        <a href="{{url('checkout')}}">
+                        <div class="uk-width-1-2 uk-flex uk-flex-center uk-width-1-1@m uk-flex-last@m">
+
+                            <button class="uk-button uk-button-primary uk-width-auto uk-width-1-1@m">Оформить заказ</button>
+                        </div>
+                        </a>
+                        <div class="uk-width-1-2 uk-text-center uk-width-1-1@m uk-text-left@m _shopaholic-cart-total-price">
+                            {% partial 'cart/cart-total-price' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="uk-text-bold uk-margin-small-bottom">Ваша корзина пуста</div>
+            <div class="uk-text-small uk-margin-small-bottom">
+                Выберите нужный вам товар из каталога интерент-магазина и добавте его в корзину
+            </div>
+            <a class="uk-button uk-button-primary" href="{{ url('catalog') }}">Перейти в каталог</a>
+        {% endif %}
+    </div>
+</section>

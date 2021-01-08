@@ -1,0 +1,71 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ post.title }}</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="/" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item"><a href="/team" class="sub-b__links">Сборная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item"><a href="/team/{{ category.slug }}" class="sub-b__links">{{ category.name }}</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">{{ post.title }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'team/left-menu' %}
+            <div class="grid-b__content">
+                    {% if post.featured_files.count %}
+                        <div class="comments-b__tabs comments-b__tabs_gray">
+                            <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links comments-b__tabs-links_active">Содержание</a>
+                            </div>
+                            <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links">Документы</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="person-b__photo">
+                        {% for image in post.featured_images %}
+                        <img loading="lazy" src="{{ image.path }}" alt="">
+                        {% endfor %}
+                    </div>
+                    <div class="person-b__about">
+                        <div class="article-b__content article-b__content_show">
+                            <div class="person-b__whois">{{ post.title }}</div>
+                            <div class="person-b__text">
+                                <p>{{ post.content | raw }}</p>
+                            </div>
+                        </div>
+                        <div class="article-b__content">
+                            {% if post.featured_files.count %}
+                            <div class="docs-b">
+                                {% for file in post.featured_files %}
+                                {% set arrFile = file.file_name | split('.') %}
+                                {% set fileType = arrFile|slice(length-1, length) %}
+                                <a href="{{ file.path }}" class="docs-b__item">
+                                    <i class="icon_docs icon_docs_{{ fileType[0] }}"></i>
+                                    <span class="docs-b__name">{{ file.file_name }}</span>
+                                    <span class="docs-b__size">{{ file.size }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p>Нет документов</p>
+                            {% endif %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>

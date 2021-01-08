@@ -1,0 +1,8 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('lovata/subscriptionsshopaholic/subscriptionperiods') ?>"><?= e(trans('lovata.subscriptionsshopaholic::lang.period.list_title')) ?></a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?= $this->reorderRender() ?>

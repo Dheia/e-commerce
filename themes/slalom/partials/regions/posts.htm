@@ -1,0 +1,54 @@
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+use RainLab\Blog\Models\Post;
+
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+
+    $this['posts'] = $this['posts']->sortByDesc('is_region_main');
+}
+==
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ blogPosts.category.name }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+    <div class="max-width">
+        <div class="grid-b">
+            <div class="grid-b__sidebar">
+                <div class="sidebar-b">
+                    <div class="sidebar-b__menu">
+                        {% partial 'regions/menu' %}
+                    </div>
+                </div>
+            </div>
+            <div class="grid-b__content">
+                <div class="welcome-page">
+                    Смотрите в разделе <b>{{ blogPosts.category.name }}</b>:
+                </div>
+                <div class="services-b">
+                    <div class="services-b__list">
+                        {% for post in posts if post.published %}
+                            {% if post.is_region_main %}
+                        <div class="services-b__item">
+                            <div class="services-b__about">
+                                <div class="services-b__title">
+                                    <a href="/regions/{{ blogPosts.category.parent.slug }}/{{ blogPosts.category.slug }}/{{ post.slug }}">{{ post.title }}</a>
+                                </div>
+                            </div>
+                        </div>
+                            {% endif %}
+                            {% if post.is_region_main !=1 %}
+                                {% partial 'people/people' post=post %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

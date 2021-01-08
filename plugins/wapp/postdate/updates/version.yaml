@@ -1,0 +1,38 @@
+1.0.1:
+    - 'Create Fake Database for blog.'
+    - create_post_sorevnovania.php
+    - seeder_create_blog_news.php
+1.0.2:
+    - 'Create Fake Database for team.'
+    - seeder_create_national_team.php
+1.0.3:
+    - 'Create Fake Database for results.'
+    - seeder_create_sobytiya.php
+1.0.4:
+    - 'create table for galleries(import).'
+    - create_galleries_table.php
+1.0.6:
+    - 'create table for parsed news duplicate'
+    - 'create table for calendar'
+    - 'create table for files'
+    - create_import_parsed_news_duplicate.php
+    - create_import_calendar_table.php
+    - create_import_files_table.php
+1.0.7:
+    - 'create year column for events'
+    - create_post_sorevnovania_year.php
+1.0.8:
+    - 'create subcategories for trainers'
+    - seeder_create_trainers_subcategory.php
+
+1.0.9:
+    - 'add column for attach post to post'
+    - add_posts_to_rainlab_blog_posts_table.php
+
+1.0.10:
+    - 'add is_region_main to blog post'
+    - add_column_to_rainlab_blog_posts_table.php
+
+1.1.0:
+    - 'add priority to RainLab Blog'
+    - add_priority_to_rainlab_blog_posts_table.php

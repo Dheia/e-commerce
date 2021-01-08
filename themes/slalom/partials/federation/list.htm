@@ -1,0 +1,63 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ blogPosts.category.name }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'federation/left-menu' %}
+            <div class="grid-b__content">
+                <div class="welcome-page">
+                    Смотрите в разделе <b>{{ blogPosts.category.name }}</b>:
+                </div>
+                <div class="catalog-b__list catalog-b__list_services">
+                    {% for post in posts %}
+                        <div class="catalog-b__item">
+                            <div class="catalog-b__pic">
+                                <a href="{{ post.url }}">
+                                    {% if post.featured_images.count %}
+                                        {% for image in post.featured_images|slice(0, 1) %}
+                                            <img loading="lazy" src="{{ image.path }}" alt="">
+                                        {% endfor %}
+                                    {% else %}
+                                        <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="catalog-b__title"><a href="{{ post.url }}">{{post.title}}</a>
+                            </div>
+                            <div class="catalog-b__text">{{ post.content|striptags|length > 1100 ? post.content|slice(0, 1100)|striptags|raw ~ '...' : post.content|striptags|raw }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!--pagination-->
+                {% if posts.lastPage > 1 %}
+                <div class="paging-b">
+                    <div class="paging-b__list">
+                        {% if posts.currentPage > 1 %}
+                        <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ posts.currentPage-1 }}" class="paging-b__links paging-b__links_arrow">‹</a></div>
+                        {% endif %}
+
+                        {% for page in 1..posts.lastPage %}
+                        {% if posts.currentPage == page %}
+                        <div class="paging-b__item"><span class="paging-b__links paging-b__links_active">{{ page }}</span></div>
+                        {% else %}
+                        <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ page }}" class="paging-b__links">{{ page }}</a></div>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if posts.lastPage > posts.currentPage %}
+                        <div class="paging-b__item"><a href="{{ this.page.currentUrl}}?page={{ posts.currentPage+1 }}" class="paging-b__links paging-b__links_arrow">›</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <!--pagination-->
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,11 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: wapp.userconnect::lang.category.fields.name.label
+        type: text
+    description:
+        label: wapp.userconnect::lang.category.fields.description.label
+        type: textarea

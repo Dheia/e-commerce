@@ -1,0 +1,14 @@
+[viewBag]
+==
+{% if answer %}
+    <span class="lead">
+        <span class="label label-success">{{ answer }}</span>
+        {% for post in posts %}
+            {{ post.title }}
+        {% endfor %}
+    </span>
+{% else %}
+    <span class="text-muted">
+        Нажмите кнопку "Обновить"
+    </span>
+{% endif %}

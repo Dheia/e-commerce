@@ -1,0 +1,64 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ post.title }}</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'federation/left-menu' %}
+            <div class="grid-b__content">
+                <div class="person-b">
+                    <div class="person-b__photo">
+                        {% for image in post.featured_images | slice(0,1) %}
+                            <img loading="lazy" src="{{ image.path }}" alt="">
+                        {% endfor %}
+                    </div>
+                    <div class="person-b__about">
+                        <div class="person-b__whois">{{ post.title }}</div>
+                        <!--<div class="person-b__contacts">
+                            <div class="reviews-b__contacts">
+                                <div class="reviews-b__contacts-item">
+                                    <svg class="icon__mail" width="16px" height="13px">
+                                        <use xlink:href="#mail"></use>
+                                    </svg>
+                                    <a href="mailto:it@site.ru">it@site.ru</a>
+                                </div>
+                                <div class="reviews-b__contacts-item"><i class="icon icon_phone"></i>  <a href="tel:">+7 (000) 456-78-90</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="person-b__social">
+                            <div class="reviews-b__social">
+                                <a href="#"><i class="icon_contacts icon_contacts_vk"></i></a>
+                                <a href="#"><i class="icon_contacts icon_contacts_tw"></i></a>
+                                <a href="#"><i class="icon_contacts icon_contacts_ig"></i></a>
+                            </div>
+                        </div>-->
+
+                        <div class="person-b__text">
+                            <p>{{ post.content | raw}}</p>
+                        </div>
+                        {% if post.featured_files %}
+                            {% for file in post.featured_files %}
+                                {% set arrFile = file.file_name | split('.') %}
+                                {% set fileType = arrFile|slice(length-1, length) %}
+                                <a href="{{ file.path }}" class="docs-b__item" download>
+                                    <i class="icon_docs icon_docs_{{ fileType[0] }}"></i>
+                                    <span class="docs-b__name">{{ file.file_name }}</span>
+                                    <span class="docs-b__size">{{ file.size }}</span>
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                        <!--<a href="#" class="button">Написать сообщение</a>-->
+                    </div>
+                </div>
+                <div class="article-b__end">
+                    <a href="/federation/{{ post.categories[0].slug }}" class="article-b__end-back"><span class="article-b__end-icon">‹</span><span class="article-b__end-text">Назад к списку</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

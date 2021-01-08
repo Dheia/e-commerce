@@ -1,0 +1,38 @@
+{#<div#}
+{#    class="uk-button uk-button-default uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-margin-medium-top">#}
+{#    <span class="uk-margin-small-right" uk-icon="icon: plus; ratio: 0.7;"></span>Показать еще#}
+{#</div>#}
+{% set arPaginationList = Pagination.get(iPage, iCount) %}
+
+{% if arPaginationList is not empty %}
+<div class="pagination-container">
+<ul class="uk-pagination uk-margin-medium-top uk-flex uk-flex-center" uk-margin>
+    {% for arPagination in arPaginationList %}
+        {% if iPage > 1 and loop.first %}
+            <li class='_shopaholic-pagination' data-page="{{ iPage - 1 }}">
+                <a class="{{ arPagination.class }}" href="?page={{ iPage - 1 }}">
+                    <span uk-pagination-previous=""></span>
+                </a>
+            </li>
+        {% endif %}
+
+        <li class='_shopaholic-pagination{% if iPage == arPagination.value %} uk-active {% endif %}'
+            data-page="{{ arPagination.value }}">
+            {% if iPage != arPagination.value %}
+                <a href="?page={{ arPagination.value }}">{{ arPagination.name }}</a>
+            {% else %}
+                {{ arPagination.name }}
+            {% endif %}
+        </li>
+
+        {% if iPage < iMaxPage and loop.last %}
+            <li class='_shopaholic-pagination' data-page="{{ iPage + 1 }}">
+                <a href="?page={{ iPage + 1 }}">
+                    <span uk-pagination-next=""></span>
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+</div>
+{% endif %}

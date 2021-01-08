@@ -1,0 +1,37 @@
+[viewBag]
+
+[blogCategories]
+slug = "news"
+displayEmpty = 1
+categoryPage = "news-detail"
+==
+<?php
+function onStart(){
+    $newsCategoryId = Db::table('rainlab_blog_categories')->where('slug', 'news')->value('id');
+    $noCategoryList = Db::table('rainlab_blog_posts_categories')->where('category_id', $newsCategoryId)->lists('post_id');
+    $first = \Rainlab\Blog\Models\Category::with('posts')->where('id',$newsCategoryId)->first();
+    $this['postsNoCategory'] = $first->posts;
+}
+?>
+==
+{% set categories = blogCategories.categories %}
+
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <div class="sidebar-b__category">
+            {% for mainNewsCategory in categories if mainNewsCategory.slug == 'news' %}
+                <div class="block-b__title block-b__title_small block-b__title_border">{{ mainNewsCategory.name }}</div>
+                <div class="sidebar-b__category-list">
+                    {% for subCategory in mainNewsCategory.children %}
+                    <div class="sidebar-b__category-item">
+                        <a href="/news/{{ subCategory.slug }}" class="sidebar-b__category-links">{{ subCategory.name | replace({'Новости: ':''}) }}<span>{{ subCategory.posts.count }}</span></a>
+                    </div>
+                    {% endfor %}
+                    <div class="sidebar-b__category-item">
+                        <a href="/news/no-category" class="sidebar-b__category-links">Без категории<span>{{ postsNoCategory.count }}</span></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

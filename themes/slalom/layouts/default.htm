@@ -1,0 +1,90 @@
+description = "Default"
+
+[Settings]
+
+[staticPage]
+useContent = 1
+default = 1
+
+[searchForm]
+resultPage = "search"
+categoryFilter = 0
+==
+<?php
+function onInit()
+{
+    $this['phone'] = $this->Settings->get('phone');
+    $this['second_phone'] = $this->Settings->get('second_phone');
+    $this['address'] = $this->Settings->get('address');
+    $this['mail'] = $this->Settings->get('mail');
+    $this['facebook'] = $this->Settings->get('facebook');
+    $this['facebook_active'] = $this->Settings->get('facebook_active');
+    $this['vk'] = $this->Settings->get('vk');
+    $this['vk_active'] = $this->Settings->get('vk_active');
+    $this['instagram'] = $this->Settings->get('instagram');
+    $this['instagram_active'] = $this->Settings->get('instagram_active');
+    $this['twitter'] = $this->Settings->get('twitter');
+    $this['youtube'] = $this->Settings->get('youtube');
+    $this['imgLogoHeader'] = $this->Settings->get('logoHeader');
+    $this['imgLogoFooter'] = $this->Settings->get('logoFooter');
+}
+?>
+==
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>October CMS - {{ this.page.title }}</title>
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <meta name="author" content="OctoberCMS">
+        <meta content="telephone=no" name="format-detection">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="OctoberCMS">
+        <link rel="icon" type="image/png" href="{{ 'assets/images/october.png'|theme }}">
+        <link href="{{ 'assets/css/vendor.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/theme.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/main.css'|theme }}" rel="stylesheet" type="text/css">
+        {% styles %}
+    </head>
+    <body class="bg-white">
+    <div class="wrapper">
+        <!-- Header -->
+            {% partial 'site/header' %}
+        <!-- Content -->
+        <section id="layout-content">
+            {% page %}
+        </section>
+
+        <!-- Footer -->
+        <footer id="layout-footer">
+            {% partial 'site/footer' %}
+        </footer>
+
+        <!-- Scripts -->
+        <script src="{{ 'assets/vendor/jquery.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/bootstrap.js'|theme }}"></script>
+        <script src="{{ 'assets/javascript/app.js'|theme }}"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+        <script src="{{ 'assets/js/main.js'|theme }}"></script>
+
+        <script src="{{ 'assets/js/fotorama.js'|theme }}"></script>
+        <script src="{{ 'assets/js/swiper.js'|theme }}"></script>
+        <script src="{{ 'assets/js/jquery.touchSwipe.min.js'|theme }}"></script>
+        <script src="{{ 'assets/js/jquery.fancybox.js'|theme }}"></script>
+        <script src="{{ 'assets/js/jquery.inputmask.bundle.js'|theme }}"></script>
+        <script src="{{ 'assets/js/stickyfill.js'|theme }}"></script>
+        <script src="{{ 'assets/js/modal.js'|theme }}"></script>
+        <script src="{{ 'assets/js/jquery.sticky.js'|theme }}"></script>
+        <script src="{{ 'assets/js/jquery.mCustomScrollbar.js'|theme }}"></script>
+        <script src="{{ 'assets/js/jquery.marquee.min.js'|theme }}"></script>
+        {% partial 'site/symbols' %}
+        {% framework extras %}
+        {% scripts %}
+    </div>
+    </body>
+</html>

@@ -1,0 +1,101 @@
+[staticMenu]
+code = "footer"
+
+==
+
+<div class="footer-wrapper" id="footerWrapper">
+    <footer class="footer">
+        <div class="uk-container">
+            <div class="uk-padding uk-padding-remove-horizontal" uk-grid>
+                <div class="uk-width-1-4 uk-visible@m">
+                    <div class="uk-margin-small-bottom">
+                        <a class="uk-flex uk-flex-center" href="#">
+                            {% if imgLogoFooter.getPath() is not empty() %}
+                                <img src="{{ imgLogoFooter.getPath() }}">
+                            {% else %}
+                                <img data-src="{{'assets/img/Logo-inner.svg'|theme}}" uk-img>
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="uk-grid-small uk-flex-center" uk-grid>
+                        <a class="uk-width-auto" href="{{ facebook }}">
+                            <span uk-icon="facebook"></span>
+                        </a>
+                        <a class="uk-width-auto" href="{{ twitter }}">
+                            <span uk-icon="twitter"></span>
+                        </a>
+                        <a class="uk-width-auto" href="{{ youtube }}">
+                            <span uk-icon="youtube"></span>
+                        </a>
+                        <a class="uk-width-auto" href="{{ instagram }}">
+                            <span uk-icon="instagram"></span>
+                        </a>
+                    </div>
+                </div>
+                {% for menuItem in staticMenu.menuItems %}
+                <div class="uk-width-1-4 footer__navs uk-width-expand@s">
+                    <div class="uk-margin-small-bottom uk-text-bold">{{ menuItem.title }}</div>
+                    {% if menuItem.items is not empty() %}
+                    {% set obChilds = menuItem.items %}
+                    <uk class="uk-flex uk-flex-column">
+                        {% for menuChItem in obChilds %}
+                            <li class="uk-margin-small-bottom"><a href="{{ menuChItem.url }}">{{ menuChItem.title }}</a></li>
+                        {% endfor %}
+                    </uk>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <div class="uk-width-1-4 footer__navs uk-width-expand@s">
+                    <div class="uk-margin-small-bottom uk-text-bold">Наши контакты</div>
+                    <div class="uk-margin-small-bottom uk-grid-small uk-flex-middle uk-flex-nowrap" uk-grid>
+                        <span uk-icon="phone"></span>
+                        <a class="uk-text-bold" href="tel:  {% if phone %} {{ phone }} {% else %} +7( 3452 ) 54-43-88 {% endif %} ">
+                            {% if phone %} {{ phone }} {% else %} +7( 3452 ) 54-43-88 {% endif %}
+                        </a>
+                    </div>
+                    <div class="uk-margin-small-bottom footer__mail uk-grid-small uk-flex-middle uk-flex-nowrap"
+                         uk-grid>
+                        <span>
+                            <img data-src="{{ 'assets/img/envelope.svg'|theme }}" uk-img uk-svg>
+                        </span>
+                        <a class="wrap-word" href="mailto: {% if mail is not empty %} {{ mail }} {% else %} sale@evroset.market {% endif %}">
+                            {% if mail is not empty %} {{ mail }} {% else %} sale@evroset.market {% endif %}
+                        </a>
+                    </div>
+                    <div class="uk-margin-small-bottom footer__mail uk-grid-small uk-flex-middle uk-flex-nowrap"
+                         uk-grid>
+                        <div class="uk-width-auto">
+                            <a href="{{ vk }}">
+                                <img src="{{ 'assets/img/vk-inner.svg'|theme }}">
+                            </a>
+                        </div>
+                        <div class="uk-width-auto"><a href="{{ instagram }}">
+                                <img src="{{ 'assets/img/insta-inner.svg'|theme }}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-padding-small uk-padding-remove-horizontal uk-grid-medium uk-flex-center" uk-grid>
+                <div class="uk-width-1-1 footer__paylist uk-width-expand@s">
+                    <div class="uk-grid-small uk-flex-center" uk-grid><a class="uk-width-auto" href="#"><img
+                        data-src="{{'assets/img/cash.svg'|theme}}" uk-img uk-svg></a><a class="uk-width-auto"
+                                                                                        href="#"><img
+                        data-src="{{'assets/img/visa.svg'|theme}}" uk-img uk-svg></a>
+                        <a class="uk-width-auto" href="#">
+                            <img data-src="{{'assets/img/mastercard.svg'|theme}}" uk-img uk-svg></a>
+                        <a class="uk-width-auto" href="#">
+                        <img data-src="{{'assets/img/Mir-logo.svg'|theme}}" uk-img uk-svg>
+                        </a>
+                        <a class="uk-width-auto" href="#">
+                        <img data-src="{{'assets/img/sber.svg'|theme}}" uk-img uk-svg>
+                        </a>
+                        <a class="uk-width-auto" href="#">
+                        <img data-src="{{'assets/img/contract.svg'|theme}}" uk-img uk-svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

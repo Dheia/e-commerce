@@ -1,0 +1,10 @@
+plugin:
+    name: 'lovata.reviewsshopaholic::lang.plugin.name'
+    description: 'lovata.reviewsshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-star
+    homepage: ''
+permissions:
+    shopaholic-menu-reviews:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.reviewsshopaholic::lang.permission.review'

@@ -1,0 +1,11 @@
+1.0.0:
+    - 'Initialize plugin.'
+    - create_table_subscription_access.php
+    - create_table_subscription_period.php
+    - update_table_product_add_subscription_fields.php
+    - update_table_offer_add_subscription_fields.php
+    - update_table_order_position_add_subscription_fields.php
+1.0.1:
+    - 'Updated license file'
+1.0.2:
+    - 'Fixed dynamic method in ElementItem classes. Requires Toolbox plugin version 1.28.1 and later.'

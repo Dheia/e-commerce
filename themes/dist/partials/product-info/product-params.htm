@@ -1,0 +1,19 @@
+<div class="tovars-list__item-desc uk-width-1-1">
+    {% for obProperty in obPropertyList if obProperty.property_value.notEmpty %}
+    <div class="uk-flex uk-flex-middle uk-margin-xsmall-bottom">
+        <div class="uk-article-meta uk-margin-small-right">{{ obProperty.name }}
+            {% if obProperty.measure.notEmpty %} {{
+            obProperty.measure.name }}
+            {% endif %}
+        </div>
+        <span>{{ obProperty.property_value.getValueString() }}</span>
+    </div>
+    {% endfor %}
+
+    {% if obBrand.isNotEmpty %}
+    <div class="uk-flex uk-flex-middle uk-margin-xsmall-bottom">
+        <div class="uk-article-meta uk-margin-small-right">Производитель:</div>
+        <span>{{ obBrand.name }}</span>
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,60 @@
+title = "Федерация внутренние"
+url = "/federation/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ :category }}"
+displayEmpty = 1
+categoryPage = 404
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = 404
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+postsPerPage = 6
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "federation-detail"
+postPage = "federation-detail"
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+
+    $posts = new Post;
+    $this['priority_posts'] = $posts->orderBy('priority', 'desc')->paginate(6);
+}
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('category'))->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+    $isRightCategory = 0;
+    foreach($attachment as $key => $attach){
+        if($attach->category_id == $currentCategory->id){
+            $isRightCategory = 1;
+        }
+    }
+    if(!$isRightCategory && $this->param('slug')){
+        return $this->controller->run('404');
+    }
+}
+==
+{% set post = blogPost %}
+{% set categories = blogCategories.categories %}
+
+{% if this.param['slug'] %}
+    {% partial 'federation/detail' %}
+{% else %}
+    {% partial 'federation/list' posts = priority_posts %}
+{% endif %}

@@ -1,0 +1,6 @@
+{% if arProductList is not empty %}
+    {% partial 'catalog/catalog-products' obProductList=arProductList %}
+    {% partial 'catalog/pagination' %}
+{% else %}
+    Product not found.
+{% endif %}

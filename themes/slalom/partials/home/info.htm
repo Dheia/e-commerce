@@ -1,0 +1,106 @@
+[viewBag]
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "antidoping"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "news"
+postPage = "antidoping"
+==
+{% set posts = blogPosts.posts.take(4) %}
+
+<div class="main-page-catalog">
+    <div class="max-width">
+
+        <div class="top-b">
+            <h2>Антидопинг</h2>
+        </div>
+
+        <div class="note-b">
+            В нашем каталоге представлены последние линейки спецтехники, систем Закажите консультацию по любому товару у наших специалистов или соберите свой заказ прямо на сайте. Мы подготовим для вас индивидуальное коммерческое предложение и вышлем персональный
+            блок бонусов и скидок.
+        </div>
+
+        <div class="main-page-catalog__grid">
+            {% for post in posts %}
+                <div class="main-page-catalog__item">
+                    <div class="main-page-catalog__pic">
+                        <a href="#">
+                            {% if post.featured_images.count %}
+                                {% for image in post.featured_images|slice(0, 1) %}
+                                    <img loading="lazy" src="{{ image.path }}" alt="">
+                                {% endfor %}
+                            {% else %}
+                                <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="main-page-catalog__about">
+                        <div class="main-page-catalog__title"><a href="{{ post.url }}">{{ post.title }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="main-page-logo">
+
+    <div class="main-page-logo__float">
+        <div class="marquee">
+            <div class="main-page-logo__list">
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-1.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-2.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-3.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-4.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-5.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-6.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-7.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-8.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-9.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-10.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-11.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-12.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-13.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-14.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-15.png'|theme }}" alt="">
+                </div>
+                <div class="main-page-logo__item">
+                    <img loading="lazy" src="{{ 'assets/img/content/logo/pic-16.png'|theme }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

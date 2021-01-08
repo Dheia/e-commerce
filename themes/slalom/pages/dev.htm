@@ -1,0 +1,281 @@
+title = "dev"
+url = "/dev"
+layout = "default"
+is_hidden = 0
+==
+
+<?php
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post as PostModel;
+use System\Models\File;
+use Illuminate\Support\Str;
+use PolloZen\SimpleGallery\Models\Gallery as SimpleGallery;
+use Exception;
+use Wapp\Basecode\Components\Import;
+
+function onTest(){
+    $this['answer'] = "Успешно";
+    $posts = Db::update('update rainlab_blog_posts set published = 1');
+    $this['posts'] = $posts;
+}
+
+public function onAttachAlbumToPost(){
+    $service =  new Import;
+    $response = $service->onAttachAlbumToPost();
+    $this['response_album'] = $response;
+}
+
+function onImport(){
+    $slugs = Db::table('rainlab_blog_posts')->lists('slug','id');
+    foreach($slugs as $key => $slug)
+        {
+        $data = Db::select('select new_name,file_type,is_preview from gas_file_news where article_slug = ?',[$slug]);
+        if($data){
+            foreach($data as $num => $file_db)
+            {
+                if($file_db->file_type == 'file')
+                {
+                    if(file_exists('storage/app/media/files/'.$file_db->new_name))
+                    {
+                        $file = new File;
+                        $file->data = 'storage/app/media/files/'.$file_db->new_name;
+                        $file->field = "featured_files";
+                        $file->attachment_type = 'RainLab\Blog\Models\Post';
+                        $file->attachment_id = $key;
+                        $file->save();
+                    }
+                }
+                elseif($file_db->file_type == 'image' && $file_db->is_preview == 1 )
+                {
+                    if(file_exists('storage/app/media/images/'.$file_db->new_name))
+                    {
+                        $file = new File;
+                        $file->data = 'storage/app/media/images/'.$file_db->new_name;
+                        $file->field = "featured_images";
+                        $file->attachment_type = 'RainLab\Blog\Models\Post';
+                        $file->attachment_id = $key;
+                        $file->save();
+                    }
+                }
+                elseif($file_db->file_type == 'result')
+                {
+                    if(file_exists('storage/app/media/files/'.$file_db->new_name))
+                    {
+                        $file = new File;
+                        $file->data = 'storage/app/media/files/'.$file_db->new_name;
+                        $file->field = "featured_results";
+                        $file->attachment_type = 'RainLab\Blog\Models\Post';
+                        $file->attachment_id = $key;
+                        $file->save();
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+function onCalendar(){
+    $calendar = Db::table('gas_calendar')->get();
+    foreach( $calendar as $key => $single ){
+        $post = PostModel::where('slug', $single->article_slug);
+        if($post){
+            $post->update([
+                'date_start' => $single->date_start,
+                'date_end' => $single->date_end,
+                'participants' => $single->participants,
+                'place' => $single->place,
+                'type' => $single->article_type,
+                'year' => $single->year,
+            ]);
+        }else{
+            dump('Не найдено');
+        }
+    }
+    $this['calendar'] = "Успешно";
+}
+
+
+function onGalleries(){
+    $main_path = post('path');
+    #$main_path = '/home/gas/slalom_parse/galleries/part1';
+    $collection = collect();
+    $f_collection = collect();
+    $files_not_added = collect();
+    $directories = glob($main_path . '/*' , GLOB_ONLYDIR);
+        foreach($directories as $key => $folder)
+        {
+            if (is_dir($folder))
+            {
+                $f_collection=$f_collection->merge([$folder]);
+                $name = str_replace($main_path.'/','',$folder);
+
+                $scan = scandir($main_path.'/'.$name.'/');
+
+                #get slug
+                $translit = "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();";
+                $string = transliterator_transliterate($translit, $name);
+                $string = preg_replace('/[-\s]+/', '-', $string);
+                $slug = trim($string, '-');
+
+                $album = SimpleGallery::where('name',$name)->first();
+                if (!$album)
+                {
+                    # mk album
+                    $album = SimpleGallery::create([
+                        'name' => $name,
+                        'slug' => $slug,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                # attach images to album
+                foreach($scan as $scan_file)
+                {
+                    if (!is_dir("myFolder/$scan_file") and file_exists($main_path.'/'.$name.'/'.$scan_file))
+                    {
+                        try
+                        {
+                            $file = new File;
+                            $file->data = $main_path.'/'.$name.'/'.$scan_file;
+                            $file->field = "images";
+                            $file->attachment_type = 'PolloZen\SimpleGallery\Models\Gallery';
+                            $file->attachment_id = $album->id;
+                            $file->save();
+                            $f_collection=$f_collection->merge([$file]);
+
+                        }
+                        catch(Exception $e)
+                        {
+                            $files_not_added = $files_not_added->merge($file);
+                        }
+                    }
+                }
+            }
+        }
+        $this['f_not_added'] = $files_not_added;
+        $this['last_path'] = $main_path;
+}
+
+
+function onAttachNews(){
+    $categ_n_f = collect();
+    $post_n_f = collect();
+
+    $news_duplicate = Db::table('gas_parsed_news_duplicate')->get();
+    foreach($news_duplicate as $news)
+    {
+        $post = PostModel::where('title', $news->title)->first();
+        $category = Category::where('name', $news->additional_category)->first();
+
+        if ($post != null and $category != null)
+        {
+            $item = Db::table('rainlab_blog_posts_categories')
+                    ->where('post_id', '=', $post->id)
+                    ->where('category_id','=', $category->id)
+                    ->get();
+            if(empty($item)){
+            Db::table('rainlab_blog_posts_categories')->insert([
+                'post_id' => $post->id,
+                'category_id' => $category->id
+            ]);}
+        }elseif($post == null){
+            $post_n_f = $post_n_f->merge($news->title);
+        }elseif($category == null){
+            $categ_n_f = $categ_n_f->merge($news->additional_category);
+        }
+    }
+
+    $this['categ_n_f'] = $categ_n_f;
+    $this['post_n_f'] = $post_n_f;
+}
+==
+<hr>
+<h3>Активация постов</h3>
+<form class="form-inline"
+               data-request="onTest"
+               data-request-update="blogs-update: '#result'">
+    <button type="submit" class="btn btn-primary">Обновить</button>
+</form>
+
+<div id="result">
+    {% partial 'blogs-update' %}
+</div>
+
+<hr>
+
+<h3>Импорт из бд</h3>
+<form class="form-inline"
+      data-request="onImport"
+      data-request-update="blogs-update-import: '#import'">
+    <button type="submit" class="btn btn-primary">Импорт</button>
+</form>
+
+<div id="import">
+    {% partial 'blogs-update-import' %}
+</div>
+
+<hr>
+<h3>Календарь событий</h3>
+<form class="form-inline"
+      data-request="onCalendar"
+      data-request-update="import-calendar: '#calendar'">
+    <button type="submit" class="btn btn-primary">Обновить календарь</button>
+</form>
+
+<div id="calendar">
+    {% partial 'import-calendar' %}
+</div>
+
+<hr>
+<h3>Импорт альбомов</h3>
+<form class="form-inline"
+      data-request="onGalleries"
+      data-request-update="import-gelleries: '#galleries'">
+    <span class="alert-danger">
+       Альбомы разбиты на части. Скрипт необходимо выполнить для каждой части. Всего 8 папок
+    </span>
+    <div>
+        local path: <span class="alert-success">/home/gas/slalom_parse/galleries/part1</span>
+    </div>
+    <div>
+        production path: <span class="alert-success">DataSlalom/galleries/part1</span>
+    </div>
+
+    <div class="col-lg-6">
+        <input class="input-text" name="path" placeholder="/home/gas/slalom_parse/galleries">
+    </div>
+    <button type="submit" class="btn btn-primary">создать альбомы</button>
+</form>
+
+<div id="galleries">
+    {% partial 'import-gelleries' %}
+</div>
+
+<hr>
+
+<hr>
+<h3>Привязать статьи к доб.категориям</h3>
+<form class="form-inline"
+      data-request="onAttachNews"
+      data-request-update="attach-news: '#attachNews'">
+    <button type="submit" class="btn btn-primary">Привязать</button>
+</form>
+
+<div id="attachNews">
+    {% partial 'attach-news' %}
+</div>
+<hr>
+
+<hr>
+<h3>Привязать альбомы к статьям</h3>
+<form class="form-inline"
+      data-request="onAttachAlbumToPost"
+      data-request-update="attach-album: '#attachAlbum'">
+    <button type="submit" class="btn btn-primary">Привязать</button>
+</form>
+
+<div id="attachAlbum">
+    {% partial 'attach-album' %}
+</div>

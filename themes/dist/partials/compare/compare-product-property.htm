@@ -1,0 +1,13 @@
+{# @var obGroupList \Lovata\PropertiesShopaholic\Classes\Collection\GroupCollection #}
+{# @var obFilterProductPropertyList \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection #}
+{% set obGroupList =  obFilterProductPropertyList.groupList() %}
+{% set obMainGroup =  obGroupList.getByCode('main') %}
+{% set obMainFilterPropertyList = obFilterProductPropertyList.group(obMainGroup.id) %}
+{# если не выводятся все сво-ва в таблице хар-к - значит это свойство не закреплено ни за одни продуктом #}
+
+ {% for obProperty in obMainFilterPropertyList if obProperty.property_value.notEmpty %}
+     <li class="prop"> {{ obProperty.name }}
+         {% if obProperty.measure.notEmpty %} {{ obProperty.measure.name }} {% endif %}
+     </li>
+ {% endfor %}
+    <li class="prop">Производитель</li>

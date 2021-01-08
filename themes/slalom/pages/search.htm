@@ -1,0 +1,90 @@
+title = "search"
+url = "/search"
+layout = "default"
+is_hidden = 0
+
+[searchResult]
+searchTerm = "{{ :search }}"
+pageNumber = "{{ :page }}"
+disableUrlMapping = 1
+postsPerPage = 10
+noPostsMessage = "Результаты не найдены"
+sortOrder = "published_at desc"
+includeCategories[] = 1
+includeCategories[] = 2
+includeCategories[] = 3
+includeCategories[] = 4
+includeCategories[] = 5
+includeCategories[] = 6
+includeCategories[] = 7
+includeCategories[] = 8
+includeCategories[] = 15
+includeCategories[] = 21
+categoryPage = "news"
+postPage = "news-detail"
+
+[searchForm]
+resultPage = "search"
+categoryFilter = 0
+==
+{% set posts = searchResult.posts %}
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>Поиск</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="/" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">Поиск</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            <div class="grid-b__content grid-b__content_full">
+                {#                    TODO измени класс на search-b #}
+                <div class="search-mustBehere">
+{#                <div class="search-b">#}
+                    <form action="{{ searchForm.resultPage|page }}" class="search-b__form">
+                        <button type="submit" class="search-b__form-submit">
+                            <svg class="icon__search" width="16px" height="16px">
+                                <use xlink:href="#search"></use>
+                            </svg>
+                        </button>
+                        <input type="text" name="search" class="input-text input-text_noborder form-control" value="">
+                    </form>
+
+                    <div class="search-b_test">
+                        {% if posts is not empty() %}
+                        {% for post in posts %}
+                        <div class="search-b__item">
+                            <div class="search-b__title"><a href="{{ post.url }}">{{ post.title }}</a>
+                            </div>
+                            <div class="search-b__cat">
+                                {% for category in post.categories %}
+                                <div class="search-b__cat-item"><a href="/{{ category.slug }}" class="search-b__cat-links">{{ category.name }}</a></div>
+                                {% endfor %}
+                            </div>
+                            <div class="search-b__text">
+                                {{ post.excerpt }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <li class="no-data">{{ noPostsMessage }}</li>
+                        {% endif %}
+                    </div>
+
+                    <!--TODO Нужна ли сортировка? С людьми она не к месту
+                    <div class="search-b__filter">
+                        <a href="#" class="search-b__filter-links search-b__filter-links_active">Отсортировано по релевантности</a> | <a href="#" class="search-b__filter-links">Сортировать по дате</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

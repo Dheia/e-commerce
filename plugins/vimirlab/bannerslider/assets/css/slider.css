@@ -1,0 +1,108 @@
+/* Slider CSS */
+#banner-slider .owl-item .item {
+	background-image:url('{{ slide.image.path }}');
+	background-position: 50% 10%;
+    height: 500px;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: cover;
+}
+#banner-slider .banner-text {
+    position: absolute;
+    top: 30%;
+    display: block;
+}
+#banner-slider .banner-text.text-left{
+	position: absolute;
+	top: 30%;
+	display: block;
+	left: 10%;
+}
+#banner-slider .banner-text.text-center{
+	position: absolute;
+	top: 30%;
+	display: block;
+	left: 0;
+	right: 0;
+}
+#banner-slider .banner-text.text-right{
+	position: absolute;
+	top: 30%;
+	display: block;
+	right: 10%;
+}
+#banner-slider .banner-text a.btn{
+	display: inline-block;
+	border: 2px solid #fff;
+	background: transparent;
+	color: #fff;
+	margin-right: 25px;
+	border-radius: 0px;
+}
+#banner-slider .banner-text a.btn:last-child{margin-right: 0px;}
+#banner-slider .banner-text a.btn:hover{
+	border: 2px solid #fff;
+	background: #000;
+	color: #fff;
+	transition: 0.5s;
+}
+#banner-slider .owl-dots {
+    position: absolute;
+    bottom: 30px;
+    right: 0;
+    left: 0;
+    color: #fff;
+	text-align: center;
+}
+.owl-carousel button.owl-dot {
+	background: #fff;
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+	border-radius: 50%;
+}
+button.owl-dot.active {
+    background: #c7cccc;
+}
+.carousel-nav-left{
+    height: 30px;
+    font-size: 30px;
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    margin: auto 0;
+    margin-left: -40px;
+}
+
+.carousel-nav-right{
+    height: 30px;
+    font-size: 30px;
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+	right: 0%;
+    margin: auto 0;
+    margin-right: -40px;
+}
+
+@media (max-width: 767px){
+	#banner-slider .banner-text.text-left{
+	position: absolute;
+	top: 5%;
+	display: block;
+	left: 10%;
+}
+#banner-slider .banner-text.text-center{
+	position: absolute;
+	top: 5%;
+	display: block;
+	left: 0;
+	right: 0;
+}
+#banner-slider .banner-text.text-right{
+	position: absolute;
+	top: 5%;
+	display: block;
+	right: 15%;
+}
+}

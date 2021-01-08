@@ -1,0 +1,65 @@
+title = "Авторизация"
+url = "/sing-in"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 1
+logged_only = 0
+
+[Login]
+mode = "submit"
+redirect_on = 1
+redirect_page = "home"
+
+[rolesAccess]
+redirectAuth = "home"
+==
+{% set obUser = UserData.get %}
+
+{% set arError = Login.getErrorMessage %}
+{% set arForm = Login.getOldFormData %}
+
+<section class="uk-section-small cabinet">
+    <div class="uk-container uk-flex uk-flex-center">
+        <div class="cabinet__form">
+            <form href="{{ 'login'|page }}">
+                <div class="uk-card uk-card-body uk-card-small uk-background-default bordered">
+                <h3 class="uk-h3">Вход</h3>
+                <div class="uk-margin-small-bottom uk-flex uk-flex-column">
+                    <label class="uk-margin-small-bottom" for="field-email">Электронная почта</label>
+                    <input class="uk-input uk-width-1-1" id="field-email" name="email" value="{{ arForm.email }}">
+                    {% if arError.message is not empty and arError.field == 'email' %}
+                        <p>{{ arError.message }}</p>
+                    {% endif %}
+                </div>
+                <div class="uk-article-meta">Почта в формате my_mail@site.ru</div>
+{#                <div class="uk-article-meta">Телефон в формате +79685746732</div>#}
+                <div class="cabinet__password-wrap uk-margin-small-bottom uk-flex uk-flex-column uk-margin-small-top">
+                    <label class="uk-margin-small-bottom" for="field-password">Пароль</label>
+                    <div class="uk-position-relative">
+                        <a class="uk-link uk-position-center-right passwordToggler" href="#">Показать</a>
+                        <input class="uk-input" id="field-password" type="password" name="password">
+                    </div>
+                </div>
+{#                <div class="uk-margin-small-bottom uk-margin-medium-top">Проверочный код</div>#}
+{#                <div class="uk-margin-medium-bottom">Сюда вставить капчу</div>#}
+                <button class="uk-margin-small-bottom uk-button-primary uk-button uk-width-1-1" type="submit">Войти</button>
+                <button class="uk-margin-small-bottom uk-button-default uk-button uk-width-1-1">
+                    <a href="{{ url('register') }}">Регистрация</a>
+                </button>
+                    {% if social_login_links %}
+                        <div class="cabinet__form-soc__form-soc">
+                            <h4 class="uk-h4">Войти через соц. сети</h4>
+                            {% partial 'site/auth_social' social_login_links = social_login_links %}
+                        </div>
+                    {% endif %}
+            </div>
+            </form>
+        </div>
+    </div>
+</section>

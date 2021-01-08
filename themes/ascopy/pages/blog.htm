@@ -1,0 +1,70 @@
+title = "Блог"
+url = "/blog"
+layout = "default"
+is_hidden = 0
+child_of = "home"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog-category"
+postPage = "blog-post"
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 1
+categoryPage = "blog-category"
+
+[breadcrumbs]
+main-ol-class = "breadcrumb"
+active-class = "active"
+disabled-class = "disabled"
+==
+use Wapp\Ascopy\Components\Breadcrumbs;
+
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+    $arrYears = Db::table('rainlab_blog_posts')->get(['year']);
+    $years = [];
+    foreach($arrYears as $key => $year){
+        if(!in_array($year->year,$years)){
+            array_push($years,$year->year);
+        }
+    }
+    rsort($years);
+    $this['years'] = $years;
+    $this['filtered'] = 0;
+    if($_GET){
+        $arrPosts = \Rainlab\Blog\Models\Post::where('year',$_GET['year'])->get();
+        if(count($arrPosts)){
+            $this['filerPosts'] = $arrPosts;
+            $this['filtered'] = 1;
+        }
+    }
+    $this['pageUrl'] = '/blog';
+}
+==
+{% if filtered %}
+    {% set posts = filerPosts %}
+{% else %}
+    {% set posts = blogPosts.posts %}
+{% endif %}
+
+{% for category in blogCategories.categories %}
+    {% if category.slug == 'blog' %}
+        {% set categories = category.children %}
+    {% endif %}
+{% endfor %}
+
+{% partial 'blog/posts' posts = posts pageTitle = 'Блог' categories = categories arrBreadcrumbs = arrBreadcrumbs %}

@@ -1,0 +1,10 @@
+plugin:
+    name: 'wapp.basecode::lang.plugin.name'
+    description: 'wapp.basecode::lang.plugin.description'
+    author: Wapp
+    icon: oc-icon-magic
+    homepage: ''
+permissions:
+    wapp-site-settings:
+        label: 'wapp.basecode::lang.permission.settings'
+        tab: 'wapp.basecode::lang.tab.permissions'

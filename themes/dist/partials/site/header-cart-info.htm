@@ -1,0 +1,81 @@
+{# @var obWishList \Lovata\Shopaholic\Classes\Collection\ProductCollection #}
+
+{% set obWishList = ProductList.make().wishList().active() %}
+{% set obCartPositionList = Cart.get %}
+{% set obCompareList = ProductList.make().compare() %}
+
+{% if fixed %}
+<div class="uk-grid-medium uk-flex-middle" uk-grid>
+    <div class="uk-width-auto uk-hidden@m uk-visible@s">
+        <a class="header__login" href="#">
+            <img data-src="{{'assets/img/user.svg'|theme}}" uk-img uk-svg></a></div>
+    <div class="uk-width-auto uk-hidden@m"><a href="#" uk-search-icon></a>
+        <div class="uk-padding-small" id="mobileSearch"
+             uk-dropdown="offset: 0; mode: click; pos: bottom-justify; boundary: .header__middleline; boundary-align: true"></div>
+    </div>
+    <div class="uk-width-auto">
+        <a class="uk-visible@s header__badge uk-position-relative {% if obCompareList.count() < 1 %} empty {% endif %}"
+           href="{{url('compare')}}">
+            <img data-src="{{'assets/img/chart-bar.svg'|theme}}" uk-img uk-svg>
+            <span class="uk-badge">{{ obCompareList.count() }}</span>
+        </a>
+    </div>
+    <div class="uk-width-auto">
+        <a class="uk-visible@s header__badge uk-position-relative {% if obWishList.count() < 1 %} empty {% endif %}"
+           href="{{ 'favorite'|page() }}">
+            <img data-src="{{'assets/img/heart.svg'|theme}}" uk-img uk-svg>
+            <span class="uk-badge">{{ obWishList.count() }}</span>
+        </a>
+    </div>
+    <div class="uk-width-expand">
+        <a class="header__badge uk-flex-middle" href="{{ 'cart'|page }}">
+            <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                {% if obCartPositionList.count() > 0 %}
+                    <span class="uk-width-auto uk-position-relative">
+        <img data-src="{{ 'assets/img/shopping-cart.svg'|theme }}" uk-img uk-svg>
+        <span class="uk-badge header__cart-count">{{ obCartPositionList.count() }}</span>
+    </span>
+                {% else %}
+                    <span class="uk-width-expand header__cart uk-visible@m">
+                        <span>Корзина пуста</span>
+                    </span>
+                {% endif %}
+            </div>
+        </a>
+    </div>
+</div>
+
+{% else %}
+<div class="uk-grid-medium uk-flex-middle" uk-grid>
+    <div class="uk-width-auto">
+        <a class="header__badge uk-position-relative {% if obCompareList.count() < 1 %} empty {% endif %}"
+           href="{{url('compare')}}">
+            <img data-src="{{ 'assets/img/chart-bar.svg'|theme }}" uk-img uk-svg>
+            <span class="uk-badge">{{ obCompareList.count() }}</span>
+        </a>
+    </div>
+    <div class="uk-width-auto">
+        <a class="header__badge uk-position-relative {% if obWishList.count() < 1 %} empty {% endif %}"
+           href="{{ 'favorite'|page() }}">
+            <img data-src="{{ 'assets/img/heart.svg'|theme }}" uk-img uk-svg>
+            <span class="uk-badge">{{ obWishList.count() }}</span>
+        </a>
+    </div>
+    <div class="uk-width-expand">
+        <a class="header__badge uk-flex-middle" href="{{ 'cart'|page }}">
+     <span class="uk-grid-medium uk-flex-middle" uk-grid>
+            {% if obCartPositionList.count() > 0 %}
+                <span class="uk-width-auto uk-position-relative">
+             <img data-src="{{ 'assets/img/shopping-cart.svg'|theme }}" uk-img uk-svg>
+             <span class="uk-badge header__cart-count">{{ obCartPositionList.count() }}</span>
+         </span>
+        {% else %}
+                <span class="uk-width-expand header__cart">
+             <span>Корзина пуста</span>
+         </span>
+            {% endif %}
+     </span>
+        </a>
+    </div>
+</div>
+{% endif %}

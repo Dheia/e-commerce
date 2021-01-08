@@ -1,0 +1,16 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: wapp.userconnect::lang.subscribers.list_title
+list: ~/plugins/wapp/userconnect/models/subscriber/columns.yaml
+modelClass: Wapp\UserConnect\Models\Subscriber
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 10
+showCheckboxes: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: Search..
+export:
+    useList: true

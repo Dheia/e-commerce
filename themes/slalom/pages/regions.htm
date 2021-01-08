@@ -1,0 +1,13 @@
+title = "Регионы"
+url = "/regions"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "regiony"
+displayEmpty = 0
+categoryPage = "regions-category"
+
+==
+{% set categories = blogCategories.categories %}
+{% partial 'regions/firstlist' %}

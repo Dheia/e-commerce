@@ -1,0 +1,59 @@
+[viewBag]
+
+[blogCategories]
+slug = "sorevnovaniya"
+displayEmpty = 1
+categoryPage = "sorevnovaniya"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = 'pravila'
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = "pravila"
+==
+{% set categories = blogCategories.categories %}
+{% set rulesPosts = blogPosts.posts %}
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <div class="sidebar-b__menu">
+            <div class="sidebar-b__item"><a href="/calendar" class="sidebar-b__links">Календарь соревнований</a></div>
+            <div class="sidebar-b__item"><a href="/results" class="sidebar-b__links">Результаты соревнований</a></div>
+            <div class="sidebar-b__item"><a href="/rezultaty-sorevnovaniy-do-2011-goda" class="sidebar-b__links">Результаты соревнований до 2011 года</a></div>
+            <div class="sidebar-b__item">
+                <a href="/sudeyskaya-kollegiya" class="sidebar-b__links {% if kollegia %}sidebar-b__links_active{% endif %}">Судейская коллегия
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </a>
+                {% if kollegia %}
+                    <div class="sidebar-b__drop">
+                        {% for category in categories if category.slug == 'sorevnovaniya' %}
+                            {% for subCategory in category.children if subCategory.slug == 'sudeyskaya-kollegiya' %}
+                                {% for kollCategory in subCategory.children %}
+                                    <a href="/sudeyskaya-kollegiya/{{ kollCategory.slug }}" class="sidebar-b__drop-links">{{ kollCategory.name }}</a>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="sidebar-b__item">
+                <a href="/rules" class="sidebar-b__links {% if rules %}sidebar-b__links_active{% endif %}">Правила
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </a>
+                {% if rules %}
+                    <div class="sidebar-b__drop">
+                        {% for rulePost in rulesPosts %}
+                            <a href="/rules/{{ rulePost.slug }}" class="sidebar-b__drop-links">{{ rulePost.title }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

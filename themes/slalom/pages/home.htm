@@ -1,0 +1,72 @@
+title = "Главная"
+url = "/"
+layout = "default"
+is_hidden = 0
+
+[blogPosts blogPostsNews]
+pageNumber = "{{ :page }}"
+categoryFilter = "news"
+postsPerPage = 8
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "news-detail"
+postPage = "news-detail"
+
+[Galleries]
+galleryOrder = "idAsc"
+results = 2
+markup = "user"
+galleryPage = "galereya"
+
+[blogPosts slalomChannels]
+pageNumber = "{{ :page }}"
+categoryFilter = "slalom-channels"
+postsPerPage = 4
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "slalom-channels"
+postPage = "news-detail"
+==
+<section class="content">
+
+    <!-- SLIDER -->
+    <div class="main-block-b">
+        <div class="max-width">
+            <div class="main-block-b__grid">
+                {% partial 'home/main-slider' %}
+                <div class="main-block-b__list">
+                    {% partial 'home/upcoming-developments' %}
+                    {% partial 'home/results' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SLIDER -->
+
+    <!-- NEWS -->
+    {% partial 'home/news' %}
+    <!-- NEWS -->
+
+    <!-- PRODUCTS -->
+    {% partial 'home/national-team' %}
+    <!-- PRODUCTS -->
+
+    <!-- ARTICLES -->
+    {% partial 'home/channels' %}
+    <!-- ARTICLES -->
+
+    <!-- ABOUT -->
+    {% partial 'home/regions' %}
+    <!-- ABOUT -->
+
+    <!-- FEDERATION -->
+    {% partial 'home/federation' %}
+    <!-- FEDERATION -->
+
+    <!-- LAST -->
+    {% partial 'home/photo-video' %}
+    <!-- LAST -->
+    <!-- CATALOG -->
+    {% partial 'home/info' %}
+    <!-- CATALOG -->
+</section>

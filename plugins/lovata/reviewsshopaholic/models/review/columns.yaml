@@ -1,0 +1,48 @@
+columns:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+        sortable: true
+        searchable: false
+    name:
+        label: 'lovata.reviewsshopaholic::lang.field.user_name'
+        type: text
+        sortable: true
+        searchable: true
+    email:
+        label: 'lovata.toolbox::lang.field.email'
+        type: text
+        sortable: true
+        searchable: true
+    phone:
+        label: 'lovata.toolbox::lang.field.phone'
+        type: text
+        sortable: true
+        searchable: true
+    product_id:
+        label: 'lovata.reviewsshopaholic::lang.field.product'
+        relation: product
+        searchable: false
+        sortable: true
+        select: name
+    rating:
+        label: 'lovata.reviewsshopaholic::lang.field.rating'
+        type: text
+        sortable: true
+        searchable: false
+    id:
+        label: 'lovata.toolbox::lang.field.id'
+        type: text
+        searchable: true
+        sortable: true
+        width: 100px
+    created_at:
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: timetense
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'lovata.toolbox::lang.field.updated_at'
+        type: timetense
+        sortable: true
+        invisible: true

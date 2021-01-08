@@ -1,0 +1,79 @@
+title = "Import Page"
+url = "/import-page"
+layout = "default"
+is_hidden = 0
+==
+
+<?php
+use RainLab\Blog\Models\PostImport as PostImport;
+function onImportCsv(){
+    $dir = $_SERVER['DOCUMENT_ROOT'].'/'.post('value1');
+    $files = scandir($dir);
+    foreach($files as $key => $fileName){
+        if(strripos($fileName,'.csv')){
+            $results = [];
+            $keys = [];
+            $csv = [];
+            $file=fopen($_SERVER['DOCUMENT_ROOT'].'/'.post('value1').'/'.$fileName,"r");
+            $count = 0;
+            while (($result = fgetcsv($file)) !== false)
+            {
+                if($count == 0){
+                    foreach($result as $key => $single){
+                        $single = strtolower($single);
+                        if($single == 'author email'){
+                            $result[$key] = 'author_email';
+                        }elseif($single == 'created date'){
+                            $result[$key] = 'created_at';
+                        }elseif($single == 'updated date'){
+                            $result[$key] = 'updated_at';
+                        }elseif($single == 'published date'){
+                            $result[$key] = 'published_at';
+                        }else{
+                            if($single){
+                                $result[$key] = $single;
+                            }else{
+                                $result[$key] = false;
+                            }
+                        }
+                    }
+                    $keys = $result;
+                }else{
+                    $csv[] = $result;
+                }
+                    $count++;
+            }
+            foreach($csv as $key => $values){
+                if(count($keys) == count($values)){
+                    $results[] = array_combine($keys,$values);
+                }else{
+                    file_put_contents('wapp_files.txt', '-------------------------------------------------------\n', FILE_APPEND);
+                    file_put_contents('wapp_files.txt', $fileName, FILE_APPEND);
+                    file_put_contents('wapp_log.txt', '-------------------------------------------------------\n', FILE_APPEND);
+                    file_put_contents('wapp_log.txt', $values, FILE_APPEND);
+                }
+            }
+            foreach($results as $key => $single){
+                unset($results[$key]['featured images']);
+                unset($results[$key]['html content']);
+            }
+            $importer = new PostImport();
+            $importer->auto_create_categories = 1;
+            $importer->update_existing = 0;
+            $importer->importData($results);
+            fclose($file);
+        }
+    }
+}
+
+==
+
+<h3>Импорт из папки</h3>
+<form data-request="onImportCsv" data-request-update="blog-import: '#import'">
+    <input type="text" name="value1">
+    <input type="submit" value="Импорт">
+</form>
+
+<div id="import">
+    {% partial 'blog-import' %}
+</div>

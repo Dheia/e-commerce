@@ -1,0 +1,30 @@
+1.0.1:
+
+    - 'Create Fake Database for shopaholic.'
+
+    - 'run seeder_create_brand'
+    - seeder_create_brand.php
+    - 'run seeder_create_category'
+    - seeder_create_category.php
+    #    - 'run seeder_create_currency'
+    #    - TODO fix it
+    #    - seeder_create_currency.php
+    - 'run seeder_create_price_types'
+    - seeder_create_price_types.php
+    - 'run seeder_create_prices'
+    - seeder_create_prices.php
+    #    - 'run seeder_create_promo_block'
+    #    - TODO fix it
+    #    - seeder_create_promo_block.php
+    - 'run seeder_create_products'
+    - seeder_create_products.php
+    - 'Create banners.'
+    - seeder_create_banner.php
+
+1.0.2:
+    - 'create data for buddies_addition_properties'
+    - seeder_create_buddies_property.php
+
+1.0.3:
+    - 'update lovata labels'
+    - seeder_create_shopaholic_labels.php

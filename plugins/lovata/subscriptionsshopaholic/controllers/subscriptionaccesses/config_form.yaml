@@ -1,0 +1,16 @@
+name: 'lovata.subscriptionsshopaholic::lang.access.name'
+modelClass: Lovata\SubscriptionsShopaholic\Models\SubscriptionAccess
+form: $/lovata/subscriptionsshopaholic/models/subscriptionaccess/fields.yaml
+defaultRedirect: lovata/subscriptionsshopaholic/subscriptionaccesses
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/subscriptionsshopaholic/subscriptionaccesses/update/:id'
+    redirectClose: lovata/subscriptionsshopaholic/subscriptionaccesses
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/subscriptionsshopaholic/subscriptionaccesses
+    redirectClose: lovata/subscriptionsshopaholic/subscriptionaccesses
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

@@ -1,0 +1,42 @@
+<div class="uk-card-body cabinet__filter-boundary">
+    <div uk-grid>
+        <div>
+            <h3 class="uk-h3">Мои заказы</h3>
+        </div>
+        <div>
+            <div class="uk-position-relative">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: triangle-down"></span>
+                <button class="uk-button uk-button-default cabinet__filter-drop" type="button">Фильтры</button>
+                <div class="uk-margin-remove-top" uk-dropdown="mode: click; pos: bottom-justify;">
+                    <div class="uk-h4">Показать заказы</div>
+                    <div class="uk-flex uk-flex-middle uk-margin-small-bottom">От
+                        <input class="uk-input mask uk-margin-small-left uk-margin-small-right" type="text"
+                               data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy"
+                               im-insert="false">до
+                        <input class="uk-input mask uk-margin-small-left" type="text" data-inputmask-alias="datetime"
+                               data-inputmask-inputformat="dd/mm/yyyy" im-insert="false">
+                    </div>
+                    <div class="uk-margin-small-bottom">
+                        <label>
+                            <input class="uk-radio" type="radio" name="ordersFilter"> Активные
+                        </label>
+                    </div>
+                    <div class="uk-margin-small-bottom">
+                        <label>
+                            <input class="uk-radio" type="radio" name="ordersFilter"> Завершенные
+                        </label>
+                    </div>
+                    <div class="uk-margin-small-bottom">
+                        <label>
+                            <input class="uk-radio" type="radio" name="ordersFilter"> Отмененные
+                        </label>
+                    </div>
+                    <a class="uk-hidden@s uk-link" href="#">Очистить фильтр</a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-flex uk-flex-middle uk-visible@s">
+            <a class="uk-link" href="#">Очистить фильтр</a>
+        </div>
+    </div>
+</div>

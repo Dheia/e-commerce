@@ -1,0 +1,162 @@
+tabs:
+    fields:
+
+        news_list:
+            tab: wapp.basecode::lang.tab.news_list
+            label: wapp.basecode::lang.field.news_list
+            type: repeater
+            form:
+                fields:
+                    news_id:
+                        dropdown
+
+
+#        popular_product_list:
+#            tab: wapp.basecode::lang.tab.popular_products
+#            label: wapp.basecode::lang.field.popular_product_list
+#            type: repeater
+#            form:
+#                fields:
+#                    product_id:
+#                        dropdown
+
+
+
+        catalogs:
+            tab: wapp.basecode::lang.tab.catalogs_home_page
+            label: wapp.basecode::lang.field.catalogs_list
+            type: repeater
+            form:
+                fields:
+                    category_id:
+                        dropdown
+
+
+        popular_category_list:
+            tab: wapp.basecode::lang.tab.popular_categories
+            label: wapp.basecode::lang.field.popular_category_list
+            type: repeater
+            form:
+                fields:
+                    category_id:
+                        dropdown
+
+
+
+        #this content for contact page
+        phone:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_phone
+            type: text
+
+        second_phone:
+            span: right
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_second_phone
+            type: text
+
+        mail:
+            span: right
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_mail
+            type: text
+
+        address:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_address
+            type: text
+
+        work_time:
+            span: right
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_work_time
+            type: text
+
+#        #socials
+        telegram:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_telegram
+            type: text
+
+        instagram:
+            span: right
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_instagram
+            type: text
+
+        vk:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_vk
+            type: text
+
+        youtube:
+            span: right
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.youtube
+            type: text
+
+        twitter:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.twitter
+            type: text
+
+        facebook_active:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_facebook_active
+            type: checkbox
+
+        instagram_active:
+            span: right
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_instagram_active
+            type: checkbox
+
+        vk_active:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_vk_active
+            type: checkbox
+
+        facebook:
+            span: left
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.contact_facebook
+            type: text
+
+        storeImage:
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.store_image
+            type: fileupload
+            mode: image
+            imageHeight: 250
+            imageWidth: 250
+
+
+        mapIframe:
+            span: auto
+            tab: wapp.basecode::lang.tab.contact_page
+            label: wapp.basecode::lang.field.map_iframe
+            type: textarea
+
+
+        logoHeader:
+            tab: wapp.basecode::lang.tab.home_page
+            label: wapp.basecode::lang.field.logo_header
+            type: fileupload
+            mode: file
+            imageHeight: 250
+            imageWidth: 250
+
+        logoFooter:
+            tab: wapp.basecode::lang.tab.home_page
+            label: wapp.basecode::lang.field.logo_footer
+            type: fileupload
+            mode: file
+            imageHeight: 250
+            imageWidth: 250

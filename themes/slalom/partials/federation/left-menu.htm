@@ -1,0 +1,23 @@
+<div class="grid-b__sidebar">
+    <div class="sidebar-b">
+        <div class="sidebar-b__menu">
+            {% for category in categories %}
+            {% set currentCategory = 0 %}
+            {% for subcategory in category.children %}
+                {% if subcategory.slug == blogPosts.category.slug %}
+                    {% set currentCategory = 1 %}
+                {% endif %}
+            {% endfor %}
+                {% if category.slug == blogPosts.category.slug or currentCategory == 1 %}
+                    {% if category.children is not empty %}
+                            <div class="sidebar-b__item"><a href="/federation/kak-eto-bylo" class="sidebar-b__links">Как это было</a></div>
+                        {% for obChildCategory in category.children %}
+                            <div class="sidebar-b__item"><a href="/federation/{{ obChildCategory.slug }}" class="sidebar-b__links">{{ obChildCategory.name }}</a></div>
+                        {% endfor %}
+                            <div class="sidebar-b__item"><a href="/federation/broshyury" class="sidebar-b__links">Брошюры</a></div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

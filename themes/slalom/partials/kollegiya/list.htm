@@ -1,0 +1,39 @@
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+==
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>Судейская коллегия</h1>
+            {% partial 'site/breadcrumbs' arrBreadcrumbs = arrBreadcrumbs %}
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'sorevnovania/left-menu' kollegia = 1 %}
+            <div class="grid-b__content">
+                <div class="services-b">
+                    <div class="services-b__list">
+                        {% for category in categories if category.slug == 'sorevnovaniya' %}
+                            {% for categoryChildren in category.children if categoryChildren.slug == 'sudeyskaya-kollegiya' %}
+                                {% for subCategoryChildren in categoryChildren.children %}
+                                    <div class="services-b__item">
+                                        <div class="services-b__about">
+                                            <span class="services-b__title"><a href="/{{ categoryChildren.slug }}/{{ subCategoryChildren.slug }}">{{ subCategoryChildren.name }}</a></span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

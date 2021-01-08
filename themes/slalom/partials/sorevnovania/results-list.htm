@@ -1,0 +1,74 @@
+<section class="content">
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ blogPosts.category.name }}</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="main.html" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">{{ blogPosts.category.name }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            <div class="grid-b__sidebar">
+                <div class="sidebar-b">
+                    <div class="sidebar-b__menu">
+                        {% partial 'sorevnovania/left-menu' %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-b__content">
+                {% for post in posts %}
+                <div class="services-b">
+                    <div class="services-b__list">
+                        <div class="services-b__item">
+                            <div class="services-b__about services-b__about person-b__description">
+                                {% if post.featured_images.count %}
+                                <div class="services-b__pic">
+                                    <a href="{{ post.url }}">
+                                        {% for image in post.featured_images|slice(0, 1) %}
+                                        <img loading="lazy" src="{{ image.path }}" alt="">
+                                        {% endfor %}
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <span class="services-b__title"><a href="{{ post.url }}">{{ post.title }}</a></span>
+                                <span class="services-b__text">{{ post.excerpt }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!--pagination-->
+                {% if posts.lastPage > 1 %}
+                <div class="paging-b">
+                    <div class="paging-b__list">
+                        {% if posts.currentPage > 1 %}
+                        <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ posts.currentPage-1 }}" class="paging-b__links paging-b__links_arrow">‹</a></div>
+                        {% endif %}
+
+                        {% for page in 1..posts.lastPage %}
+                        {% if posts.currentPage == page %}
+                        <div class="paging-b__item"><span class="paging-b__links paging-b__links_active">{{ page }}</span></div>
+                        {% else %}
+                        <div class="paging-b__item"><a href="{{ this.page.currentUrl }}?page={{ page }}" class="paging-b__links">{{ page }}</a></div>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if posts.lastPage > posts.currentPage %}
+                        <div class="paging-b__item"><a href="{{ this.page.currentUrl}}?page={{ posts.currentPage+1 }}" class="paging-b__links paging-b__links_arrow">›</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <!--pagination-->
+            </div>
+        </div>
+    </div>
+</section>

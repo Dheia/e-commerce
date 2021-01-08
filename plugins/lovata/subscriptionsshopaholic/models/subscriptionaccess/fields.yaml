@@ -1,0 +1,18 @@
+fields:
+    product:
+        label: 'lovata.toolbox::lang.field.product'
+        span: left
+        required: 1
+        type: relation
+        nameFrom: name
+    expire_at:
+        label: 'lovata.subscriptionsshopaholic::lang.field.expire_at'
+        span: right
+        type: datepicker
+tabs:
+    fields:
+        order:
+            tab: 'lovata.ordersshopaholic::lang.menu.orders'
+            type: partial
+            path: $/lovata/subscriptionsshopaholic/controllers/subscriptionaccesses/_order_position.htm
+            span: full

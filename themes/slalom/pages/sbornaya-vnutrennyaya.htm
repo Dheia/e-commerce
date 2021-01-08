@@ -1,0 +1,63 @@
+title = "Сборная внутренняя"
+url = "/team/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ :category }}"
+displayEmpty = 0
+categoryPage = 404
+
+[blogPost secondLevelPost]
+slug = "{{ :slug }}"
+categoryPage = "sbornaya-vnutrennyaya"
+
+==
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('category'))->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+    if($this->param('slug')){
+        $currentPost = Post::where('slug', $this->param('slug'))->first();
+    }
+
+    if(isset($currentPost)){
+        $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+        $isRightCategory = 0;
+        foreach($attachment as $key => $attach){
+            if($attach->category_id == $currentCategory->id){
+                $isRightCategory = 1;
+            }
+        }
+        $subCategory = Category::where('slug',$this->param('slug'))->first();
+        if(isset($subCategory)){
+            foreach($attachment as $key => $attach){
+                if($attach->category_id == $subCategory->id){
+                    $isRightCategory = 1;
+                }
+            }
+        };
+        if(!$isRightCategory){
+            return $this->controller->run('404');
+        };
+    }
+}
+==
+{% set currentCategory =  this.param['category'] %}
+{% set categories = blogCategories.categories %}
+{% if this.param['slug'] %}
+    {% partial 'team/detail' secondLevel=true postSecondLevel = secondLevelPost.post  currentCategory = currentCategory%}
+{% else %}
+    {% for sbornaya in categories if sbornaya.slug == 'sbornaya' %}
+        {% for subCategory in sbornaya.children if subCategory.slug == this.param['category'] %}
+            {% if subCategory.children.count %}
+                {% partial 'team/list' currentCategory=currentCategory categories=subCategory.children slug=subCategory.slug name=subCategory.name %}
+            {% else %}
+                {% partial 'team/detail' currentCategory = currentCategory %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}

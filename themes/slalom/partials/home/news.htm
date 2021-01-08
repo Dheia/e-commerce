@@ -1,0 +1,36 @@
+
+<div class="main-page-articles">
+    <div class="max-width">
+
+        <div class="top-b">
+            <h2>Новости</h2>
+            <div class="top-b__more"><a href="/news">Посмотреть все новости</a>
+            </div>
+        </div>
+
+        <div class="news-b__list news-b__list_articles-main">
+            {% set postsNews = blogPostsNews.posts %}
+            {% set posts = postsNews.take(8) %}
+            {% for post in postsNews %}
+                <div class="news-b__item">
+                    <a href="{{ post.url }}" class="news-b__block">
+                        {% if post.featured_images.count %}
+                            {% for image in post.featured_images|slice(0, 1) %}
+                                <img loading="lazy" src="{{ image.path }}" alt="">
+                            {% endfor %}
+                        {% else %}
+                            <img loading="lazy" src="{{ 'assets/images/nophoto.png'|theme }}" alt="">
+                        {% endif %}
+                        <span class="news-b__about">
+                        <!--<span class="news-b__tag">Управление проектами</span>-->
+                        <span class="news-b__title">{{ post.title }}</span>
+                        <!-- TODO выяснить структуру span-->
+                        <!--<span class="news-b__text">В общественном признании люди нуждаются даже несмотря на преобладающую в 21 веке материальную мотивацию.Сотруднику важно осознавать свою значимость, иметь возможность самовыражения и самореализации. Также на эффективность работы сотрудника влияет бла...</span>-->
+                        <span class="news-b__date">{{ post.published_at | date('d.m.Y') }}</span>
+                        </span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

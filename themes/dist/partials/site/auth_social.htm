@@ -1,0 +1,15 @@
+<div class="uk-grid-small uk-child-width-auto" uk-grid>
+    {% for name, link in social_login_links %}
+        {% set pathImg = 'assets/img/'~ name|lower ~ '.svg' %}
+        <div>
+            <a class="soc-icon {{ name|lower }}" href="{{ link }}">
+                <img data-src="{{ pathImg|theme }}" uk-img uk-svg>
+            </a>
+        </div>
+    {% endfor %}
+    {# <div><a class="soc-icon fb" href="{{ link }}"><img data-src="{{ 'assets/img/facebook.svg'|theme }}" uk-img uk-svg></a></div>#}
+    {# <div><a class="soc-icon vk" href="#"><img data-src="img/vk.svg" uk-img uk-svg></a></div>#}
+    {# <div><a class="soc-icon ok" href="#"><img data-src="img/odnoklassniki.svg" uk-img uk-svg></a></div>#}
+    {# <div><a class="soc-icon inst" href="#"><img data-src="img/instagram.svg" uk-img uk-svg></a></div>#}
+    {# <div><a class="soc-icon yandex" href="#"><img data-src="img/yandex.svg" uk-img uk-svg></a></div>#}
+</div>

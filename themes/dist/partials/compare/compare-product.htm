@@ -1,0 +1,109 @@
+{# this partial need obProduct #}
+{% set obBrand = obProduct.brand %}
+{% set obPropertyList = obProduct.property.sort() %}
+{% set obOffer = obProduct.offer.active().first() %}
+{% set obCartPositionList = Cart.get() %}
+
+<div class="_shopaholic-product-wrapper" data-product-id="{{ obProduct.id }}">
+    <input type="hidden" name="offer_id" value="{{ obOffer.id }}">
+    <li>
+        <ul class="uk-list uk-list-divider">
+            <li class="prop first-prop">
+                <a class="card__img uk-position-relative tovars-list__item-img uk-width-1-1 uk-first-column"
+                   href="{{ obProduct.getPageUrl('catalog') }}">
+                    {% partial 'product-label/product-label' obProduct = obProduct %}
+                    {% if obProduct.preview_image.path is not empty %}
+                        <img
+                            data-src="{{ obProduct.preview_image.path }}"
+                            uk-img=""
+                            src="{{ obProduct.preview_image.path }}">
+                    {% endif %}
+                </a>
+            </li>
+            {% if obPropertyList.isNotEmpty() or obBrand.isNotEmpty() %}
+                {% for obProperty in obPropertyList %}
+                    {% if obProperty.property_value.Empty %}
+                        <li class="prop">{{ obProperty.name }} -</li>
+                    {% else %}
+                        <li class="prop">{{ obProperty.name }} {{ obProperty.property_value.getValueString() }} {% if obProperty.measure.notEmpty %} {{ obProperty.measure.name }} {% endif %}</li>
+                    {% endif %}
+                {% endfor %}
+                {% if obBrand.isNotEmpty %}
+                    <li class="prop">{{ obBrand.name }}</li>
+                {% endif %}
+            {% endif %}
+            <li>
+                <div class="uk-width-expand uk-flex uk-flex-column uk-flex-center">
+                    {% if obOffer.isNotEmpty() %}
+                        <div class="card__price old">{{ obOffer.old_price }}
+                            <img
+                                data-src="{{ 'assets/img/ruble-sign.svg'|theme }}"
+                                uk-img="" uk-svg="" hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 384 512"
+                                 class=" uk-svg"
+                                 width="384" height="512"
+                                 data-svg="http://e-commerce/themes/dist/assets/img/ruble-sign.svg">
+                                <path
+                                    d="M245.712 287.809c80.296 0 138.288-50.323 138.288-128.803C384 81.125 326.009 32 245.712 32H108c-6.627 0-12 5.373-12 12v204H12c-6.627 0-12 5.373-12 12v16c0 6.627 5.373 12 12 12h84v58H12c-6.627 0-12 5.373-12 12v14c0 6.627 5.373 12 12 12h84v84c0 6.627 5.373 12 12 12h19.971c6.627 0 12-5.373 12-12v-84H308c6.627 0 12-5.373 12-12v-14c0-6.627-5.373-12-12-12H139.971v-58.191h105.741zM139.971 71.594h104.643c59.266 0 98.14 31.979 98.14 87.215 0 55.818-38.873 88.96-98.777 88.96H139.971V71.594z"></path>
+                            </svg>
+                        </div>
+                        <div class="card__price">{{ obOffer.price }}
+                            <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}"
+                                uk-img uk-svg hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 384 512"
+                                 class=" uk-svg"
+                                 width="384" height="512"
+                                 data-svg="http://e-commerce/themes/dist/assets/img/ruble-sign.svg">
+                                <path
+                                    d="M245.712 287.809c80.296 0 138.288-50.323 138.288-128.803C384 81.125 326.009 32 245.712 32H108c-6.627 0-12 5.373-12 12v204H12c-6.627 0-12 5.373-12 12v16c0 6.627 5.373 12 12 12h84v58H12c-6.627 0-12 5.373-12 12v14c0 6.627 5.373 12 12 12h84v84c0 6.627 5.373 12 12 12h19.971c6.627 0 12-5.373 12-12v-84H308c6.627 0 12-5.373 12-12v-14c0-6.627-5.373-12-12-12H139.971v-58.191h105.741zM139.971 71.594h104.643c59.266 0 98.14 31.979 98.14 87.215 0 55.818-38.873 88.96-98.777 88.96H139.971V71.594z"></path>
+                            </svg>
+                        </div>
+                    {% else %}
+                        <div class="card__price old">setOffer
+                            <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}"
+                                uk-img="" uk-svg="" hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 384 512"
+                                 class=" uk-svg"
+                                 width="384" height="512"
+                                 data-svg="http://e-commerce/themes/dist/assets/img/ruble-sign.svg">
+                                <path
+                                    d="M245.712 287.809c80.296 0 138.288-50.323 138.288-128.803C384 81.125 326.009 32 245.712 32H108c-6.627 0-12 5.373-12 12v204H12c-6.627 0-12 5.373-12 12v16c0 6.627 5.373 12 12 12h84v58H12c-6.627 0-12 5.373-12 12v14c0 6.627 5.373 12 12 12h84v84c0 6.627 5.373 12 12 12h19.971c6.627 0 12-5.373 12-12v-84H308c6.627 0 12-5.373 12-12v-14c0-6.627-5.373-12-12-12H139.971v-58.191h105.741zM139.971 71.594h104.643c59.266 0 98.14 31.979 98.14 87.215 0 55.818-38.873 88.96-98.777 88.96H139.971V71.594z"></path>
+                            </svg>
+                        </div>
+                        <div class="card__price">setOffer
+                            <img data-src="{{ 'assets/img/ruble-sign.svg'|theme }}"
+                                uk-img uk-svg hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 384 512"
+                                 class=" uk-svg"
+                                 width="384" height="512"
+                                 data-svg="http://e-commerce/themes/dist/assets/img/ruble-sign.svg">
+                                <path
+                                    d="M245.712 287.809c80.296 0 138.288-50.323 138.288-128.803C384 81.125 326.009 32 245.712 32H108c-6.627 0-12 5.373-12 12v204H12c-6.627 0-12 5.373-12 12v16c0 6.627 5.373 12 12 12h84v58H12c-6.627 0-12 5.373-12 12v14c0 6.627 5.373 12 12 12h84v84c0 6.627 5.373 12 12 12h19.971c6.627 0 12-5.373 12-12v-84H308c6.627 0 12-5.373 12-12v-14c0-6.627-5.373-12-12-12H139.971v-58.191h105.741zM139.971 71.594h104.643c59.266 0 98.14 31.979 98.14 87.215 0 55.818-38.873 88.96-98.777 88.96H139.971V71.594z"></path>
+                            </svg>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="btns uk-width-auto">
+                    <button class="card__icon _shopaholic-cart-add {% if obCartPositionList.hasProduct(obProduct.id) %} checked {% endif %}">
+                        В корзине
+                    </button>
+                </div>
+                <div class="btns uk-width-auto">
+                    <input type="hidden" value="{{ obProduct.id }}"
+                           name="product_id">
+                    <button
+                        data-request="ProductList::onRemoveFromCompare"
+                        type="submit" class="card__icon"
+                        data-request-success="window.location.reload()">
+                        Убрать
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </li>
+</div>

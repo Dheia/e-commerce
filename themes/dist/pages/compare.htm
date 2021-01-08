@@ -1,0 +1,116 @@
+title = "compare"
+url = "/compare/:category?*"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 0
+
+[ProductList]
+sorting = "no"
+
+[CategoryPage MainCategoryPage]
+slug = "{{ :category }}"
+slug_required = 0
+smart_url_check = 1
+has_wildcard = 1
+skip_error = 0
+
+[CategoryPage]
+slug = "{{ :slug }}"
+slug_required = 0
+smart_url_check = 1
+has_wildcard = 0
+skip_error = 1
+
+[Compare]
+==
+<?php
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
+    public function onInit(){
+        $obCategoryItem = $this->CategoryPage->get();
+        $obMainCategoryItem = $this->MainCategoryPage->get();
+
+        $this->Compare->setRequestData(null, $obMainCategoryItem, $obCategoryItem);
+
+        if(empty($obProductItem)) {
+            $sActiveSort = $this->ProductList->getSorting();
+            $this->Compare->initCompareData($sActiveSort);
+
+            $obProductList = $this->Compare->getProductList();
+
+            $obFilteredProductList = $this->Compare->getFilterProductPropertyList();
+            $obFilterProductPropertyList = $this->Compare->getFilterProductPropertyList();
+            $this['obFilterProductPropertyList']  = $obFilterProductPropertyList;
+            $arProductList = $this->Compare->getSortWithCategory();
+            $this['obCompareProductList'] = $arProductList;
+            $this['currentUrl'] = $this->pageUrl('');
+        }
+    }
+?>
+==
+<section id="compare" class="uk-section compare">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <aside class="uk-width-1-4 tovars-list__aside catalog_filters uk-offcanvas uk-first-column">
+                {% partial 'compare/compare-categories' obActiveCategory = obActiveCategory %}
+            </aside>
+
+            <div class="uk-width-expand">
+                <form class="uk-card uk-background-default uk-card-small cabinet__item" action="#">
+                    <div class="uk-card-body">
+                        <h3 class="uk-h3 uk-padding uk-padding-remove-vertical uk-padding-remove-left uk-position-relative uk-flex-inline">
+                            Сравнение
+                            <div class="uk-article-meta uk-position-top-right">{{ obCompareProductList.count() }}</div>
+                        </h3>
+                    </div>
+
+                    {% if currentUrl == url('compare') %}
+                        {% partial 'compare/compare-choose-category' %}
+                    {% else %}
+                        <div class="uk-card-body">
+                            {% if obCompareProductList.isNotEmpty() %}
+                                <div uk-grid>
+                                    <div class="uk-width-1-2 uk-width-1-4@s">
+                                        <ul class="uk-list uk-list-divider">
+                                            <li class="prop first-prop">Характеристики товара</li>
+                                            {% partial 'compare/compare-product-property' %}
+                                        </ul>
+                                    </div>
+                                    <div class="uk-width-expand">
+                                        <div class="uk-position-relative uk-margin" tabindex="-1" uk-slider
+                                             id="toggleRecently">
+                                            <div class="uk-slider-container">
+                                                <ul class="uk-grid-collapse uk-child-width-1-1 uk-slider-items uk-child-width-1-3@m uk-child-width-1-2@s">
+                                                    {% for obProduct in obCompareProductList %}
+                                                        {% partial 'compare/compare-product' obProduct = obProduct %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            <a class="uk-position-center-left uk-position-center-left--25 uk-position-small uk-hidden-hover"
+                                               href="#"
+                                               uk-slidenav-previous="" uk-slider-item="previous"></a>
+                                            <a class="uk-position-center-right uk-position-center-right--25 uk-position-small uk-hidden-hover"
+                                               href="#" uk-slidenav-next=""
+                                               uk-slider-item="next"></a>
+                                            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-hidden@m"></ul>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div>В данной категории нет продуктов для сравнения</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

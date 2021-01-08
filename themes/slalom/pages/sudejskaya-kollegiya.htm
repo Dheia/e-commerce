@@ -1,0 +1,61 @@
+title = "Судейская коллегия"
+url = "/sudeyskaya-kollegiya/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = 404
+postPage = 404
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = 404
+
+==
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('category'))->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+    if($this->param('slug')){
+        $currentPost = Post::where('slug',$this->param('slug'))->first();
+        if($currentPost){
+            $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+            $isRightCategory = 0;
+            foreach($attachment as $key => $attach){
+                if($attach->category_id == $currentCategory->id){
+                    $isRightCategory = 1;
+                }
+            }
+        }
+    }
+    if($this->param('slug')){
+        if($isRightCategory){
+            return $this->controller->run('404');
+        }
+    }
+}
+==
+{% set posts = blogPosts.posts %}
+{% set post = blogPost.post %}
+
+{% if this.param['slug'] %}
+    {% partial 'kollegiya/detail' %}
+{% else %}
+    {% if posts.count == 1 %}
+        {% partial 'kollegiya/single' %}
+    {% else %}
+        {% partial 'kollegiya/peoples' %}
+    {% endif %}
+{% endif %}

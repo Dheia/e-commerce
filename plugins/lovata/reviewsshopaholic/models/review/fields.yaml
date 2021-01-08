@@ -1,0 +1,35 @@
+fields:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        span: left
+        default: 0
+        type: switch
+    name:
+        label: 'lovata.reviewsshopaholic::lang.field.user_name'
+        span: left
+        type: text
+    email:
+        label: 'lovata.toolbox::lang.field.email'
+        span: left
+        type: text
+    phone:
+        label: 'lovata.toolbox::lang.field.phone'
+        span: left
+        type: text
+    rating:
+        label: 'lovata.reviewsshopaholic::lang.field.rating'
+        span: left
+        type: dropdown
+        emptyOption: 'lovata.toolbox::lang.field.empty'
+    comment:
+        label: 'lovata.reviewsshopaholic::lang.field.comment'
+        size: large
+        span: left
+        type: textarea
+    product:
+        label: 'lovata.reviewsshopaholic::lang.field.product'
+        type: recordfinder
+        span: left
+        list: $/lovata/shopaholic/models/product/columns.yaml
+        nameFrom: name
+        descriptionFrom: code

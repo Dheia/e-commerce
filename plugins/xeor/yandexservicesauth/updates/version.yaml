@@ -1,0 +1,5 @@
+1.0.0: First version of YandexServicesAuth.
+1.0.1: Update en/lang.php.
+1.0.2: YandexServicesAuthApi::yandex_services_auth_info() -> YandexServicesAuthApi::authInfo().
+1.0.3: Update yandex_services_auth_info() function.
+1.0.4: Adds a new permission to hide the settings menu item.

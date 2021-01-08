@@ -1,0 +1,20 @@
+title = "Thank you page"
+url = "/checkout/:slug"
+layout = "default"
+
+description = "Страница благодарности"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[OrderPage]
+slug = "{{ :slug }}"
+slug_required = 1
+==
+{# Get order object #}
+{% set obOrder = OrderPage.get() %}
+<div data-id="{{ obOrder.id }}">
+    <h1>{{ obOrder.order_number }}</h1>
+</div>

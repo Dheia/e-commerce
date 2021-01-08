@@ -1,0 +1,49 @@
+fields:
+tabs:
+    fields:
+        active:
+            label: 'lovata.toolbox::lang.field.active'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            span: left
+            default: 0
+            type: switch
+        name:
+            label: 'lovata.toolbox::lang.field.name'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            span: left
+            type: text
+        mechanism:
+            label: 'lovata.ordersshopaholic::lang.field.promo_mechanism'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            required: true
+            span: right
+            type: relation
+            nameFrom: relation_name
+        date_begin:
+            label: 'lovata.toolbox::lang.field.date_begin'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            span: left
+            type: datepicker
+        date_end:
+            label: 'lovata.toolbox::lang.field.date_end'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            span: right
+            type: datepicker
+        promo_block:
+            label: 'lovata.shopaholic::lang.field.promo_block'
+            emptyOption: 'lovata.toolbox::lang.field.empty'
+            span: left
+            type: relation
+            tab: 'lovata.toolbox::lang.tab.settings'
+        preview_text:
+          label: 'lovata.toolbox::lang.field.preview_text'
+          size: large
+          span: full
+          type: textarea
+          tab: 'lovata.toolbox::lang.tab.description'
+        description:
+          label: 'lovata.toolbox::lang.field.description'
+          size: giant
+          span: full
+          type: richeditor
+          tab: 'lovata.toolbox::lang.tab.description'

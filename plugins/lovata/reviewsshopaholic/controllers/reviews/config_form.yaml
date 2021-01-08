@@ -1,0 +1,16 @@
+name: 'lovata.reviewsshopaholic::lang.review.name'
+modelClass: Lovata\ReviewsShopaholic\Models\Review
+form: $/lovata/reviewsshopaholic/models/review/fields.yaml
+defaultRedirect: lovata/reviewsshopaholic/reviews
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/reviewsshopaholic/reviews/update/:id'
+    redirectClose: lovata/reviewsshopaholic/reviews
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/reviewsshopaholic/reviews
+    redirectClose: lovata/reviewsshopaholic/reviews
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

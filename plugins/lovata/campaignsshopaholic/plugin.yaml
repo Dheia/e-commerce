@@ -1,0 +1,10 @@
+plugin:
+    name: 'lovata.campaignsshopaholic::lang.plugin.name'
+    description: 'lovata.campaignsshopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-cart-plus
+    homepage: ''
+permissions:
+    shopaholic-menu-promo-campaign:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.campaignsshopaholic::lang.permission.campaign'

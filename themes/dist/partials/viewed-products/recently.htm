@@ -1,0 +1,43 @@
+{# @var obViewedProductList \Lovata\Shopaholic\Classes\Collection\ProductCollection #}
+{# @var obProduct \Lovata\Shopaholic\Classes\Item\ProductItem #}
+
+{% set obViewedProductList = ProductList.make().viewed().active() %}
+
+{% if obViewedProductList.isNotEmpty() %}
+
+<section class="uk-section-xsmall recently" id="recently-list">
+    <div class="uk-container">
+        <div class="uk-flex uk-flex-between uk-flex-middle">
+            <h3 class="uk-h3 uk-margin-remove">Вы недавно смотрели</h3>
+            <div class="uk-grid-small recently-btns uk-flex uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                    <a class="clear-view-list" href="#">Очистить</a></div>
+                <div class="uk-width-auto">
+                    <button class="uk-button uk-button-default" uk-toggle="target: #toggleRecently"
+                            id="recentlyToggler">Скрыть
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-position-relative uk-margin" tabindex="-1" uk-slider id="toggleRecently">
+            <div class="uk-slider-container">
+                <ul class="uk-grid-collapse uk-child-width-1-2 uk-slider-items uk-child-width-1-5@m uk-child-width-1-3@s">
+                    {% partial 'carousel-products/carousel-products' arProduct = obViewedProductList %}
+                </ul>
+            </div>
+            <a class="uk-position-center-left uk-position-center-left--25 uk-position-small uk-hidden-hover" href="#"
+               uk-slidenav-previous="" uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-center-right--25 uk-position-small uk-hidden-hover" href="#" uk-slidenav-next=""
+               uk-slider-item="next"></a>
+            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin uk-hidden@m"></ul>
+
+        </div>
+    </div>
+</section>
+
+{% endif %}
+
+
+
+

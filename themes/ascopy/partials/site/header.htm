@@ -1,0 +1,125 @@
+[staticMenu]
+code = "menyu-dlya-header"
+
+[viewBag]
+==
+<header class="header-b">
+
+    <div class="header-b__top">
+
+        <div class="max-width">
+
+            <div class="header-b__grid">
+                <div class="header-b__city"><a href="#" class="header-b__city-links" data-show-modal="city">Челябинск <img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a>
+                </div>
+                <div class="header-b__phone"><a href="tel:84993467749">+74993467749</a>
+                </div>
+                <div class="header-b__menu">
+                    {% for item in staticMenu.menuItems %}
+                        <div class="header-b__item"><a href="{{ item.url }}" class="header-b__links">{% if item.title == 'Акции' %}<img src="{{ 'assets/img/content/lightdark.svg'|theme }}" alt="">{% endif %}{{ item.title }}</a></div>
+                    {% endfor %}
+                </div>
+                <div class="header-b__auth"><a href="#" class="header-b__auth-links" data-show-modal="auth"><img src="{{ 'assets/img/content/user.svg'|theme }}" alt=""> Войти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-b__main">
+        <div class="max-width">
+            <div class="header-b__grid">
+                <div class="header-b__logo"><a href="index.html"><img src="{{ 'assets/img/content/logo.svg'|theme }}" alt=""></a>
+                </div>
+                <div class="header-b__cat"> <a href="#" class="js--toggle-catalog"> <svg class="icon__catalog" width="10px" height="10px"> <use xlink:href="#catalog"></use> </svg> Каталог <img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a>
+                </div> <form class="header-b__search"> <input placeholder="Поиск" class="header-b__search-input"> <button type="submit" class="header-b__search-submit"><img src="{{ 'assets/img/content/zoom.svg'|theme }}" alt=""></button> </form>
+                <div class="header-b__actions"> <a href="compare.html" class="header-b__actions-item"> <svg class="icon__compare" width="18px" height="17px"> <use xlink:href="#compare"></use> </svg> <span class="header-b__actions-count">0</span></a> <a href="#" class="header-b__actions-item"> <svg class="icon__like" width="20px" height="16px"> <use xlink:href="#like"></use> </svg> <span class="header-b__actions-count">0</span></a> <a href="cart.html" class="header-b__actions-item"> <svg class="icon__cart" width="19px" height="16px"> <use xlink:href="#cart"></use> </svg> <span class="header-b__actions-count">0</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-b__catalog">
+        <div class="header-b__catalog-grid">
+            <div class="header-b__catalog-sidebar">
+                <div class="header-b__catalog-menu"> <a href="#" class="header-b__catalog-links header-b__catalog-links_active">Текстиль<img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a> <a href="#" class="header-b__catalog-links">Декор<img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a> <a href="#" class="header-b__catalog-links">Лампы и светильники<img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a> <a href="#" class="header-b__catalog-links">Товары для ванной<img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a> <a href="#" class="header-b__catalog-links">Кухонные принадлежности<img src="{{ 'assets/img/content/arrw.svg'|theme }}" alt=""></a>
+                </div>
+            </div>
+            <div class="header-b__catalog-content">
+                <div class="header-b__catalog-list header-b__catalog-list_show">
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Постельное белье</a>
+                        </div> <a href="#" class="header-b__catalog-element">Комплекты постельного белья</a> <a href="#" class="header-b__catalog-element">Простыни</a> <a href="#" class="header-b__catalog-element">Наволочки</a>
+                    </div>
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Кухонные аксессуары</a>
+                        </div>
+                    </div>
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Принадлежности для выпечки</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-b__catalog-list">
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Принадлежности для выпечки</a>
+                        </div>
+                    </div>
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Кухонные аксессуары</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-b__catalog-list">
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">11Кухонные аксессуары</a>
+                        </div>
+                    </div>
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Принадлежности для выпечки</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-b__catalog-list">
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Кухонные аксессуары</a>
+                        </div>
+                    </div>
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">fadПринадлежности для выпечки</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-b__catalog-list">
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">223Кухонные аксессуары</a>
+                        </div>
+                    </div>
+                    <div class="header-b__catalog-item">
+                        <div class="header-b__catalog-icon"><img src="{{ 'assets/img/content/cat.svg'|theme }}" alt="">
+                        </div>
+                        <div class="header-b__catalog-title"><a href="#">Принадлежности для выпечки</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

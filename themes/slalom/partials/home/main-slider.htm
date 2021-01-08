@@ -1,0 +1,43 @@
+==
+<?php
+function onStart(){
+    $posts = \Rainlab\Blog\Models\Post::where('is_main_banner',1)->get();
+    $this['banners'] = $posts;
+}
+?>
+==
+<div class="main-block-b__slider">
+    <div class="arrow-b arrow-b_prev arrow-b_prev-main">
+        <svg class="icon__arrow-l" width="9px" height="15px">
+            <use xlink:href="#arrow-l"></use>
+        </svg>
+    </div>
+    <div class="arrow-b arrow-b_next arrow-b_next-main">
+        <svg class="icon__arrow-r" width="9px" height="15px">
+            <use xlink:href="#arrow-r"></use>
+        </svg>
+    </div>
+    <div class="swiper-container js--slider-main">
+        <div class="swiper-wrapper">
+            {% for banner in banners if banner.is_main_banner %}
+            <div class="swiper-slide {% if banner.banner_white %}{{ 'swiper-slide_white' }}{% endif %}" style="background:url('{{ banner.featured_images[0].path }}') no-repeat 50% 100%; background-size:cover">
+                <div class="max-width">
+                    <div class="headline-b__grid">
+                        <div class="headline-b__about {% if banner.banner_white %}{{ 'headline-b__about_white' }}{% endif %}">
+                            <h1 class="headline-b__title {% if banner.banner_white %}{{ 'headline-b__about_white' }}{% endif %}">{{ banner.title }}</h1>
+                            <div class="headline-b__text">
+                                {{ banner.excerpt }}
+                            </div>
+                            <div class="headline-b__actions">
+                                <a href="{{ banner.url }}" class="button">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="swiper-pagination"></div>
+    </div>
+</div>

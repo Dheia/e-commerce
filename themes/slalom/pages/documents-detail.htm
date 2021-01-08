@@ -1,0 +1,60 @@
+title = "Документы внутренняя"
+url = "/documents/:category*/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ :category }}"
+displayEmpty = 1
+categoryPage = "documents-detail"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "{{ :category }}"
+postsPerPage = 6
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "documents-detail"
+postPage = "documents-detail"
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "documents"
+
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+
+function onEnd(){
+    $currentCategory = Category::where('slug',$this->param('category'))->first();
+    if(!$currentCategory){
+        return $this->controller->run('404');
+    };
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+    $isRightCategory = 0;
+    foreach($attachment as $key => $attach){
+        if($attach->category_id == $currentCategory->id){
+            $isRightCategory = 1;
+        }
+    }
+    if(!$isRightCategory && $this->param('slug')){
+        return $this->controller->run('404');
+    }
+}
+==
+{% set categories = blogCategories.categories %}
+{% set posts = blogPosts.posts %}
+{% if this.param['slug'] %}
+    {% partial 'documents/detail' %}
+{% elseif posts.count == 1 and posts.first.slug|lower == this.param['category']|lower %}
+    {% partial 'documents/single' %}
+{% else %}
+    {% partial 'documents/category' %}
+{% endif %}

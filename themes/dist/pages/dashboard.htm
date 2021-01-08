@@ -1,0 +1,212 @@
+title = "Личный кабинет"
+url = "/dashboard"
+layout = "default"
+is_hidden = 0
+child_of = "home"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+role = 0
+permission = 0
+anonymous_only = 0
+logged_only = 1
+
+
+[rolesAccess]
+redirectAuth = "home"
+
+[UserAddress]
+
+[subscriptionForm]
+category = 1
+==
+<?php
+    public function onInit(){
+    use Wapp\Userconnect\Models\Subscriber;
+    use Lovata\Toolbox\Classes\Helper\UserHelper;
+
+    $obUMail = UserHelper::instance()->getUser() ? UserHelper::instance()->getUser()->email : '';
+
+    $uHasSubscribe = Subscriber::where('email',$obUMail)->exists();
+    $this['uHasSubscribe'] = $uHasSubscribe;
+}
+?>
+==
+{% set obUser = UserData.get %}
+{% if obUser %}
+    {% set obOrderList = obUser.order %}
+<section class="uk-section dashboard">
+    <div class="uk-container">
+        <h1 class="uk-h1 section-title">Личный кабинет</h1>
+        {% partial 'site/breadcrumbs' %}
+        <div class="uk-child-width-1-3@m" uk-grid="masonry: true;">
+            <div>
+                <div class="uk-card uk-card-small uk-card-default dashboard__item">
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <span class="uk-margin-small-right">
+                            <img data-src="{{ 'assets/img/user.svg'|theme }}" uk-img uk-svg style="max-width:20px"></span>
+                        <span class="uk-text-bold">Персональная информация</span>
+                    </div>
+                    <div class="uk-card-body">
+                        <div class="uk-grid-small uk-child-width-1-1" uk-grid>
+                            <div class="uk-flex">
+                                <div class="uk-width-1-3">Фамилия, имя:</div>
+                                {% if obUser.name or obUser.surname %}
+                                <div class="uk-width-expand uk-text-bold">{{ obUser.name }} {{ obUser.surname }}</div>
+                                {% else %}
+                                <div class="uk-width-expand uk-text-bold">-</div>
+                                {% endif %}
+                            </div>
+                            <div class="uk-flex">
+                                <div class="uk-width-1-3">Email:</div>
+                                {% if obUser.email %}
+                                    <div class="uk-width-expand uk-text-bold">{{ obUser.email }}</div>
+                                {% else %}
+                                <div class="uk-width-expand uk-text-bold">-</div>
+                                {% endif %}
+                            </div>
+                            <div class="uk-flex">
+                                <div class="uk-width-1-3">Телефон:</div>
+                                {% if obUser.phone %}
+                                <div class="uk-width-expand uk-text-bold">{{ obUser.phone }}</div>
+                                {% else %}
+                                    <div class="uk-width-expand uk-text-bold">-</div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="uk-grid-small" uk-grid>
+                                    <div class="uk-width-1-2">
+                                        <a class="dashboard-change uk-button uk-button-small uk-button-default" href="{{ url('change-password') }}">изменить пароль</a>
+                                    </div>
+                                    <div class="uk-width-1-2">
+                                        <a class="dashboard-change uk-button uk-button-small uk-button-default" href="{{ url('personal-info') }}">изменить данные</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-small uk-card-default dashboard__item">
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <span class="uk-margin-small-right">
+                            <img data-src="{{ 'assets/img/clipboard-list.svg'|theme }}" uk-img uk-svg style="max-width:15px">
+                        </span>
+                        <span class="uk-text-bold">История заказов</span>
+                    </div>
+                    <div class="uk-card-body">
+                        {% if obOrderList.isNotEmpty %}
+                        <div class="uk-grid-small" uk-grid>
+                            {% partial 'dashboard/order-list/order-list' %}
+                            <div class="uk-width-1-1">
+                                <a class="uk-button-small uk-button uk-button-default" href="{{ url('orders') }}">показать все заказы</a>
+                            </div>
+                        </div>
+                        {% else %}
+                            <div class="uk-card-body">Заказы отсутствуют</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-small uk-card-default dashboard__item">
+                    <div class="uk-card-body">
+                        <div class="uk-grid-small" uk-grid>
+                            <div class="uk-width-auto">
+                                <img data-src="{{'assets/img/heart.svg'|theme}}" uk-img uk-svg style="max-width:25px">
+                            </div>
+                            <div class="uk-width-expand uk-flex uk-flex-middle">
+                                <div class="uk-text-bold uk-margin-small-right">Избранное</div>
+                                {% set obWishList = ProductList.make().wishList().active() %}
+                                {% if obWishList.count() >0 %}
+                                    <div class="uk-badge">{{ obWishList.count() }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="uk-width-auto">
+                                <a class="uk-button-default uk-button-small uk-button" href="{{url('favorite')}}">изменить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-small uk-card-default dashboard__item">
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <span class="uk-margin-small-right">
+                            <img data-src="{{ 'assets/img/users.svg'|theme }}" uk-img uk-svg style="max-width:20px">
+                        </span>
+                        <span class="uk-text-bold">Связанные соцсети</span>
+                    </div>
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <a class="soc-icon vk uk-margin-small-right" href="#">
+                            <img data-src="{{ 'assets/img/vk.svg'|theme }}" uk-img uk-svg></a>
+                        <div class="uk-flex uk-flex-column">
+                            <div class="uk-text-bold">Вконтакте</div>
+                            <a class="uk-link" href="#">Удалить</a>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        <h6 class="uk-h6">Привять соцсеть</h6>
+                        <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                            <div><a class="soc-icon facebook" href="#"><img data-src="{{ 'assets/img/facebook.svg'|theme }}" uk-img uk-svg></a></div>
+                            <div><a class="soc-icon vk" href="#"><img data-src="{{ 'assets/img/vk.svg'|theme }}" uk-img uk-svg></a></div>
+                            <div><a class="soc-icon ok" href="#"><img data-src="{{ 'assets/img/ok.svg'|theme }}" uk-img uk-svg></a></div>
+                            <div><a class="soc-icon inst" href="#"><img data-src="{{ 'assets/img/instagram.svg'|theme }}" uk-img uk-svg></a></div>
+                            <div><a class="soc-icon yandex" href="#"><img data-src="{{ 'assets/img/yandex.svg'|theme }}" uk-img uk-svg></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-small uk-card-default dashboard__item">
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <span class="uk-margin-small-right">
+                            <img data-src="{{ 'assets/img/inbox-in.svg'|theme }}" uk-img uk-svg style="max-width:20px">
+                        </span>
+                        <span class="uk-text-bold">Подписаться на рассылку</span>
+                    </div>
+                    <div class="uk-card-body">
+                        {% if uHasSubscribe == false %}
+                        <form class="uk-grid-small uk-child-width-1-1" data-request="subscriptionForm::onSubscribe" uk-grid>
+                            <div>
+                                <input class="uk-input" type="email" name="email" placeholder="Введите ваш Email"
+                                {% if obUser.email %} value="{{ obUser.email }}" {% endif %}>
+                            </div>
+{#                            <div>#}
+{#                                <label>#}
+{#                                    <input class="uk-checkbox uk-margin-small-right" type="checkbox">Хочу получать новости#}
+{#                                </label>#}
+{#                            </div>#}
+{#                            <div>#}
+{#                                <label>#}
+{#                                    <input class="uk-checkbox uk-margin-small-right" type="checkbox">Хочу получать акции#}
+{#                                </label>#}
+{#                            </div>#}
+                            <div>
+                                <button class="uk-button uk-button-small uk-button-default">Подписаться</button>
+{#                                <button class="uk-button uk-button-small uk-button-default">Сохранить изменения</button>#}
+                            </div>
+                        </form>
+                        {% else %}
+                            <div class="uk-card-body">Вы подписаны</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-small uk-card-default dashboard__item">
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <span class="uk-margin-small-right">
+                            <img data-src="{{ 'assets/img/box-alt.svg'|theme }}" uk-img uk-svg style="max-width:20px">
+                        </span>
+                        <span class="uk-text-bold">Профили доставки</span>
+                    </div>
+                    {% partial 'dashboard/delivery-list/delivery-list' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    {{ partial('popups/add_address') }}
+{% endif %}

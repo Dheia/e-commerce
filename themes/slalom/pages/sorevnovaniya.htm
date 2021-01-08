@@ -1,0 +1,13 @@
+title = "Соревнования"
+url = "/sorevnovaniya"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ sorevnovaniya }}"
+displayEmpty = 1
+categoryPage = "sorevnovaniya"
+==
+{% set categories = blogCategories.categories %}
+
+{% partial 'sorevnovania/category-list' %}

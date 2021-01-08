@@ -1,0 +1,235 @@
+title = "Результаты"
+url = "/results/:slug?"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "{{ sorevnovaniya }}"
+displayEmpty = 1
+categoryPage = "sorevnovaniya"
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "rezultaty"
+==
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
+function onStart(){
+    $newsCategoryId = Db::table('rainlab_blog_categories')->where('slug', 'kalendar-sorevnovaniy')->value('id');
+    $arrYears = Db::table('rainlab_blog_posts')->get('year');
+    $years = [];
+    foreach($arrYears as $key => $year){
+        if(!in_array($year->year,$years)){
+            array_push($years,$year->year);
+        }
+    }
+    $idList = Db::table('rainlab_blog_posts_categories')->where('category_id', $newsCategoryId)->lists('post_id');
+    if($_GET){
+        $arrPosts = \Rainlab\Blog\Models\Post::where('year',$_GET['year'])->get();
+    }else{
+        $arrPosts = \Rainlab\Blog\Models\Post::where('year','2020')->get();
+        #$count = 0;
+        #foreach($idList as $key => $id){
+        #    if($count < 100){
+        #        $arrPosts[] = \Rainlab\Blog\Models\Post::where('id',$id)->first();
+        #    }
+        #    $count = $count+1;
+        #}
+    };
+    $this['posts'] = $arrPosts;
+    $this['years'] = $years;
+}
+function onEnd(){
+    $currentCategory = Category::where('slug','kalendar-sorevnovaniy')->first();
+    $currentPost = Post::where('slug',$this->param('slug'))->first();
+    $attachment = Db::table('rainlab_blog_posts_categories')->where('post_id', $currentPost->id)->get();
+    $isRightCategory = 0;
+    foreach($attachment as $key => $attach){
+        if($attach->category_id == $currentCategory->id){
+            $isRightCategory = 1;
+        }
+    }
+    if(!$isRightCategory && $this->param('slug')){
+        return $this->controller->run('404');
+    }
+}
+
+
+==
+{% set curYear = "now"|date("Y") %}
+{% set post = blogPost.post %}
+<section class="content">
+    {% if this.param['slug'] %}
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>{{ post.title }}</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="/" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item"><a href="/results" class="sub-b__links">Результаты</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">{{ post.title }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'sorevnovania/left-menu' %}
+            <div class="grid-b__content">
+                <div class="person-b__photo">
+                    {% for image in post.featured_images %}
+                    <img loading="lazy" src="{{ image.path }}" alt="">
+                    {% endfor %}
+                </div>
+                <div class="person-b__about person-b__description">
+                    <div class="comments-b__tabs comments-b__tabs_gray">
+                        <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links comments-b__tabs-links_active">Содержание</a>
+                        </div>
+                        <div class="comments-b__tabs-item"><a href="#" class="comments-b__tabs-links">Документы</a>
+                        </div>
+                    </div>
+                    <div class="person-b__whois">{{ post.title }}</div>
+                    <div class="person-b__text">
+                        <div class="article-b__content article-b__content_show">
+                            <p>{{ post.content|raw }}</p>
+                        </div>
+                        <div class="article-b__content">
+                            {% if post.featured_files.count %}
+                                <p>Документы:</p>
+                                <div class="docs-b">
+                                {% for file in post.featured_files %}
+                                    {% set arrFile = file.file_name | split('.') %}
+                                    {% set fileType = arrFile|slice(length-1, length) %}
+                                    <a href="{{ file.path }}" class="docs-b__item">
+                                        <i class="icon_docs icon_docs_{{ fileType[0] }}"></i>
+                                        <span class="docs-b__name">{{ file.file_name }}</span>
+                                        <span class="docs-b__size">{{ file.size }}</span>
+                                    </a>
+                                {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Нет документов</p>
+                            {% endif %}
+                            {% if post.featured_results.count %}
+                                <p>Результаты:</p>
+                                <div class="docs-b">
+                                {% for file in post.featured_results %}
+                                    {% set arrFile = file.file_name | split('.') %}
+                                    {% set fileType = arrFile|slice(length-1, length) %}
+                                    <a href="{{ file.path }}" class="docs-b__item">
+                                        <i class="icon_docs icon_docs_{{ fileType[0] }}"></i>
+                                        <span class="docs-b__name">{{ file.file_name }}</span>
+                                        <span class="docs-b__size">{{ file.size }}</span>
+                                    </a>
+                                {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Нет результатов</p>
+                            {% endif %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="headline-b">
+        <div class="max-width">
+            <h1>Результаты {% if curYear %}соревнований за {{ curYear }} год{% endif %}</h1>
+            <div class="sub-b">
+                <div class="sub-b__item"><a href="/" class="sub-b__links">Главная</a>
+                    <svg class="icon__down-arrow" width="256px" height="256px">
+                        <use xlink:href="#down-arrow"></use>
+                    </svg>
+                </div>
+                <div class="sub-b__item">Результаты</div>
+            </div>
+        </div>
+    </div>
+    <div class="max-width">
+        <div class="grid-b">
+            {% partial 'sorevnovania/left-menu' %}
+            {% if posts.count > 0 %}
+            <div class="grid-b__content">
+                {% for date in years|sort|reverse %}
+                    <!--<div class="calendar_tab {% if date == curYear %}active{% endif %}"><a href="/results?year={{ date }}">{{ date }}</a></div>-->
+                {% endfor %}
+                <div class="price-b">
+                    <div class="price-b__section">
+                        {% if curYear %}
+                            <div class="price-b__label">Результаты соревнований за {{ curYear }} год</div>
+                        {% endif %}
+                        <table width="100%" cellspacing="0" cellpadding="0" class="table table_border">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Мероприятие</th>
+                                <th>Срок начала</th>
+                                <th>Срок окончания</th>
+                                <th>Место</th>
+                                <th>Участники</th>
+                                <th>Поло-жения</th>
+                                <th>Рез-ты</th>
+                                <th>Фото</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for post in posts %}
+                            {% if date(currentDate)>date(post.date_end) %}
+                            <tr>
+                                {% if post.type == 'no_type' %}
+                                <td>Не указан</td>
+                                {% elseif post.type == 'russia' %}
+                                <td>Россия</td>
+                                {% elseif  post.type == 'world' %}
+                                <td>Мир</td>
+                                {% elseif post.type == 'region' %}
+                                <td>Регион</td>
+                                {% elseif post.type == 'olympicgames' %}
+                                <td>Олимпийские игры</td>
+                                {% else %}
+                                <td>Не указан</td>
+                                {% endif %}
+                                <td><a href="/results/{{ post.slug }}">{{ post.title }}</a></td>
+                                <td>{{ post.date_start is empty ? "" : post.date_start|date("d.m.Y") }}</td>
+                                <td>{{ post.date_end is empty ? "" : post.date_end|date("d.m.Y") }}</td>
+                                <td>{{ post.place }}</td>
+                                <td>{{ post.participants }}</td>
+                                <td>
+                                    <svg class="icon__file" width="16px" height="16px" fill="#08c">
+                                        {% if post.featured_files.count %}<use xlink:href="#file"></use>{% endif %}
+                                    </svg>
+                                </td>
+                                <td>
+                                    <svg class="icon__file" width="16px" height="16px" fill="#08c">
+                                        {% if post.featured_results.count %}<use xlink:href="#flag"></use>{% endif %}
+                                    </svg>
+                                </td>
+                                <td>
+                                    <svg class="icon__file" width="16px" height="16px" fill="#08c">
+                                        {% if post.featured_images.count %}<use xlink:href="#img"></use>{% endif %}
+                                    </svg>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="grid-b__content">
+                <h1>На данный момент результатов за текущий год нет</h1>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</section>

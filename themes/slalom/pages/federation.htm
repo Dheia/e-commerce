@@ -1,0 +1,30 @@
+title = "Федерация"
+url = "/federation"
+layout = "default"
+is_hidden = 0
+
+[blogCategories]
+slug = "federation"
+displayEmpty = 1
+categoryPage = 404
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+categoryFilter = "federation"
+postsPerPage = 6
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "federation-detail"
+postPage = "federation-detail"
+==
+use Wapp\Postdate\Components\Breadcrumbs as Breadcrumbs;
+function onStart(){
+    $breadcrumbs = new Breadcrumbs;
+    $resBreadcrumbs = $breadcrumbs->getBreadcrumbs($this->pageUrl(''));
+    $this['arrBreadcrumbs'] = $resBreadcrumbs;
+}
+==
+
+{% set posts = blogPosts.posts %}
+{% set categories = blogCategories.categories %}
+{% partial 'federation/category-list' %}

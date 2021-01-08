@@ -1,0 +1,24 @@
+title: vimirlab.bannerslider::lang.title.slider
+
+list: ~/plugins/vimirlab/bannerslider/models/slider/columns.yaml
+modelClass: VimirLab\BannerSlider\Models\Slider
+recordUrl: vimirlab/bannerslider/sliders/update/:id
+
+noRecordsMessage: backend::lang.list.no_records
+
+recordsPerPage: 20
+
+showSetup: true
+
+showSorting: true
+
+showCheckboxes: true
+
+defaultSort:
+    column: id
+    direction: desc
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

@@ -1,0 +1,13 @@
+{% set obLabelList = obProduct.label.active().sort() %}
+{% set obOffer = obProduct.offer.active().first() %}
+
+<div class="card__label">
+    {% if obLabelList.isNotEmpty() == true %}
+        {% for obLabel in obLabelList %}
+            <div class="card__{{ obLabel.code }}">{{ obLabel.name }}</div>
+        {% endfor %}
+    {% endif %}
+    {% if obOffer.discount_price_value > 0 %}
+        <div class="card__sale">Распродажа</div>
+    {% endif %}
+</div>

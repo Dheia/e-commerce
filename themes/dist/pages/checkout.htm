@@ -1,0 +1,94 @@
+title = "Оформление заказа"
+url = "/checkout"
+layout = "default"
+description = "Оформление заказа"
+is_hidden = 0
+child_of = "mey_no_parent"
+hide_crumb = 0
+remove_crumb_trail = 0
+crumb_disabled = 0
+
+[ShippingTypeList]
+
+[PaymentMethodList]
+
+[MakeOrder]
+mode = "ajax"
+==
+<?php
+function onInit()
+    {
+     $this['path_page_js'] = '';
+
+    }
+?>
+==
+<h1>Оформление заказа</h1>
+{% set obShippingTypeList = ShippingTypeList.make().active().sort() %}
+{% if obShippingTypeList.isNotEmpty() %}
+    Доставка:
+    {% for obShippingType in obShippingTypeList %}
+        <div>
+            <input type="radio" name="shipping_type_id" value="{{ obShippingType.id }}"> {{ (obShippingType.name) }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% set obPaymentMethodList = PaymentMethodList.make().active().sort() %}
+{% if obPaymentMethodList.isNotEmpty() %}
+    Оплата:
+    {% for obPaymentMethod in obPaymentMethodList %}
+        <div>
+            {{ (obPaymentMethod.name) }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+<form class="_shopaholic-order-form">
+    <div class="uk-card-body">
+        <h3 class="uk-h3">Форма для заказа</h3>
+    </div>
+    <div class="uk-card-body uk-margin-medium-right uk-margin-medium-left uk-padding-remove-horizontal">
+        <div class="uk-grid-small uk-child-width-1-1 uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-flex uk-flex-column cabinet__label-wrap uk-first-column">
+                <label class="uk-text-right@m cabinet__label" for="accountName">Имя</label>
+                <div class="uk-width-auto">
+                    <input class="uk-input mask _shopaholic-order-field" name="name" data-group="user" data-field="name">
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-column cabinet__label-wrap uk-grid-margin uk-first-column">
+                <label class="uk-text-right@m cabinet__label" for="accountName">last_name</label>
+                <div class="uk-width-auto">
+                    <input class="uk-input mask _shopaholic-order-field" name="last_name" data-group="user">
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-column cabinet__label-wrap uk-grid-margin uk-first-column">
+                <label class="uk-text-right@m cabinet__label" for="accountName">email</label>
+                <div class="uk-width-auto">
+                    <input class="uk-input mask _shopaholic-order-field" name="email" data-group="user">
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-column cabinet__label-wrap uk-grid-margin uk-first-column">
+                <label class="uk-text-right@m cabinet__label" for="accountName">address</label>
+                <div class="uk-width-auto">
+                    <input class="uk-input mask _shopaholic-order-field" name="address" data-group="shipping_address"
+                           data-field="address1">
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-column cabinet__label-wrap uk-grid-margin uk-first-column">
+                <label class="uk-text-right@m cabinet__label" for="accountName">phone</label>
+                <div class="uk-width-auto">
+                    <input class="uk-input mask _shopaholic-order-field" name="phone" data-group="user">
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-column cabinet__label-wrap uk-grid-margin uk-first-column">
+                <label class="uk-text-right@m cabinet__label" for="accountName">comment</label>
+                <div class="uk-width-auto">
+                    <input class="uk-input mask _shopaholic-order-field" name="comment" data-group="order.property">
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="checkout_submit">submit</button>
+</form>
